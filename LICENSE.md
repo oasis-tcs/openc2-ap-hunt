@@ -7,5 +7,5 @@ governed by the OASIS policies, including the [Intellectual Property Rights (IPR
 including any applicable [declarations](https://www.oasis-open.org/committees/openc2/ipr.php). Feedback from non-TC members, if any, is governed by the terms of the 
 [OASIS Feedback License](https://www.oasis-open.org/policies-guidelines/ipr#appendixa). 
 
-Description of this repository is presented in the [README](https://github.com/oasis-tcs/openc2-ap-edr/blob/master/README.md) file, and guidelines for 
-contribution/participation are given in the [CONTRIBUTING](https://github.com/oasis-tcs/openc2-ap-edr/blob/master/CONTRIBUTING.md) file.
+Description of this repository is presented in the [README](https://github.com/oasis-tcs/openc2-ap-hunt/blob/master/README.md) file, and guidelines for 
+contribution/participation are given in the [CONTRIBUTING](https://github.com/oasis-tcs/openc2-ap-hunt/blob/master/CONTRIBUTING.md) file.
