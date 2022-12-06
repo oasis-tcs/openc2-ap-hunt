@@ -12,8 +12,7 @@ Contributors to this repository are expected to be Members of the OASIS OpenC2 T
 
 This specification defines an actuator profile to automate management of cyber threat hunting activities using OpenC2. Threat hunting is the process of proactively and iteratively searching through networks and on endpoints to detect and isolate cyber observables that may indicate threats that evade existing security solutions. This actuator profile defines the OpenC2 Actions, Targets, Arguments, and Specifiers along with conformance clauses to enable the operation of OpenC2 Producers and Consumers in the context of cyber threat hunting. It covers invocation of stored hunting processes (e.g., “hunt books”), passing of hunt parameters, selection of analytics to apply to hunt data, and the expected type(s) and format(s) of information returned by hunting processes.
 
-### :scroll: Licensing :scroll:
-
+### Licensing
 
 Please see the <a
 href="https://github.com/oasis-tcs/openc2-ap-hunt/blob/master/LICENSE.md">LICENSE</a> file for description of the license terms and OASIS policies
