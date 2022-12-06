@@ -26,8 +26,6 @@ file.
 
 ## Maintainers
 
-Maintainers of this TC GitHub
-
 Maintainers for this repository are consistent with the TC's conventions of including Secretary and Co-chairs as maintainers.
 
 - David Lemire, david.lemire@hii-tsd.com, dlemire60, National Security Agency
