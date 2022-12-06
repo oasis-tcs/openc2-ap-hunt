@@ -8,7 +8,7 @@ Anyone wishing to [participate](https://www.oasis-open.org/org/faq#committee-par
 [join](https://www.oasis-open.org/committees/join) as a TC Member. *Member* in this context means any TC role or office other than OASIS TC Observer, 
 per the [TC Process](https://www.oasis-open.org/policies-guidelines/tc-process#membership). 
 
-Persons who are not TC members are invited to open issues and provide comments using this repository's [GitHub Issues](https://github.com/oasis-tcs/openc2-ap-edr/issues/new) 
+Persons who are not TC members are invited to open issues and provide comments using this repository's [GitHub Issues](https://github.com/oasis-tcs/openc2-ap-hunt/issues/new) 
 tracking facility or using the TC's [comment facility](https://www.oasis-open.org/committees/comments/index.php?wg_abbrev=openc2). All such content created in GitHub 
 Issues and/or posted to the TC's [archived comment list](https://lists.oasis-open.org/archives/openc2/) is governed by the terms of the 
 [OASIS Feedback License](https://www.oasis-open.org/policies-guidelines/ipr#appendixa)
