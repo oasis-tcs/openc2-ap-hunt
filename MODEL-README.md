@@ -2,7 +2,7 @@
 
 _This file provides a template for creating a new README.md for an OpenC2 TC work product repository. The initial generic logo graphic should be replaced with one specific for the work product, and internal content should be edited to name, describe, and link to the proper information for the work product. GitHub links in the source should be edited to reference the repository for **this** work product._
 
-![Work Product ReadMe Logo](images/generic-logo-header.png)
+![Work Product ReadMe Logo](images/hunting-ap-logo-header.png)
 
 ## ![oasis-avatar](https://avatars.githubusercontent.com/u/47402065?s=24&v=4) An OASIS [Work Product](https://www.oasis-open.org/policies-guidelines/oasis-defined-terms-2018-05-22/#dWorkProduct) Repository ![oasis-avatar](https://avatars.githubusercontent.com/u/47402065?s=24&v=4) 
 
