@@ -34,9 +34,7 @@ than typical open source software project repositories:
   this branch is essentially empty.
 * The **Working** branch is where all work-in-progress content is
   captured, and is the place to go for the [current working
-  version]() of this work product.
-
-> In the above bullet about the Working branch edit the `READMD.md` source to insert a link to the working version markdown file in the `working` branch of the repo.
+  version](https://github.com/oasis-tcs/openc2-ap-hunt/blob/working/ap-hunt-v1.0.md) of this work product.
 
 More information about the TC's repository organizing conventions
 and branching strategy can be found in our [Documentation
