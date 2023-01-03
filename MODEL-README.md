@@ -11,7 +11,7 @@ work](https://www.oasis-open.org/committees/openc2/charter.php).
 Contributors must be Members of the TC. Work is governed by the
 OASIS policies and is not done under typical open source
 licensing. For more details, see the
-[Contributions](#writinghand-contributions-writinghand) and
+[Contributions](#writing_hand-contributions-writing_hand) and
 [Licensing](#scroll-licensing-scroll) sections below. 
 
 ## :blue_book: _OpenC2 Actuator Profile for Threat Hunting_ :blue_book:
@@ -92,5 +92,3 @@ are created and the associated CSDs mature.
 <div>
 <p>Please send questions or comments about <a href="https://www.oasis-open.org/resources/tcadmin/github-repositories-for-oasis-tc-members-chartered-work">OASIS TC GitHub repositories</a> to the <a href="mailto:tc-admin@oasis-open.org">OASIS TC Administrator</a>.  For questions about content in this repository, please contact the TC Chair or Co-Chairs as listed on the the <a href="https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=openc2">OpenC2 TC's OASIS home page</a>.</p>
 </div>
-
-
