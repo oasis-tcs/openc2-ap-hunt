@@ -45,11 +45,23 @@ Norms](https://github.com/oasis-tcs/openc2-tc-ops/blob/main/Documentation-Norms.
 
 ### :left_speech_bubble: Description :left_speech_bubble:
 
-_Provide a 1-2 paragraph summary of the work product contained in this repo._
+This specification defines an actuator profile to automate
+management of cyber threat hunting activities using OpenC2.
+Threat hunting is the process of proactively and iteratively
+searching through networks and on endpoints to detect and isolate
+cyber observables that may indicate  threats that evade existing
+security solutions. This actuator profile defines the OpenC2
+Actions, Targets, Arguments, and Specifiers along with
+conformance clauses to enable the operation of OpenC2 Producers
+and Consumers in the context of cyber threat hunting. It covers
+invocation of stored hunting processes (e.g., “hunt books”),
+passing of hunt parameters, selection of analytics to apply to
+hunt data, and the expected type(s) and format(s) of information
+returned by hunting processes.
 
 ### :writing_hand: Contributions :writing_hand:
 <div>
-<p>As stated in this repository's <a href="https://github.com/oasis-tcs/openc2-jadn/blob/master/CONTRIBUTING.md">CONTRIBUTING file</a>, contributors to this repository are expected to be Members of the OASIS OpenC2 TC, for any substantive change requests.  Anyone wishing to contribute to this GitHub project and <a href="https://www.oasis-open.org/join/participation-instructions">participate</a> in the TC's technical activity is invited to join as an OASIS TC Member.  Public feedback is also accepted, subject to the terms of the <a href="https://www.oasis-open.org/policies-guidelines/ipr#appendixa">OASIS Feedback License</a>.</p>
+<p>As stated in this repository's <a href="https://github.com/oasis-tcs/openc2-ap-hunt/blob/master/CONTRIBUTING.md">CONTRIBUTING file</a>, contributors to this repository are expected to be Members of the OASIS OpenC2 TC, for any substantive change requests.  Anyone wishing to contribute to this GitHub project and <a href="https://www.oasis-open.org/join/participation-instructions">participate</a> in the TC's technical activity is invited to join as an OASIS TC Member.  Public feedback is also accepted, subject to the terms of the <a href="https://www.oasis-open.org/policies-guidelines/ipr#appendixa">OASIS Feedback License</a>.</p>
 </div>
 
 
