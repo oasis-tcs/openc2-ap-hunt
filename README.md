@@ -36,8 +36,6 @@ than typical open source software project repositories:
   captured, and is the place to go for the [current working
   version](https://github.com/oasis-tcs/openc2-ap-hunt/blob/working/ap-hunt-v1.0.md) of this work product.
 
-> In the above bullet about the Working branch edit the `READMD.md` source to insert a link to the working version markdown file in the `working` branch of the repo.
-
 More information about the TC's repository organizing conventions
 and branching strategy can be found in our [Documentation
 Norms](https://github.com/oasis-tcs/openc2-tc-ops/blob/main/Documentation-Norms.md#433-configure-repository).
