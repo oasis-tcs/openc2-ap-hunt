@@ -16,7 +16,11 @@ licensing. For more details, see the
 [Contributions](#writinghand-contributions-writinghand) and
 [Licensing](#scroll-licensing-scroll) sections below. 
 
-## :blue_book: _OpenC2 TC Work Product Title_ :blue_book:
+## :blue_book: _OpenC2 Actuator Profile for Threat Hunting_ :blue_book:
+
+This repository support development of a specification defining
+an actuator profile (AP) to automate management of cyber threat
+hunting activities using OpenC2.
 
 _Provide a 1-2 sentence summary of the work product contained in this repo._
 
