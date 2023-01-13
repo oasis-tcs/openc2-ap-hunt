@@ -1,0 +1,1 @@
+This folder supports the development of the JADN IM for the TH-AP. Feel free to submit contributions in the form of JADN, JIDL, JSON, or simple Markdown documents related to the process of defining the threat hunting AP scheme.
