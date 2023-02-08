@@ -1,6 +1,6 @@
 {
  "info": {
-  "package": "https://github.com/oasis-tcs/openc2-ap-hunt",
+  "package": "https://praxiseng.com/threat-hunter-9001",
   "version": "0-wd01",
   "title": "Threat Hunting Profile",
   "description": "Data definitions for Threat Hunting (TH) functions",
@@ -29,7 +29,7 @@
 
   ["Target", "Choice", [], "", [
     [9, "features", "Features", [], "A set of items used with the query Action to determine an Actuator's capabilities."],
-    [1036, "th", "AP-Target", ["<"], "Threat Hunting Profile-defined targets"]
+    [1036, "th", "AP-Target$th", ["<"], "Threat Hunting Profile-defined targets"]
   ]],
 
   ["Args", "Map", ["{1"], "", [
@@ -37,11 +37,11 @@
     [2, "stop_time", "Date-Time", ["[0"], ""],
     [3, "duration", "Duration", ["[0"], ""],
     [4, "response_requested", "Response-Type", ["[0"], ""],
-    [1036, "th", "AP-Args", ["[0"], ""]
+    [1036, "th", "AP-Args$th", ["<"], ""]
   ]],
 
   ["Actuator", "Choice", [], "", [
-    [1036, "th", "AP-Specifiers", ["<"], "TH-defined actuator specifiers"]
+    [1036, "th", "AP-Specifiers$th", ["<"], "TH-defined actuator specifiers"]
   ]],
 
   ["Results", "Map", ["{1"], "Response Results", [
@@ -49,7 +49,7 @@
     [2, "profiles", "Nsid", ["q", "[0", "]0"], "List of profiles supported by this Actuator"],
     [3, "pairs", "Pairs", ["[0"], "Targets applicable to each supported Action"],
     [4, "rate_limit", "Number", ["y0.0", "[0"], "Maximum number of requests per minute supported by design or policy"],
-    [1024, "th", "AP-Results", ["[0", "<"], "TH-defined results"]
+    [1036, "th", "AP-Results$th", ["[0", "<"], "TH-defined results"]
   ]],
 
   ["Pairs", "Enumerated", [], "", [
@@ -57,58 +57,104 @@
     [30, "investigate: /hunt", ""]
   ]],
 
-  ["AP-Target", "Choice", [], "TH targets defined in this profile", [
+  ["AP-Target$th", "Choice", [], "TH targets defined in this profile", [
     [1, "hunt", "String", [], "description here"],
-    [2, "huntbooks", "String", [], "description here"],
-    [3, "datasources", "String", [], "description here"]
+    [2, "huntbooks", "Huntbook-Specifiers$th", [], "description here"],
+    [3, "datasources", "Datasource-Specifiers$th", [], "description here"]
   ]],
 
-  ["AP-Args", "Map", ["{1"], "TH command arguments defined in this profile", [
-    [1, "huntargs", "Huntargs", ["[0"], "Arguments for use in conjunction with huntbook implementation"]
+  ["AP-Args$th", "Map", ["{2"], "TH command arguments defined in this profile", [
+    [1, "string_arg", "String", ["[0"], "string arguments supplied as huntargs"],
+    [2, "integer_arg", "Integer", ["[0"], "integer arguments supplied as huntargs"],
+    [3, "time_arg", "AP-Args$Time-arg$th", ["[0"], "Date-Time arguments supplied as huntargs"],
+    [4, "stix", "AP-Args$Stix$th", ["[0", "<"], "stix arguments supplied as huntargs"],
+    [5, "timerange", "Stix-Timerange$th", ["[0"], "string arguments supplied as huntargs"],
+    [6, "path", "Path-Format$th", ["[0"], "integer arguments supplied as huntargs"],
+    [7, "datasource", "String", ["{1"], "Date-Time arguments supplied as huntargs"],
+    [8, "hunt_process", "Hunt-Process$th", ["[0", "<"], "process targeted by hunt activity: specify type."],
+    [9, "ipv4_address", "IPv4-Addr", ["[0"], "IPv4 address as defined in [RFC0791]"],
+    [10, "ipv6_address", "IPv6-Addr", ["[0"], "IPv6 address as defined in [RFC8200]"],
+    [11, "ipv4_network", "IPv4-Net", ["[0"], "ipv4 network targeted by hunt activity"],
+    [12, "ipv6_network", "IPv6-Net", ["[0"], "ipv6 network targeted by hunt activity"],
+    [13, "endpoint", "String", ["[0"], "endpoint targeted by hunt activity"],
+    [14, "directory", "String", ["[0"], "directory targeted by hunt activity"]
   ]],
 
-  ["AP-Specifiers", "Map", ["{1"], "TH actuator specifiers (may be empty)", []],
+  ["AP-Specifiers$th", "Map", [], "TH actuator specifiers (may be empty)", []],
 
-  ["AP-Results", "Map", ["{1"], "TH results defined in this profile", [
-    [1, "huntbooks", "Ap-results$Huntbooks", ["[0"], "Huntbook info returned by query huntbooks"],
-    [2, "datasources", "Ap-results$Datasources", ["[0"], "Datasource identifiers returned by query datasources"]
+  ["Huntbook-Specifiers$th", "Map", ["{1"], "TH Huntbook specifiers", [
+    [1, "named", "String", ["[0"], "requests information from an element with the given name"],
+    [2, "full", "Boolean", [], "Specifies the return should include each supported huntbook with their full usage information"],
+    [3, "titles", "Boolean", ["[0"], "Specifies the return type should be a list of titles (Strings)"],
+    [4, "args", "String", ["[0"], "Specifies the returned data should include the required arguments for the given Huntbook"],
+    [5, "returns", "String", ["[0"], "Specifies the returned data should include the expected returns for the given Huntbook"]
   ]],
 
-  ["Huntargs", "Map", ["{1"], "Arguments defined by the huntbook. May be a variety of types, handled by the hunting actuator.", [
-    [1, "string_arg", "Huntargs$String-arg", ["[0"], "string arguments supplied as huntargs"],
-    [2, "integer_arg", "Huntargs$Integer-arg", ["[0"], "integer arguments supplied as huntargs"],
-    [3, "time_arg", "Huntargs$Time-arg", ["[0"], "Date-Time arguments supplied as huntargs"],
-    [4, "stix", "Huntargs$Stix", ["[0", "<"], "stix arguments supplied as huntargs"]
+  ["Datasource-Specifiers$th", "Map", ["{1"], "TH Datasource specifiers", [
+    [1, "named", "String", ["[0"], "requests information from an element with the given name"],
+    [2, "full", "Boolean", [], "Specifies the return should include each accessible datasource with their full usage information"],
+    [3, "titles", "Boolean", ["[0"], "Specifies the return type should be a list of titles (Strings)"]
   ]],
 
-  ["StixObject", "Map", ["{1"], "Stix cyber observables used in threat hunting. link to STIX table HERE", []],
-
-  ["Huntargs$String-arg", "ArrayOf", ["*String", "{1"], "string arguments supplied as huntargs", []],
-
-  ["Huntargs$Integer-arg", "ArrayOf", ["*Integer", "{1"], "integer arguments supplied as huntargs", []],
-
-  ["Huntargs$Time-arg", "ArrayOf", ["*Date-Time", "{1"], "time arguments supplied as huntargs", []],
-
-  ["Huntargs$Stix", "ArrayOf", ["*StixObject", "{1"], "stix arguments supplied as huntargs", []],
-
-  ["Ap-results$Huntbooks", "ArrayOf", ["*String"], "Huntbook names returned by query huntbooks", []],
-
-  ["Ap-results$Datasources", "ArrayOf", ["*String"], "Datasource identifiers returned by query datasources", []],
-
-  ["Status-Code", "Enumerated", ["="], "", [
-    [102, "Processing", "an interim Response used to inform the Producer that the Consumer has accepted the Command but has not yet completed it"],
-    [200, "OK", "the Command has succeeded"],
-    [201, "Created", "the Command has succeeded and a new resource has been created as a result of it"],
-    [400, "Bad Request", "the Consumer cannot process the Command due to something that is perceived to be a Producer error (e.g., malformed Command syntax)"],
-    [401, "Unauthorized", "the Command Message lacks valid authentication credentials for the target resource or authorization has been refused for the submitted credentials"],
-    [403, "Forbidden", "the Consumer understood the Command but refuses to authorize it"],
-    [404, "Not Found", "the Consumer has not found anything matching the Command"],
-    [500, "Internal Error", "the Consumer encountered an unexpected condition that prevented it from performing the Command"],
-    [501, "Not Implemented", "the Consumer does not support the functionality required to perform the Command"],
-    [503, "Service Unavailable", "the Consumer is currently unable to perform the Command due to a temporary overloading or maintenance of the Consumer"]
+  ["AP-Results$th", "Map", ["{1"], "TH results defined in this profile", [
+    [1, "huntbooks", "Ap-results$Huntbooks$th", ["[0"], "Huntbook names returned by query huntbooks"],
+    [2, "datasources", "Ap-results$Datasources$th", ["[0"], "Datasource identifiers returned by query datasources"]
   ]],
+
+  ["Hunt-Process$th", "Choice", [], "Identification of process to be targeted by hunt activity", [
+    [1, "name", "String", ["[0"], "targeted process name as a String"],
+    [2, "uuid", "String", ["[0"], "targeted process UUID"],
+    [3, "pid", "Integer", ["[0"], "targeted process PID"]
+  ]],
+
+  ["Stix-Timerange$th", "Choice", [], "Identification of process to be targeted by hunt activity", [
+    [1, "timerange_absolute", "Timerange-Abs$th", ["[0"], "Absolute timerange, defined by a start and end time in ISO 8601 format"],
+    [2, "timerange_relative", "Timerange-Rel$th", ["[0"], "Relative timerange, example '3, Days' for last 3 days"]
+  ]],
+
+  ["Path-Format$th", "Choice", [], "Path referenced by hunt activity: choose format", [
+    [1, "path_absolute", "String", ["[0"], "absolute path to target"],
+    [2, "path_relative", "String", ["[0"], "relative path to target"]
+  ]],
+
+  ["Time-Unit$th", "Enumerated", [], "Units referenced by relative time arguments", [
+    [1, "Days", ""],
+    [2, "Hours", ""],
+    [3, "Minutes", ""],
+    [4, "Seconds", ""]
+  ]],
+
+  ["Timerange-Abs$th", "Record", ["{2"], "string representation of ISO 8601 time", [
+    [1, "hunt_start_time", "String", ["[1"], "Start time, as a Stix time string"],
+    [2, "hunt_stop_time", "String", ["[1"], "Start time, as a Stix time string"]
+  ]],
+
+  ["Timerange-Rel$th", "Record", ["{2"], "string representation of ISO 8601 time", [
+    [1, "number", "Integer", ["[1"], "Start time, as a Stix time string"],
+    [2, "time_unit", "Time-Unit$th", ["[1"], "Start time, as a Stix time string"]
+  ]],
+
+  ["StixObject$th", "ArrayOf", ["*String", "{1"], "Stix cyber observables used in threat hunting. link to STIX table HERE", []],
+
+  ["AP-Args$Time-arg$th", "ArrayOf", ["*Date-Time", "{1"], "time arguments supplied as huntargs", []],
+
+  ["AP-Args$Stix$th", "ArrayOf", ["*StixObject$th", "{1"], "stix arguments supplied as huntargs", []],
+
+  ["Ap-results$Huntbooks$th", "ArrayOf", ["*String"], "Huntbook names returned by query huntbooks", []],
+
+  ["Ap-results$Datasources$th", "ArrayOf", ["*String"], "Datasource identifiers returned by query datasources", []],
 
   ["Features", "ArrayOf", ["*Feature", "{0", "}10", "q"], "An array of zero to ten names used to query a Consume for its supported capabilities.", []],
+
+  ["IPv4-Net", "Array", ["/ipv4-net"], "IPv4 address and prefix length", [
+    [1, "ipv4_addr", "IPv4-Addr", [], "IPv4 address as defined in [[RFC0791]](#rfc0791)"],
+    [2, "prefix_length", "Integer", ["[0"], "CIDR prefix-length. If omitted, refers to a single host address."]
+  ]],
+
+  ["IPv6-Net", "Array", ["/ipv6-net"], "IPv6 address and prefix length", [
+    [1, "ipv6_addr", "IPv6-Addr", [], "IPv6 address as defined in [[RFC8200]](#rfc8200)"],
+    [2, "prefix_length", "Integer", ["[0"], "prefix length. If omitted, refers to a single host address"]
+  ]],
 
   ["Date-Time", "Integer", ["{0"], "Date and Time", []],
 
@@ -121,6 +167,10 @@
     [4, "rate_limit", "Maximum number of Commands per minute supported by design or policy"]
   ]],
 
+  ["IPv4-Addr", "Binary", ["/ipv4-addr"], "32 bit IPv4 address as defined in [[RFC0791]](#rfc0791)", []],
+
+  ["IPv6-Addr", "Binary", ["/ipv6-addr"], "128 bit IPv6 address as defined in [[RFC8200]](#rfc8200)", []],
+
   ["Nsid", "String", ["{1", "}16"], "A short identifier that refers to a namespace.", []],
 
   ["Response-Type", "Enumerated", [], "", [
@@ -128,6 +178,19 @@
     [1, "ack", "Respond when Command received"],
     [2, "status", "Respond with progress toward Command completion"],
     [3, "complete", "Respond when all aspects of Command completed"]
+  ]],
+
+  ["Status-Code", "Enumerated", ["="], "", [
+    [102, "Processing", "an interim Response used to inform the Producer that the Consumer has accepted the Command but has not yet completed it"],
+    [200, "OK", "the Command has succeeded"],
+    [201, "Created", "the Command has succeeded and a new resource has been created as a result of it"],
+    [400, "Bad Request", "the Consumer cannot process the Command due to something that is perceived to be a Producer error (e.g., malformed Command syntax)"],
+    [401, "Unauthorized", "the Command Message lacks valid authentication credentials for the target resource or authorization has been refused for the submitted credentials"],
+    [403, "Forbidden", "the Consumer understood the Command but refuses to authorize it"],
+    [404, "Not Found", "the Consumer has not found anything matching the Command"],
+    [500, "Internal Error", "the Consumer encountered an unexpected condition that prevented it from performing the Command"],
+    [501, "Not Implemented", "the Consumer does not support the functionality required to perform the Command"],
+    [503, "Service Unavailable", "the Consumer is currently unable to perform the Command due to a temporary overloading or maintenance of the Consumer"]
   ]],
 
   ["Command-ID", "String", ["%^\\S{0,36}$"], "Command Identifier", []],
