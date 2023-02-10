@@ -1,0 +1,47 @@
+       title: "Threat Hunting Profile"
+     package: "https://praxiseng.com/threat-hunter-9001"
+     version: "0-wd01"
+ description: "Data definitions for Threat Hunting (TH) functions"
+  namespaces: {"ls": "http://oasis-open.org/openc2/oc2ls-types/v1.1", "th": "https://github.com/oasis-tcs/openc2-ap-hunt"}
+     exports: ["OpenC2-Command", "OpenC2-Response"]
+
+OpenC2-Command = Record                         // The Command defines an Action to be performed on a Target
+   1 action           Action                    // The task or activity to be performed (i.e., the 'verb').
+   2 target           Target                    // The object of the Action. The Action is performed on the Target.
+   3 args             Args optional             // Additional information that applies to the Command.
+   4 actuator         Actuator optional         // The subject of the Action. The Actuator executes the Action on the ..
+   5 command_id       ls:Command-ID optional    // An identifier of this Command.
+
+OpenC2-Response = Map{1..*}
+   1 status           ls:Status-Code            // An integer status code
+   2 status_text      String optional           // A free-form human-readable description of the Response status
+   3 results          Results optional          // Map of key:value pairs that contain additional results based on the..
+
+Action = Enumerated                             // Actions available to this Profile
+   3 query                                      // Initiate a request for information.
+  30 investigate
+
+Target = Choice
+   9 features         ls:Features               // A set of items used with the query Action to determine an Actuator'..
+1036 th/              th:AP-Target              // Threat Hunting Profile-defined targets
+
+Args = Map{1..*}
+   1 start_time       ls:Date-Time optional
+   2 stop_time        ls:Date-Time optional
+   3 duration         ls:Duration optional
+   4 response_requested ls:Response-Type optional
+1036 th/              th:AP-Args
+
+Actuator = Choice
+1036 th/              th:AP-Specifiers          // TH-defined actuator specifiers
+
+Results = Map{1..*}                             // Response Results
+   1 versions         ls:Version unique [0..10] // List of OpenC2 language versions supported by this Actuator
+   2 profiles         ls:Nsid unique [0..*]     // List of profiles supported by this Actuator
+   3 pairs            Pairs optional            // Targets applicable to each supported Action
+   4 rate_limit       Number{0.0..*} optional   // Maximum number of requests per minute supported by design or policy
+1036 th/              th:AP-Results optional    // TH-defined results
+
+Pairs = Enumerated
+   3 query: features, /huntbooks, /datasources
+  30 investigate: /hunt

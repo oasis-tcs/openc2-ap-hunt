@@ -1,0 +1,170 @@
+       title: "Threat Hunting Profile"
+     package: "https://praxiseng.com/threat-hunter-9001"
+     version: "0-wd01"
+ description: "Data definitions for Threat Hunting (TH) functions"
+     exports: ["OpenC2-Command", "OpenC2-Response"]
+
+OpenC2-Command = Record                         // The Command defines an Action to be performed on a Target
+   1 action           Action                    // The task or activity to be performed (i.e., the 'verb').
+   2 target           Target                    // The object of the Action. The Action is performed on the Target.
+   3 args             Args optional             // Additional information that applies to the Command.
+   4 actuator         Actuator optional         // The subject of the Action. The Actuator executes the Action on the ..
+   5 command_id       Command-ID optional       // An identifier of this Command.
+
+OpenC2-Response = Map{1..*}
+   1 status           Status-Code               // An integer status code
+   2 status_text      String optional           // A free-form human-readable description of the Response status
+   3 results          Results optional          // Map of key:value pairs that contain additional results based on the..
+
+Action = Enumerated                             // Actions available to this Profile
+   3 query                                      // Initiate a request for information.
+  30 investigate
+
+Target = Choice
+   9 features         Features                  // A set of items used with the query Action to determine an Actuator'..
+1036 th/              AP-Target$th              // Threat Hunting Profile-defined targets
+
+Args = Map{1..*}
+   1 start_time       Date-Time optional
+   2 stop_time        Date-Time optional
+   3 duration         Duration optional
+   4 response_requested Response-Type optional
+1036 th/              AP-Args$th
+
+Actuator = Choice
+1036 th/              AP-Specifiers$th          // TH-defined actuator specifiers
+
+Results = Map{1..*}                             // Response Results
+   1 versions         Version unique [0..10]    // List of OpenC2 language versions supported by this Actuator
+   2 profiles         Nsid unique [0..*]        // List of profiles supported by this Actuator
+   3 pairs            Pairs optional            // Targets applicable to each supported Action
+   4 rate_limit       Number{0.0..*} optional   // Maximum number of requests per minute supported by design or policy
+1036 th/              AP-Results$th optional    // TH-defined results
+
+Pairs = Enumerated
+   3 query: features, /huntbooks, /datasources
+  30 investigate: /hunt
+
+AP-Target$th = Choice                           // TH targets defined in this profile
+   1 hunt             String                    // description here
+   2 huntbooks        Huntbook-Specifiers$th    // description here
+   3 datasources      Datasource-Specifiers$th  // description here
+
+AP-Args$th = Map{2..*}                          // TH command arguments defined in this profile
+   1 string_arg       String optional           // string arguments supplied as huntargs
+   2 integer_arg      Integer optional          // integer arguments supplied as huntargs
+   3 time_arg         AP-Args$Time-arg$th optional// Date-Time arguments supplied as huntargs
+   4 stix/            AP-Args$Stix$th optional  // stix arguments supplied as huntargs
+   5 timerange        Stix-Timerange$th optional// string arguments supplied as huntargs
+   6 path             Path-Format$th optional   // integer arguments supplied as huntargs
+   7 datasource       String{1..*}              // Date-Time arguments supplied as huntargs
+   8 hunt_process/    Hunt-Process$th optional  // process targeted by hunt activity: specify type.
+   9 ipv4_address     IPv4-Addr optional        // IPv4 address as defined in [RFC0791]
+  10 ipv6_address     IPv6-Addr optional        // IPv6 address as defined in [RFC8200]
+  11 ipv4_network     IPv4-Net optional         // ipv4 network targeted by hunt activity
+  12 ipv6_network     IPv6-Net optional         // ipv6 network targeted by hunt activity
+  13 endpoint         String optional           // endpoint targeted by hunt activity
+  14 directory        String optional           // directory targeted by hunt activity
+
+AP-Specifiers$th = Map                          // TH actuator specifiers (may be empty)
+
+Huntbook-Specifiers$th = Map{1..*}              // TH Huntbook specifiers
+   1 named            String optional           // requests information from an element with the given name
+   2 full             Boolean                   // Specifies the return should include each supported huntbook with th..
+   3 titles           Boolean optional          // Specifies the return type should be a list of titles (Strings)
+   4 args             String optional           // Specifies the returned data should include the required arguments f..
+   5 returns          String optional           // Specifies the returned data should include the expected returns for..
+
+Datasource-Specifiers$th = Map{1..*}            // TH Datasource specifiers
+   1 named            String optional           // requests information from an element with the given name
+   2 full             Boolean                   // Specifies the return should include each accessible datasource with..
+   3 titles           Boolean optional          // Specifies the return type should be a list of titles (Strings)
+
+AP-Results$th = Map{1..*}                       // TH results defined in this profile
+   1 huntbooks        Ap-results$Huntbooks$th optional// Huntbook names returned by query huntbooks
+   2 datasources      Ap-results$Datasources$th optional// Datasource identifiers returned by query datasources
+
+Hunt-Process$th = Choice                        // Identification of process to be targeted by hunt activity
+   1 name             String optional           // targeted process name as a String
+   2 uuid             String optional           // targeted process UUID
+   3 pid              Integer optional          // targeted process PID
+
+Stix-Timerange$th = Choice                      // Identification of process to be targeted by hunt activity
+   1 timerange_absolute Timerange-Abs$th optional// Absolute timerange, defined by a start and end time in ISO 8601 fo..
+   2 timerange_relative Timerange-Rel$th optional// Relative timerange, example '3, Days' for last 3 days
+
+Path-Format$th = Choice                         // Path referenced by hunt activity: choose format
+   1 path_absolute    String optional           // absolute path to target
+   2 path_relative    String optional           // relative path to target
+
+Time-Unit$th = Enumerated                       // Units referenced by relative time arguments
+   1 Days
+   2 Hours
+   3 Minutes
+   4 Seconds
+
+Timerange-Abs$th = Record{2..*}                 // string representation of ISO 8601 time
+   1 hunt_start_time  String                    // Start time, as a Stix time string
+   2 hunt_stop_time   String                    // Start time, as a Stix time string
+
+Timerange-Rel$th = Record{2..*}                 // string representation of ISO 8601 time
+   1 number           Integer                   // Start time, as a Stix time string
+   2 time_unit        Time-Unit$th              // Start time, as a Stix time string
+
+StixObject$th = ArrayOf(String){1..*}           // Stix cyber observables used in threat hunting. link to STIX table HE
+
+AP-Args$Time-arg$th = ArrayOf(Date-Time){1..*}  // time arguments supplied as huntargs
+
+AP-Args$Stix$th = ArrayOf(StixObject$th){1..*}  // stix arguments supplied as huntargs
+
+Ap-results$Huntbooks$th = ArrayOf(String)       // Huntbook names returned by query huntbooks
+
+Ap-results$Datasources$th = ArrayOf(String)     // Datasource identifiers returned by query datasources
+
+Features = ArrayOf(Feature){0..10} unique       // An array of zero to ten names used to query a Consume for its suppor
+
+IPv4-Net = Array /ipv4-net                      // IPv4 address and prefix length
+   1  IPv4-Addr                                 // ipv4_addr:: IPv4 address as defined in [[RFC0791]](#rfc0791)
+   2  Integer optional                          // prefix_length:: CIDR prefix-length. If omitted, refers to a single ..
+
+IPv6-Net = Array /ipv6-net                      // IPv6 address and prefix length
+   1  IPv6-Addr                                 // ipv6_addr:: IPv6 address as defined in [[RFC8200]](#rfc8200)
+   2  Integer optional                          // prefix_length:: prefix length. If omitted, refers to a single host ..
+
+Date-Time = Integer{0..*}                       // Date and Time
+
+Duration = Integer{0..*}                        // A length of time
+
+Feature = Enumerated                            // Specifies the results to be returned from a query features Command
+   1 versions                                   // List of OpenC2 Language versions supported by this Consumer
+   2 profiles                                   // List of profiles supported by this Consumer
+   3 pairs                                      // List of supported Actions and applicable Targets
+   4 rate_limit                                 // Maximum number of Commands per minute supported by design or policy
+
+IPv4-Addr = Binary /ipv4-addr                   // 32 bit IPv4 address as defined in [[RFC0791]](#rfc0791)
+
+IPv6-Addr = Binary /ipv6-addr                   // 128 bit IPv6 address as defined in [[RFC8200]](#rfc8200)
+
+Nsid = String{1..16}                            // A short identifier that refers to a namespace.
+
+Response-Type = Enumerated
+   0 none                                       // No response
+   1 ack                                        // Respond when Command received
+   2 status                                     // Respond with progress toward Command completion
+   3 complete                                   // Respond when all aspects of Command completed
+
+Status-Code = Enumerated.ID
+ 102                                            // Processing:: an interim Response used to inform the Producer that t..
+ 200                                            // OK:: the Command has succeeded
+ 201                                            // Created:: the Command has succeeded and a new resource has been cre..
+ 400                                            // Bad Request:: the Consumer cannot process the Command due to someth..
+ 401                                            // Unauthorized:: the Command Message lacks valid authentication crede..
+ 403                                            // Forbidden:: the Consumer understood the Command but refuses to auth..
+ 404                                            // Not Found:: the Consumer has not found anything matching the Command
+ 500                                            // Internal Error:: the Consumer encountered an unexpected condition t..
+ 501                                            // Not Implemented:: the Consumer does not support the functionality r..
+ 503                                            // Service Unavailable:: the Consumer is currently unable to perform t..
+
+Command-ID = String{pattern="^\S{0,36}$"}       // Command Identifier
+
+Version = String                                // Major.Minor version number
