@@ -25,7 +25,7 @@
     ]],  
     ["Action", "Enumerated", [], "Actions available to this Profile", [
       [3, "query", "Initiate a request for information."],
-      [30, "investigate", ""]
+      [30, "investigate", "Task the recipient to aggregate and report information as it pertains to a security event or incident."]
     ]],
     ["Target", "Choice", [], "", [
       [9, "features", "ls:Features", [], "A set of items used with the query Action to determine an Actuator's capabilities."],
@@ -44,10 +44,11 @@
     ["Results", "Map", ["{1"], "Response Results", [
       [1, "versions", "ls:Version", ["q", "[0", "]10"], "List of OpenC2 language versions supported by this Actuator"],
       [2, "profiles", "ls:Nsid", ["q", "[0", "]0"], "List of profiles supported by this Actuator"],
-      [3, "pairs", "Pairs", ["[0"], "Targets applicable to each supported Action"],
+      [3, "pairs", "Action-Targets", ["[0"], "Targets applicable to each supported Action"],
       [4, "rate_limit", "Number", ["y0.0", "[0"], "Maximum number of requests per minute supported by design or policy"],
       [1036, "th", "th:AP-Results", ["[0", "<"], "TH-defined results"]
     ]],
+    ["Action-Targets", "ArrayOf", ["*Pairs"], "", []],
     ["Pairs", "Enumerated", [], "", [
       [3, "query: features, /huntbooks, /datasources", ""],
       [30, "investigate: /hunt", ""]

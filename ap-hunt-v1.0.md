@@ -283,10 +283,78 @@ Darren | Anstman | Big Networks
 
 # Appendix E. Threat Hunting Command / Response Examples
 
-## E.1 Example 1
+## E.1 Example 1: Query Features
 
-## E.2 Example 2
+{
+  "action": "query",
+  "target": {
+    "features": [
+      "pairs"
+    ]
+  }
+}
 
+A Language Specification command, Query: Features is used to gather information from consumers about their OpenC2 capabilities. A Response may 
+
+{
+  "results": {
+    "pairs": [
+      "query: features, /huntbooks, /datasources",
+      "investigate: /hunt"
+    ]
+  },
+  "status": "OK"
+}
+
+## E.2 Example 2: Query Huntbooks
+
+{
+    "action": "query",
+    "target": {
+        "th": {
+            "huntbooks": {
+                "tags": "searchable_tag",
+                "format_types": {
+                    "var_name": "desired_return_variable"
+                }
+            }
+        }
+    }
+}
+
+Query is extended in this profile to include additional targets. Huntbooks and Datasources are available as Targets to provide data to gather information about Threat Hunting processes. 
+This command makes use of the "tags" and "format_types" specifiers (with example values) to filter the list of threathunting processes are listed as available from the consumer.
+This example command also makes use of the optional command_id field, that is not required to be sent in every command, but is supported in the OpenC2 Language Specification.
+
+## E.3 Example 3: Investigate Hunt
+
+{
+    "action": "investigate",
+    "target": {
+        "th": {
+            "hunt": {
+                "path_relative": "path/name/example"
+            }
+        }
+    },
+    "args": {
+        "response_requested": "status",
+        "th": {
+            "huntargs": {
+                "timerange": {
+                    "timerange_relative": {
+                        "number": "15",
+                        "time_unit": "Minutes"
+                    }
+                },
+                "datasource": "Datasource_Name",
+                "hunt_process": {
+                    "uuid": "1234567890"
+                }
+            }
+        }
+    }
+}
 -------
 
 # Appendix F. Notices
