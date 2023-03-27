@@ -93,17 +93,17 @@
 
 **_Type: Huntargs$th (Record{1..*})_**
 
-| ID | Name             | Type                    | # | Description                                                                                                                     |
-|---:|:-----------------|:------------------------|--:|:--------------------------------------------------------------------------------------------------------------------------------|
-|  1 | **string_arg**   | String                  | 1 | string arguments supplied as huntargs.                                                                                          |
-|  2 | **integer_arg**  | Integer{0..*}           | 1 | integer arguments supplied as huntargs.                                                                                         |
-|  3 | **stix**         | AP-Args$STIX$th         | 1 | STIX arguments supplied as huntargs.                                                                                            |
-|  4 | **timeranges**   | Huntargs$th$Timeranges  | 1 | a timerange used in the execution of a hunt.                                                                                    |
-|  5 | **datasources**  | Huntargs$th$Datasources | 1 | You must identify one or more available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc. |
-|  6 | **ipv4_address** | IPv4-Addr               | 1 | IPv4 address as defined in [RFC0791].                                                                                           |
-|  7 | **ipv6_address** | IPv6-Addr               | 1 | IPv6 address as defined in [RFC8200].                                                                                           |
-|  8 | **ipv4_network** | IPv4-Net                | 1 | ipv4 network targeted by hunt activity.                                                                                         |
-|  9 | **ipv6_network** | IPv6-Net                | 1 | ipv6 network targeted by hunt activity.                                                                                         |
+| ID | Name             | Type                | # | Description                                                                                       |
+|---:|:-----------------|:--------------------|--:|:--------------------------------------------------------------------------------------------------|
+|  1 | **string_arg**   | String              | 1 | string arguments supplied as huntargs.                                                            |
+|  2 | **integer_arg**  | Integer{0..*}       | 1 | integer arguments supplied as huntargs.                                                           |
+|  3 | **stix**         | STIX-Array$th       | 1 | STIX arguments supplied as huntargs.                                                              |
+|  4 | **timeranges**   | Timeranges$th       | 1 | Timeranges used in the execution of a hunt.                                                       |
+|  5 | **datasources**  | Datasource-Array$th | 1 | Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc. |
+|  6 | **ipv4_address** | IPv4-Addr           | 1 | IPv4 address as defined in [RFC0791].                                                             |
+|  7 | **ipv6_address** | IPv6-Addr           | 1 | IPv6 address as defined in [RFC8200].                                                             |
+|  8 | **ipv4_network** | IPv4-Net            | 1 | ipv4 network targeted by hunt activity.                                                           |
+|  9 | **ipv6_network** | IPv6-Net            | 1 | ipv6 network targeted by hunt activity.                                                           |
 
 **_Type: AP-Specifiers$th (Map{1..*})_**
 
@@ -112,21 +112,36 @@
 
 **_Type: Huntbook-Specifiers$th (Map)_**
 
-| ID | Name              | Type                                 | # | Description                                                             |
-|---:|:------------------|:-------------------------------------|--:|:------------------------------------------------------------------------|
-|  1 | **path**          | String                               | 1 | Return huntbooks at and below this filesystem location (absolute path). |
-|  2 | **tags**          | Huntbook-specifiers$th$Tags          | 1 | Return huntbooks with these keywords.                                   |
-|  3 | **arg_types**     | Huntbook-specifiers$th$Arg-types     | 1 | Return huntbooks that take these argument types.                        |
-|  4 | **arg_names**     | Huntbook-specifiers$th$Arg-names     | 1 | Return huntbooks that take these argument types.                        |
-|  5 | **format_types**  | Return-Type$th                       | 1 | Return huntbooks that produce these output types.                       |
-|  6 | **return_format** | Huntbook-specifiers$th$Return-format | 1 | For each huntbook returned, include these data items.                   |
+| ID | Name              | Type                   | # | Description                                                             |
+|---:|:------------------|:-----------------------|--:|:------------------------------------------------------------------------|
+|  1 | **path**          | String                 | 1 | Return huntbooks at and below this filesystem location (absolute path). |
+|  2 | **tags**          | Tags$th                | 1 | Return huntbooks with these keywords.                                   |
+|  3 | **arg_types**     | Specified-Arg-Types$th | 1 | Return huntbooks that take these argument types.                        |
+|  4 | **arg_names**     | Specified-Arg-Names$th | 1 | Return huntbooks that take these argument types.                        |
+|  5 | **format_types**  | Return-Type$th         | 1 | Return huntbooks that produce these output types.                       |
+|  6 | **return_format** | Huntbook-Sections$th   | 1 | For each huntbook returned, include these data items.                   |
+
+
+| Type Name                  | Type Definition      | Description                                      |
+|:---------------------------|:---------------------|:-------------------------------------------------|
+| **Specified-Arg-Types$th** | ArrayOf(Arg-Type$th) | Return huntbooks that take these argument types. |
+
+
+| Type Name                  | Type Definition      | Description                                            |
+|:---------------------------|:---------------------|:-------------------------------------------------------|
+| **Specified-Arg-Names$th** | ArrayOf(Arg-Name$th) | Return huntbooks that take arguments with these names. |
 
 **_Type: AP-Results$th (Map{1..*})_**
 
-| ID | Name              | Type                        | # | Description                                              |
-|---:|:------------------|:----------------------------|--:|:---------------------------------------------------------|
-|  1 | **huntbook_info** | AP-Results$Huntbook-Info$th | 1 | Structured data returned by Query: Huntbooks.            |
-|  2 | **datasources**   | Ap-results$th$Datasources   | 1 | Datasource names and info returned by Query Datasources. |
+| ID | Name              | Type                | # | Description                                              |
+|---:|:------------------|:--------------------|--:|:---------------------------------------------------------|
+|  1 | **huntbook_info** | Huntbook-Info$th    | 1 | Structured data returned by Query: Huntbooks.            |
+|  2 | **datasources**   | Datasource-Array$th | 1 | Datasource names and info returned by Query Datasources. |
+
+
+| Type Name         | Type Definition       | Description                                  |
+|:------------------|:----------------------|:---------------------------------------------|
+| **Timeranges$th** | ArrayOf(Timerange$th) | a timerange used in the execution of a hunt. |
 
 **_Type: Timerange$th (Choice)_**
 
@@ -146,17 +161,23 @@
 
 **_Type: Timerange-Abs$th (Record{2..*})_**
 
-| ID | Name                | Type                             | # | Description                        |
-|---:|:--------------------|:---------------------------------|--:|:-----------------------------------|
-|  1 | **hunt_start_time** | Timerange-abs$th$Hunt-start-time | 1 | Start time, as a STIX time string. |
-|  2 | **hunt_stop_time**  | Timerange-abs$th$Hunt-stop-time  | 1 | Stop time, as a STIX time string.  |
+| ID | Name                | Type         | # | Description                        |
+|---:|:--------------------|:-------------|--:|:-----------------------------------|
+|  1 | **hunt_start_time** | STIX-Time$th | 1 | Start time, as a STIX time string. |
+|  2 | **hunt_stop_time**  | STIX-Time$th | 1 | Stop time, as a STIX time string.  |
+
+
+| Type Name        | Type Definition                                                    | Description                             |
+|:-----------------|:-------------------------------------------------------------------|:----------------------------------------|
+| **STIX-Time$th** | String (%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z%) | string representation of ISO 8601 time. |
 
 **_Type: Timerange-Rel$th (Record{2..*})_**
 
-| ID | Name          | Type          | # | Description                        |
-|---:|:--------------|:--------------|--:|:-----------------------------------|
-|  1 | **number**    | Integer{0..*} | 1 | Start time, as a STIX time string. |
-|  2 | **time_unit** | Time-Unit$th  | 1 | Start time, as a STIX time string. |
+| ID | Name          | Type          | # | Description                                                |
+|---:|:--------------|:--------------|--:|:-----------------------------------------------------------|
+|  1 | **number**    | Integer{0..*} | 1 | Number of specified Time Units used in Relative Timerange. |
+|  2 | **time_unit** | Time-Unit$th  | 1 | Time Unit Keywords.                                        |
+
 
 | Type Name       | Type Definition | Description                                                                                                                                                                         |
 |:----------------|:----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -176,10 +197,15 @@
 
 **_Type: Datasource$th (Record{1..*})_**
 
-| ID | Name        | Type                  | # | Description                                                |
-|---:|:------------|:----------------------|--:|:-----------------------------------------------------------|
-|  1 | **ds_name** | String                | 1 | Name of a Datasource used by a Huntbook in Kestrel runtime. |
-|  2 | **ds_tags** | Datasource$th$Ds-tags | 1 | Tags applied to a Datasource for search or filter purposes. |
+| ID | Name        | Type    | # | Description                                                 |
+|---:|:------------|:--------|--:|:------------------------------------------------------------|
+|  1 | **ds_name** | String  | 1 | Name of a Datasource used by a Huntbook in Kestrel runtime. |
+|  2 | **ds_tags** | Tags$th | 1 | Tags applied to a Datasource for search or filter purposes. |
+
+
+| Type Name                | Type Definition              | Description                                           |
+|:-------------------------|:-----------------------------|:------------------------------------------------------|
+| **Huntbook-Sections$th** | ArrayOf(Huntbook-Section$th) | For each huntbook returned, include these data items. |
 
 **_Type: Huntbook-Section$th (Enumerated)_**
 
@@ -187,29 +213,46 @@
 |---:|:---------------------|:------------------------------------------------------------------------------------------------------|
 |  1 | **path**             | Specifies the return should include the path to each Huntbook specified by the query conditions.      |
 |  2 | **uniqueId**         | Specifies the return should include the ID of each Huntbook specified by the query conditions.        |
-|  3 | **args**             | Specifies the returned data should include the required arguments for the available Huntbooks.        |
-|  4 | **expected_returns** | Specifies the returned data should include the expected returns for the available Huntbooks.          |
-|  5 | **script**           | Specifies the returned data should include the full text of the Huntflow for each available Huntbook. |
+|  3 | **version**          | Specifies the return should include the ID of each Huntbook specified by the query conditions.        |
+|  4 | **args_required**    | Specifies the returned data should include the required arguments for the available Huntbooks.        |
+|  5 | **expected_returns** | Specifies the returned data should include the expected returns for the available Huntbooks.          |
+|  6 | **script**           | Specifies the returned data should include the full text of the Huntflow for each available Huntbook. |
 
-**_Type: AP-Results$Huntbook-Info$th (Record{1..*})_**
+**_Type: Huntbook-Info$th (Record{1..*})_**
 
-| ID | Name                 | Type                                         | # | Description                                          |
-|---:|:---------------------|:---------------------------------------------|--:|:-----------------------------------------------------|
-|  1 | **path**             | String                                       | 1 | Path used to identify a Huntbook in place of a name. |
-|  2 | **uniqueId**         | Integer{0..*}                                | 1 | Unique ID associated with a specified Huntbook.      |
-|  3 | **args**             | Ap-results$huntbook-info$th$Args             | 1 | a list of arguments used in the specified Huntflow.  |
-|  4 | **expected_returns** | Ap-results$huntbook-info$th$Expected-returns | 1 | Data returned by the specified Huntbooks.            |
-|  5 | **script**           | String                                       | 1 | Text of Hunt logic imlemented by specified Huntbook. |
-
-
-| Type Name           | Type Definition         | Description                          |
-|:--------------------|:------------------------|:-------------------------------------|
-| **AP-Args$STIX$th** | ArrayOf(STIX-Object$th) | STIX arguments supplied as huntargs. |
+| ID | Name                 | Type               | # | Description                                          |
+|---:|:---------------------|:-------------------|--:|:-----------------------------------------------------|
+|  1 | **path**             | String             | 1 | Path used to identify a Huntbook in place of a name. |
+|  2 | **uniqueId**         | Integer{0..*}      | 1 | Unique ID associated with a specified Huntbook.      |
+|  3 | **version**          | String             | 1 | Unique ID associated with a specified Huntbook.      |
+|  4 | **args_required**    | Typed-Arguments$th | 1 | List of arguments used in the specified Huntflow.    |
+|  5 | **expected_returns** | Typed-Arguments$th | 1 | Data returned by the specified Huntbooks.            |
+|  6 | **script**           | String             | 1 | Text of Hunt logic imlemented by specified Huntbook. |
 
 
-| Type Name          | Type Definition       | Description                                                             |
-|:-------------------|:----------------------|:------------------------------------------------------------------------|
-| **STIX-Object$th** | ArrayOf(String){1..*} | STIX cyber observables used in threat hunting. link to STIX table HERE. |
+| Type Name         | Type Definition         | Description                          |
+|:------------------|:------------------------|:-------------------------------------|
+| **STIX-Array$th** | ArrayOf(STIX-Object$th) | STIX arguments supplied as huntargs. |
+
+
+| Type Name          | Type Definition | Description                                                             |
+|:-------------------|:----------------|:------------------------------------------------------------------------|
+| **STIX-Object$th** | ArrayOf(String) | STIX cyber observables used in threat hunting. link to STIX table HERE. |
+
+
+| Type Name               | Type Definition        | Description                                                  |
+|:------------------------|:-----------------------|:-------------------------------------------------------------|
+| **Datasource-Array$th** | ArrayOf(Datasource$th) | An Array of Datasources, with multiple uses in Threathunting |
+
+
+| Type Name   | Type Definition | Description                                 |
+|:------------|:----------------|:--------------------------------------------|
+| **Tags$th** | ArrayOf(String) | Tags applied for search or filter purposes. |
+
+
+| Type Name              | Type Definition                 | Description                                           |
+|:-----------------------|:--------------------------------|:------------------------------------------------------|
+| **Typed-Arguments$th** | MapOf(Arg-Name$th, Arg-Type$th) | Argument names and types tied to a specific Huntbook. |
 
 
 | Type Name    | Type Definition                | Description                                                                           |
@@ -312,63 +355,3 @@
 | Type Name              | Type Definition | Description                                                         |
 |:-----------------------|:----------------|:--------------------------------------------------------------------|
 | **Results$Rate-limit** | Number{0..*}    | Maximum number of requests per minute supported by design or policy |
-
-
-| Type Name                  | Type Definition       | Description                                  |
-|:---------------------------|:----------------------|:---------------------------------------------|
-| **Huntargs$th$Timeranges** | ArrayOf(Timerange$th) | a timerange used in the execution of a hunt. |
-
-
-| Type Name                   | Type Definition        | Description                                                                                                                     |
-|:----------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------------------------|
-| **Huntargs$th$Datasources** | ArrayOf(Datasource$th) | You must identify one or more available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc. |
-
-
-| Type Name                       | Type Definition | Description                           |
-|:--------------------------------|:----------------|:--------------------------------------|
-| **Huntbook-specifiers$th$Tags** | ArrayOf(String) | Return huntbooks with these keywords. |
-
-
-| Type Name                            | Type Definition      | Description                                      |
-|:-------------------------------------|:---------------------|:-------------------------------------------------|
-| **Huntbook-specifiers$th$Arg-types** | ArrayOf(Arg-Type$th) | Return huntbooks that take these argument types. |
-
-
-| Type Name                            | Type Definition      | Description                                      |
-|:-------------------------------------|:---------------------|:-------------------------------------------------|
-| **Huntbook-specifiers$th$Arg-names** | ArrayOf(Arg-Name$th) | Return huntbooks that take these argument types. |
-
-
-| Type Name                                | Type Definition              | Description                                           |
-|:-----------------------------------------|:-----------------------------|:------------------------------------------------------|
-| **Huntbook-specifiers$th$Return-format** | ArrayOf(Huntbook-Section$th) | For each huntbook returned, include these data items. |
-
-
-| Type Name                     | Type Definition        | Description                                              |
-|:------------------------------|:-----------------------|:---------------------------------------------------------|
-| **Ap-results$th$Datasources** | ArrayOf(Datasource$th) | Datasource names and info returned by Query Datasources. |
-
-
-| Type Name                            | Type Definition                                                    | Description                        |
-|:-------------------------------------|:-------------------------------------------------------------------|:-----------------------------------|
-| **Timerange-abs$th$Hunt-start-time** | String (%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z%) | Start time, as a STIX time string. |
-
-
-| Type Name                           | Type Definition                                                     | Description                       |
-|:------------------------------------|:--------------------------------------------------------------------|:----------------------------------|
-| **Timerange-abs$th$Hunt-stop-time** | String (%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$%) | Stop time, as a STIX time string. |
-
-
-| Type Name                 | Type Definition | Description                                                |
-|:--------------------------|:----------------|:-----------------------------------------------------------|
-| **Datasource$th$Ds-tags** | ArrayOf(String) | Tags applied to a datasruce for search or filter purposes. |
-
-
-| Type Name                            | Type Definition | Description                                         |
-|:-------------------------------------|:----------------|:----------------------------------------------------|
-| **Ap-results$huntbook-info$th$Args** | ArrayOf(String) | a list of arguments used in the specified Huntflow. |
-
-
-| Type Name                                        | Type Definition                 | Description                               |
-|:-------------------------------------------------|:--------------------------------|:------------------------------------------|
-| **Ap-results$huntbook-info$th$Expected-returns** | MapOf(Arg-Name$th, Arg-Type$th) | Data returned by the specified Huntbooks. |
