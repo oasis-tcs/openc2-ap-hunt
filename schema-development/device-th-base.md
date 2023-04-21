@@ -31,7 +31,7 @@
 | ID | Name | Description |
 | ---: | :--- | :--- |
 | 3 | **query** | Initiate a request for information. |
-| 30 | **investigate** |  |
+| 30 | **investigate** | Task the recipient to aggregate and report information as it pertains to a security event or incident. |
 
 **_Type: Target (Choice)_**
 
@@ -62,9 +62,14 @@
 | ---: | :--- | :--- | ---: | :--- |
 | 1 | **versions** | ls:Version unique | 0..10 | List of OpenC2 language versions supported by this Actuator |
 | 2 | **profiles** | ls:Nsid unique | 0..* | List of profiles supported by this Actuator |
-| 3 | **pairs** | Pairs | 0..1 | Targets applicable to each supported Action |
+| 3 | **pairs** | Action-Targets | 0..1 | Targets applicable to each supported Action |
 | 4 | **rate_limit** | Number{0.0..*} | 0..1 | Maximum number of requests per minute supported by design or policy |
 | 1036 | **th/** | th:AP-Results | 0..1 | TH-defined results |
+
+
+| Type Name | Type Definition | Description |
+| :--- | :--- | :--- |
+| **Action-Targets** | ArrayOf(Pairs) |  |
 
 **_Type: Pairs (Enumerated)_**
 
