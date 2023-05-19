@@ -4,6 +4,7 @@
  description:  "Data definitions for Threat Hunting (TH) functions"
   namespaces:  {"ls": "http://oasis-open.org/openc2/oc2ls-types/v1.1"}
      exports:  ["AP-Target", "AP-Args", "AP-Specifiers", "AP-Results"]
+      config:  {"$MaxBinary": 5555, "$MaxString": 5555, "$MaxElements": 555, "$Sys": "$", "$TypeName": "^[A-Za-z][-:_A-Za-z0-9]{0,63}$", "$FieldName": "^[A-Za-z][-:_A-Za-z0-9]{0,63}$", "$NSID": "^[A-Za-z][A-Za-z0-9]{0,7}$"}
 
 Action = Enumerated
     3  query        // Initiate a request for information.
@@ -43,12 +44,12 @@ AP-Target = Choice                       // TH targets defined in this profile.
 AP-Args = Map              // TH command arguments defined in this profile.
     1  huntargs  Huntargs  // Arguments for use in conjunction with huntbook implementation.
 
-Huntargs = Record{1..*}                        // TH command arguments defined in this profile.
-    1  string_arg   String optional            // string arguments supplied as huntargs.
-    2  integer_arg  Integer optional           // integer arguments supplied as huntargs.
-    3  stix/        STIX-Array optional        // STIX arguments supplied as huntargs.
-    4  timeranges   Timeranges optional        // Timeranges used in the execution of a hunt.
-    5  datasources  Datasource-Array optional  // You must identify one or more available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc.
+Huntargs = Record{1..*}                         // TH command arguments defined in this profile.
+    1  string_arg    String optional            // string arguments supplied as huntargs.
+    2  integer_arg   Integer optional           // integer arguments supplied as huntargs.
+    3  stix          sco:STIX-Cybersecurity-Observables optional            // STIX arguments supplied as huntargs.
+    4  timeranges    Timeranges optional        // Timeranges used in the execution of a hunt.
+    5  datasources   Datasource-Array optional  // Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc.
     6  ls:IPv4-Addr optional                    // ipv4_address:: IPv4 address as defined in [RFC0791]
     7  ls:IPv6-Addr optional                     // ipv6_address:: IPv6 address as defined in [RFC8200]
     8  ls:IPv4-Net optional                      // ipv4_network:: ipv4 network targeted by hunt activity
@@ -68,15 +69,10 @@ Specified-Arg-Types = ArrayOf(Arg-Type)  // Return huntbooks that take these arg
 
 Specified-Arg-Names = ArrayOf(Arg-Name)  // Return huntbooks that take arguments with these names.
 
-AP-Results = Map{1..*}                           // TH results defined in this profile.
-    1  huntbook_info  Huntbook-Info optional     // Structured data returned by Query: Huntbooks.
-    2  datasources    Datasource-Array optional  // Datasource names and info returned by Query Datasources.
-    3  investigation  inv_results
-
-inv_results = Record    
-    1 names String + 
-    2 content (tables) 
-
+AP-Results = Map{1..*}                                   // TH results defined in this profile.
+    1  huntbook_info  Ap-results$Huntbook-info optional  // Structured data returned by Query: Huntbooks.
+    2  datasources    Datasource-Array optional          // Datasource names and info returned by Query Datasources.
+    3  stix_returns   sco:STIX-Cybersecurity-Observables optional                    // STIX SCO object returns
 
 Timeranges = ArrayOf(Timerange)  // a timerange used in the execution of a hunt.
 
@@ -90,11 +86,9 @@ Time-Unit = Enumerated  // Time Unit Keywords.
     3  Minutes  //
     4  Seconds  //
 
-Timerange-Abs = Record{2..*}       // Absolute timerange, defined by a start and end time in ISO 8601 format.
-    1  hunt_start_time  STIX-Time  // Start time, as a STIX time string.
-    2  hunt_stop_time   STIX-Time  // Stop time, as a STIX time string.
-
-STIX-Time = String (%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z%)  // string representation of ISO 8601 time.
+Timerange-Abs = Record{2..*}    // Absolute timerange, defined by a start and end time in ISO 8601 format.
+    1  hunt_start_time  sco:timestamp  // Start time, as a STIX time string.
+    2  hunt_stop_time   sco:timestamp  // Stop time, as a STIX time string.
 
 Timerange-Rel = Record{2..*} // Relative timerange, example '3, Days' for last 3 days.
     1  number     Integer    // Number of specified Time Units used in Relative Timerange.
@@ -139,3 +133,5 @@ Datasource-Array = ArrayOf(Datasource)  // An Array of Datasources, with multipl
 Tags = ArrayOf(String)  // Tags applied for search or filter purposes.
 
 Typed-Arguments = MapOf(Arg-Name, Arg-Type)  // Argument names and types tied to a specific Huntbook.
+
+Ap-results$Huntbook-info = ArrayOf(Huntbook-Info)  // Structured data returned by Query: Huntbooks.
