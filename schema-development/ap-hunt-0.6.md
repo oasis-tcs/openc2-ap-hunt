@@ -1,12 +1,13 @@
 ## Schema
-|                . | .                                                     |
-|-----------------:|:------------------------------------------------------|
-|     **package:** | https://github.com/oasis-tcs/openc2-ap-hunt           |
-|     **version:** | 0-wd01                                                |
-|       **title:** | Threat Hunting Profile                                |
-| **description:** | Data definitions for Threat Hunting (TH) functions    |
-|  **namespaces:** | **ls**: http://oasis-open.org/openc2/oc2ls-types/v1.1 |
-|     **exports:** | AP-Target, AP-Args, AP-Specifiers, AP-Results         |
+|                . | .                                                                                                                                                                                                              |
+|-----------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|     **package:** | https://github.com/oasis-tcs/openc2-ap-hunt                                                                                                                                                                    |
+|     **version:** | 0-wd01                                                                                                                                                                                                         |
+|       **title:** | Threat Hunting Profile                                                                                                                                                                                         |
+| **description:** | Data definitions for Threat Hunting (TH) functions                                                                                                                                                             |
+|  **namespaces:** | **ls**: http://oasis-open.org/openc2/oc2ls-types/v1.1                                                                                                                                                          |
+|     **exports:** | AP-Target, AP-Args, AP-Specifiers, AP-Results                                                                                                                                                                  |
+|      **config:** | **$MaxBinary**: 5555 **$MaxString**: 5555 **$MaxElements**: 555 **$Sys**: $ **$TypeName**: ^[A-Za-z][-:_A-Za-z0-9]{0,63}$ **$FieldName**: ^[A-Za-z][-:_A-Za-z0-9]{0,63}$ **$NSID**: ^[A-Za-z][A-Za-z0-9]{0,7}$ |
 
 **_Type: Action (Enumerated)_**
 
@@ -72,13 +73,17 @@
 
 **_Type: Huntargs (Record{1..*})_**
 
-| ID | Name            | Type             | # | Description                                                                                                                     |
-|---:|:----------------|:-----------------|--:|:--------------------------------------------------------------------------------------------------------------------------------|
-|  1 | **string_arg**  | String           | 1 | string arguments supplied as huntargs.                                                                                          |
-|  2 | **integer_arg** | Integer{0..*}    | 1 | integer arguments supplied as huntargs.                                                                                         |
-|  3 | **stix**        | STIX-Array       | 1 | STIX arguments supplied as huntargs.                                                                                            |
-|  4 | **timeranges**  | Timeranges       | 1 | Timeranges used in the execution of a hunt.                                                                                     |
-|  5 | **datasources** | Datasource-Array | 1 | You must identify one or more available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc. |
+| ID | Name             | Type             | # | Description                                                                                       |
+|---:|:-----------------|:-----------------|--:|:--------------------------------------------------------------------------------------------------|
+|  1 | **string_arg**   | String           | 1 | string arguments supplied as huntargs.                                                            |
+|  2 | **integer_arg**  | Integer{0..*}    | 1 | integer arguments supplied as huntargs.                                                           |
+|  3 | **stix**         | sco:STIX-Cybersecurity-Observables  | 1 | STIX arguments supplied as huntargs.                                                              |
+|  4 | **timeranges**   | Timeranges       | 1 | Timeranges used in the execution of a hunt.                                                       |
+|  5 | **datasources**  | Datasource-Array | 1 | Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc. |
+|  6 | **ipv4_address** | ls:IPv4-Addr     | 1 | IPv4 address as defined in [RFC0791].                                                             |
+|  7 | **ipv6_address** | ls:IPv6-Addr     | 1 | IPv6 address as defined in [RFC8200].                                                             |
+|  8 | **ipv4_network** | ls:IPv4-Net     | 1 | ipv4 network targeted by hunt activity.                                                           |
+|  9 | **ipv6_network** | ls:IPv6-Net     | 1 | ipv6 network targeted by hunt activity.                                                           |
 
 **_Type: AP-Specifiers (Map{1..*})_**
 
@@ -108,10 +113,11 @@
 
 **_Type: AP-Results (Map{1..*})_**
 
-| ID | Name              | Type             | # | Description                                              |
-|---:|:------------------|:-----------------|--:|:---------------------------------------------------------|
-|  1 | **huntbook_info** | Huntbook-Info    | 1 | Structured data returned by Query: Huntbooks.            |
-|  2 | **datasources**   | Datasource-Array | 1 | Datasource names and info returned by Query Datasources. |
+| ID | Name              | Type                     | # | Description                                              |
+|---:|:------------------|:-------------------------|--:|:---------------------------------------------------------|
+|  1 | **huntbook_info** | Ap-results$Huntbook-info | 1 | Structured data returned by Query: Huntbooks.            |
+|  2 | **datasources**   | Datasource-Array         | 1 | Datasource names and info returned by Query Datasources. |
+|  3 | **stix_returns**  | sco:STIX-Cybersecurity-Observables | 1 | STIX SCO object returns                                  |
 
 
 | Type Name      | Type Definition    | Description                                  |
@@ -136,15 +142,10 @@
 
 **_Type: Timerange-Abs (Record{2..*})_**
 
-| ID | Name                | Type      | # | Description                        |
-|---:|:--------------------|:----------|--:|:-----------------------------------|
-|  1 | **hunt_start_time** | STIX-Time | 1 | Start time, as a STIX time string. |
-|  2 | **hunt_stop_time**  | STIX-Time | 1 | Stop time, as a STIX time string.  |
-
-
-| Type Name     | Type Definition                                                    | Description                             |
-|:--------------|:-------------------------------------------------------------------|:----------------------------------------|
-| **STIX-Time** | String (%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z%) | string representation of ISO 8601 time. |
+| ID | Name                | Type   | # | Description                        |
+|---:|:--------------------|:-------|--:|:-----------------------------------|
+|  1 | **hunt_start_time** | sco:timerange | 1 | Start time, as a STIX time string. |
+|  2 | **hunt_stop_time**  | sco:timerange | 1 | Stop time, as a STIX time string.  |
 
 **_Type: Timerange-Rel (Record{2..*})_**
 
@@ -228,3 +229,8 @@
 | Type Name           | Type Definition           | Description                                           |
 |:--------------------|:--------------------------|:------------------------------------------------------|
 | **Typed-Arguments** | MapOf(Arg-Name, Arg-Type) | Argument names and types tied to a specific Huntbook. |
+
+
+| Type Name                    | Type Definition        | Description                                   |
+|:-----------------------------|:-----------------------|:----------------------------------------------|
+| **Ap-results$Huntbook-info** | ArrayOf(Huntbook-Info) | Structured data returned by Query: Huntbooks. |
