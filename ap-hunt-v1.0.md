@@ -553,25 +553,50 @@ defines a valid Command. The subsequent subsections provide the
 property tables applicable to each OpenC2 Command.
 
 
-### **Table 2.3-1. Command Matrix**
+### **Table 2.3-1 Command Matrix**
 
-**_Type: Pairs (Enumerated)_**
+|                  | **query** | **investigate** |
+|------------------|:---------:|:---------------:|
+| **features**     |   valid   |                 |
+| **/huntbooks**   |   valid   |                 |
+| **/datasources** |   valid   |                 |
+| **/hunt**        |           |      valid      |
 
-| ID | Name                                          | Description |
-|---:|:----------------------------------------------|:------------|
-|  3 | **query: features, /huntbooks, /datasources** |             |
-| 30 | **investigate: /hunt**                        |             |
+
+### **Table 2.3-2 Command Arguments Matrix**
+
+|                        | **query <br>features** | **query<br>/huntbooks** | **query<br>/datasources** | **investigate<br>/hunt** |
+|------------------------|:----------------------:|:-----------------------:|:-------------------------:|:------------------------:|
+| **response_requested** |                        |                         |                           |                          |
+| other argument #1      |                        |                         |                           |                          |
+| other argument #2      |                        |                         |                           |                          |
+|         **...**        |                        |                         |                           |                          |
+| other argument _n_     |                        |                         |                           |                          |
+
 
 ### 2.3.1 Query
 
 #### 2.3.1.1 Query Features
 
+The `query features` Command MUST be implemented in accordance
+with Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10).
+
 #### 2.3.1.2 Query /huntbooks
+
+The `query /huntbooks` command is used to identify the set of
+huntbooks available from a specific threat hunting consumer.
+
 
 #### 2.3.1.3 Query /datasources
 
+The `query /datasources` command is used to identify the set of
+data sources available from a specific threat hunting consumer.
 
 ### 2.3.2 Investigate /hunt
+
+The `investigate /hunt` command is used to instigate the use of a
+selected huntbook in combination with a specified set of threat
+hunting arguments.
 
 -------
 
