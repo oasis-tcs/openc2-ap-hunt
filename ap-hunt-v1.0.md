@@ -5,9 +5,9 @@
 
 # OpenC2 Actuator Profile for Threat Hunting Version 1.0
 
-## Committee Specification Draft 01
+## WIP for WD01 of Committee Specification Draft 01
 
-## 02 December 2022
+## dd Month 2023
 
 &nbsp;
 
