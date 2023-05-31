@@ -98,16 +98,26 @@ For complete copyright information please see the full Notices section in an App
       - [2.1.2.1 Common Targets](#2121-common-targets)
       - [2.1.2.2 SBOM Targets](#2122-sbom-targets)
     - [2.1.3 Type Definitions](#213-type-definitions)
+      - [Table 2.1.3-1 AP Target Types](#table-213-1-ap-target-types)
+      - [Table 2.1.3-2 AP Arg Types](#table-213-2-ap-arg-types)
+      - [Table 2.1.3-3 AP Huntargs Type](#table-213-3-ap-huntargs-type)
     - [2.1.4 Command Arguments](#214-command-arguments)
       - [**Table 2.1.4-1. Command Arguments Unique to Theat Hunting**](#table-214-1-command-arguments-unique-to-theat-hunting)
     - [2.1.5 Actuator Specifiers](#215-actuator-specifiers)
+      - [Table 2.1.5-1 AP Huntbook Actuator Type](#table-215-1-ap-huntbook-actuator-type)
+      - [Table 2.1.5-2 AP Huntbook Specifiers Type](#table-215-2-ap-huntbook-specifiers-type)
   - [2.2 OpenC2 Response Components](#22-openc2-response-components)
     - [Table 2.2-1 Threat Hunting Reponse Components](#table-22-1-threat-hunting-reponse-components)
+    - [Table 2.2-2 Threat Hunting Reponse Type: Huntbook Info](#table-22-2-threat-hunting-reponse-type-huntbook-info)
+    - [Table 2.2-3 Threat Hunting Reponse Type: Datasource Array](#table-22-3-threat-hunting-reponse-type-datasource-array)
     - [2.2.1 Response Status Codes](#221-response-status-codes)
   - [2.3 OpenC2 Commands](#23-openc2-commands)
     - [**Table 2.3-1. Command Matrix**](#table-23-1-command-matrix)
     - [2.3.1 Query](#231-query)
-    - [2.3.2 Investigate](#232-investigate)
+      - [2.3.1.1 Query Features](#2311-query-features)
+      - [2.3.1.2 Query /huntbooks](#2312-query-huntbooks)
+      - [2.3.1.3 Query /datasources](#2313-query-datasources)
+    - [2.3.2 Investigate /hunt](#232-investigate-hunt)
 - [3 Conformance](#3-conformance)
 - [Appendix A. References](#appendix-a-references)
   - [A.1 Normative References](#a1-normative-references)
@@ -511,7 +521,14 @@ property tables applicable to each OpenC2 Command.
 
 ### 2.3.1 Query
 
-### 2.3.2 Investigate
+#### 2.3.1.1 Query Features
+
+#### 2.3.1.2 Query /huntbooks
+
+#### 2.3.1.3 Query /datasources
+
+
+### 2.3.2 Investigate /hunt
 
 -------
 
