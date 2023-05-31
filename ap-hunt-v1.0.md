@@ -49,22 +49,65 @@ This specification is related to:
 * _Open Command and Control (OpenC2) Language Specification Version 1.1_. Edited by Duncan Sparrell and Toby Considine. Latest stage: https://docs.oasis-open.org/openc2/oc2ls/v1.1/oc2ls-v1.1.html.
 
 #### Abstract:
-This specification defines an actuator profile to automate management of cyber threat hunting activities using OpenC2. Threat hunting is the process of proactively and iteratively searching through networks and on endpoints to detect and isolate cyber observables that may indicate threats that evade existing security solutions. This actuator profile defines the OpenC2 Actions, Targets, Arguments, and Specifiers along with conformance clauses to enable the operation of OpenC2 Producers and Consumers in the context of cyber threat hunting. It covers invocation of stored hunting processes (e.g., “hunt books”), passing of hunt parameters, selection of analytics to apply to hunt data, and the expected type(s) and format(s) of information returned by hunting processes.
+This specification defines an actuator profile to automate
+management of cyber threat hunting activities using OpenC2.
+Threat hunting is the process of proactively and iteratively
+searching through networks and on endpoints to detect and isolate
+cyber observables that may indicate threats that evade existing
+security solutions. This actuator profile defines the OpenC2
+Actions, Targets, Arguments, and Specifiers along with
+conformance clauses to enable the operation of OpenC2 Producers
+and Consumers in the context of cyber threat hunting. It covers
+invocation of stored hunting processes (e.g., “hunt books”),
+passing of hunt parameters, selection of analytics to apply to
+hunt data, and the expected type(s) and format(s) of information
+returned by hunting processes.
 
 #### Status:
-This document was last revised or approved by the OASIS Open Command and Control (OpenC2) TC on the above date. The level of approval is also listed above. Check the "Latest stage" location noted above for possible later revisions of this document. Any other numbered Versions and other technical work produced by the Technical Committee (TC) are listed at https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=openc2#technical.
+This document was last revised or approved by the OASIS Open
+Command and Control (OpenC2) TC on the above date. The level of
+approval is also listed above. Check the "Latest stage" location
+noted above for possible later revisions of this document. Any
+other numbered Versions and other technical work produced by the
+Technical Committee (TC) are listed at
+https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=openc2#technical.
 
-TC members should send comments on this specification to the TC's email list. Others should send comments to the TC's public comment list, after subscribing to it by following the instructions at the "[Send A Comment](https://www.oasis-open.org/committees/comments/index.php?wg_abbrev=)" button on the TC's web page at https://www.oasis-open.org/committees/openc2/.
+TC members should send comments on this specification to the TC's
+email list. Others should send comments to the TC's public
+comment list, after subscribing to it by following the
+instructions at the "[Send A
+Comment](https://www.oasis-open.org/committees/comments/index.php?wg_abbrev=)"
+button on the TC's web page at
+https://www.oasis-open.org/committees/openc2/.
 
-This specification is provided under the [Non-Assertion](https://www.oasis-open.org/policies-guidelines/ipr/#Non-Assertion-Mode) Mode of the OASIS IPR Policy, the mode chosen when the Technical Committee was established. For information on whether any patents have been disclosed that may be essential to implementing this specification, and any offers of patent licensing terms, please refer to the Intellectual Property Rights section of the TC's web page (https://www.oasis-open.org/committees/openc2/ipr.php).
+This specification is provided under the
+[Non-Assertion](https://www.oasis-open.org/policies-guidelines/ipr/#Non-Assertion-Mode)
+Mode of the OASIS IPR Policy, the mode chosen when the Technical
+Committee was established. For information on whether any patents
+have been disclosed that may be essential to implementing this
+specification, and any offers of patent licensing terms, please
+refer to the Intellectual Property Rights section of the TC's web
+page (https://www.oasis-open.org/committees/openc2/ipr.php).
 
-Note that any machine-readable content ([Computer Language Definitions](https://www.oasis-open.org/policies-guidelines/tc-process-2017-05-26/#wpComponentsCompLang)) declared Normative for this Work Product is provided in separate plain text files. In the event of a discrepancy between any such plain text file and display content in the Work Product's prose narrative document(s), the content in the separate plain text file prevails.
+Note that any machine-readable content ([Computer Language
+Definitions](https://www.oasis-open.org/policies-guidelines/tc-process-2017-05-26/#wpComponentsCompLang))
+declared Normative for this Work Product is provided in separate
+plain text files. In the event of a discrepancy between any such
+plain text file and display content in the Work Product's prose
+narrative document(s), the content in the separate plain text
+file prevails.
 
 #### Key words:
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 [[RFC2119](#rfc2119)] and [[RFC8174](#rfc8174)] when, and only when, they appear in all capitals, as shown here.
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+"MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [[RFC2119](#rfc2119)] and
+[[RFC8174](#rfc8174)] when, and only when, they appear in all
+capitals, as shown here.
 
 #### Citation format:
-When referencing this specification the following citation format should be used:
+When referencing this specification the following citation format
+should be used:
 
 **[AP-Hunt-v1.0]**
 
