@@ -139,7 +139,7 @@ For complete copyright information please see the full Notices section in an App
     - [2.1.1 Actions](#211-actions)
     - [2.1.2 Targets](#212-targets)
       - [2.1.2.1 Common Targets](#2121-common-targets)
-      - [2.1.2.2 SBOM Targets](#2122-sbom-targets)
+      - [2.1.2.2 Threat Hunting Targets](#2122-threat-hunting-targets)
     - [2.1.3 Type Definitions](#213-type-definitions)
       - [Table 2.1.3-1 AP Target Types](#table-213-1-ap-target-types)
       - [Table 2.1.3-2 AP Arg Types](#table-213-2-ap-arg-types)
@@ -155,7 +155,8 @@ For complete copyright information please see the full Notices section in an App
     - [Table 2.2-3 Threat Hunting Reponse Type: Datasource Array](#table-22-3-threat-hunting-reponse-type-datasource-array)
     - [2.2.1 Response Status Codes](#221-response-status-codes)
   - [2.3 OpenC2 Commands](#23-openc2-commands)
-    - [**Table 2.3-1. Command Matrix**](#table-23-1-command-matrix)
+    - [**Table 2.3-1 Command Matrix**](#table-23-1-command-matrix)
+    - [**Table 2.3-2 Command Arguments Matrix**](#table-23-2-command-arguments-matrix)
     - [2.3.1 Query](#231-query)
       - [2.3.1.1 Query Features](#2311-query-features)
       - [2.3.1.2 Query /huntbooks](#2312-query-huntbooks)
@@ -175,8 +176,10 @@ For complete copyright information please see the full Notices section in an App
   - [C.2 Participants](#c2-participants)
 - [Appendix D. Revision History](#appendix-d-revision-history)
 - [Appendix E. Threat Hunting Command / Response Examples](#appendix-e-threat-hunting-command--response-examples)
-  - [E.1 Example 1](#e1-example-1)
-  - [E.2 Example 2](#e2-example-2)
+  - [E.1 Example 1: Query Features](#e1-example-1-query-features)
+  - [E.2 Example 2: Query Huntbooks](#e2-example-2-query-huntbooks)
+  - [E.3 Example 3: Investigate Hunt](#e3-example-3-investigate-hunt)
+  - [}](#)
 - [Appendix F. Notices](#appendix-f-notices)
 
 
@@ -242,6 +245,7 @@ _This section is non-normative_
 | OASIS | Organization for the Advancement of Structured Information Standards |
 | RFC | Request for Comment |
 | TC | Technical Committee |
+| TH | Threat Hunting |
 | URI | Uniform Resource Identifier |
 
 ### 1.2.3 Document conventions
@@ -275,7 +279,7 @@ Extensions to the Language Specification are defined in
 accordance with [[OpenC2-Lang-v1.0]](#openc2-lang-v10), Section
 3.1.5, where:
 
-1. The unique name of the SBOM schema is
+1. The unique name of the threat hunting schema is
    `oasis-open.org/openc2/v1.0/ap-hunt`.
 2. The namespace identifier (nsid) referring to the threat
    hunting schema is:  `th`.
@@ -295,7 +299,8 @@ This specification identifies the applicable components of an
 OpenC2 Command. The components of an OpenC2 Command include:
 
 * Action:  A subset of the Actions defined in the OpenC2 Language
-  Specification that are meaningful in the context of threat hunting.
+  Specification that are meaningful in the context of threat
+  hunting.
     * This profile SHALL NOT define Actions that are external to
       Version 1.0 of the [OpenC2 Language
       Specification](#openc2-lang-v10)
@@ -306,8 +311,9 @@ OpenC2 Command. The components of an OpenC2 Command include:
       Specification
 * Target:  A subset of the Targets and Target-Specifiers defined
   in Version 1.0 of the OpenC2 Language Specification that are
-  meaningful in the context of SBOM and one Target (and its
-  associated Specifier) that is defined in this specification
+  meaningful in the context of threat hunting and several Targets
+  (and associated Specifiers) that are defined in this
+  specification
 * Arguments:  A subset of the Arguments defined in the Language
   Specification and a set of Arguments defined in this
   specification
@@ -317,7 +323,7 @@ OpenC2 Command. The components of an OpenC2 Command include:
 > the v2 LS progresses "Actuator" should become "Profile"
 
 * Actuator:  A set of specifiers defined in this specification
-  that are meaningful in the context of SBOM
+  that are meaningful in the context of threat hunting
 
 ### 2.1.1 Actions
 
@@ -361,7 +367,7 @@ are presented in [Section 2.3](#23-openc2-commands).
 The semantics/ requirements as they pertain to common targets:
 * fill in if we have any
 
-#### 2.1.2.2 SBOM Targets
+#### 2.1.2.2 Threat Hunting Targets
 The list of common Targets is extended to include the additional
 Targets defined in this section and referenced with the `th`
 namespace.
@@ -425,9 +431,17 @@ namespace.
 |:------------------------|:------------------|:-------------------------------------------------------|
 | **Specified-Arg-Names** | ArrayOf(Arg-Name) | Return huntbooks that take arguments with these names. |
 
+Time ranges are used to specify the time period over which the
+hunt invoked with an `investigate /hunt` command should examine
+data.
+
 | Type Name      | Type Definition    | Description                                  |
 |:---------------|:-------------------|:---------------------------------------------|
 | **Timeranges** | ArrayOf(Timerange) | a timerange used in the execution of a hunt. |
+
+Time ranges may be be specified in absolute terms, with a
+specific start and end time, or for a relative duration leading
+up to the present time.
 
 **_Type: Timerange (Choice)_**
 
@@ -435,6 +449,17 @@ namespace.
 |---:|:-----------------------|:--------------|--:|:------------------------------------------------------------------------|
 |  1 | **timerange_absolute** | Timerange-Abs | 1 | Absolute timerange, defined by a start and end time in ISO 8601 format. |
 |  2 | **timerange_relative** | Timerange-Rel | 1 | Relative timerange, example '3, Days' for last 3 days.                  |
+
+**_Type: Timerange-Abs (Record{2..*})_**
+
+| ID | Name                | Type   | # | Description                        |
+|---:|:--------------------|:-------|--:|:-----------------------------------|
+|  1 | **hunt_start_time** | sco:timerange | 1 | Start time, as a STIX time string. |
+|  2 | **hunt_stop_time**  | sco:timerange | 1 | Stop time, as a STIX time string.  |
+
+
+Relative time ranges can be specified in units ranging from
+seconds to days.
 
 **_Type: Time-Unit (Enumerated)_**
 
@@ -444,13 +469,6 @@ namespace.
 |  2 | **Hours**   |             |
 |  3 | **Minutes** |             |
 |  4 | **Seconds** |             |
-
-**_Type: Timerange-Abs (Record{2..*})_**
-
-| ID | Name                | Type   | # | Description                        |
-|---:|:--------------------|:-------|--:|:-----------------------------------|
-|  1 | **hunt_start_time** | sco:timerange | 1 | Start time, as a STIX time string. |
-|  2 | **hunt_stop_time**  | sco:timerange | 1 | Stop time, as a STIX time string.  |
 
 **_Type: Timerange-Rel (Record{2..*})_**
 
@@ -476,6 +494,8 @@ additional Command Arguments defined in this section and
 referenced with the `th` namespace.
 
 #### **Table 2.1.4-1. Command Arguments Unique to Theat Hunting**
+
+Standard OpenC2 Language arguments are available for using in threat hunting commands.
 
 **_Type: Args (Enumerated)_**
 
@@ -562,6 +582,14 @@ property tables applicable to each OpenC2 Command.
 | **/datasources** |   valid   |                 |
 | **/hunt**        |           |      valid      |
 
+
+Table 2.3-2 defines the Command Arguments that are valid for each
+of the commands defines in the threat huntung profile. A Command
+(the top row in Table 2.3-2) paired with an Argument (the first
+column in Table 2.3-2) defines an allowable combination. The
+subsection identified at the intersection of the Command/Argument
+provides details applicable to each Command as influenced by the
+Argument.
 
 ### **Table 2.3-2 Command Arguments Matrix**
 
