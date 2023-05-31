@@ -19,7 +19,7 @@ OpenC2-Response = Map{1..*}
 
 Action = Enumerated                             // Actions available to this Profile
    3 query                                      // Initiate a request for information.
-  30 investigate
+  30 investigate                                // Task the recipient to aggregate and report information as it pertai..
 
 Target = Choice
    9 features         ls:Features               // A set of items used with the query Action to determine an Actuator'..
@@ -38,9 +38,11 @@ Actuator = Choice
 Results = Map{1..*}                             // Response Results
    1 versions         ls:Version unique [0..10] // List of OpenC2 language versions supported by this Actuator
    2 profiles         ls:Nsid unique [0..*]     // List of profiles supported by this Actuator
-   3 pairs            Pairs optional            // Targets applicable to each supported Action
+   3 pairs            Action-Targets optional   // Targets applicable to each supported Action
    4 rate_limit       Number{0.0..*} optional   // Maximum number of requests per minute supported by design or policy
 1036 th/              th:AP-Results optional    // TH-defined results
+
+Action-Targets = ArrayOf(Pairs)
 
 Pairs = Enumerated
    3 query: features, /huntbooks, /datasources

@@ -24,7 +24,7 @@
 
   ["Action", "Enumerated", [], "Actions available to this Profile", [
     [3, "query", "Initiate a request for information."],
-    [30, "investigate", ""]
+    [30, "investigate", "Task the recipient to aggregate and report information as it pertains to a security event or incident."]
   ]],
 
   ["Target", "Choice", [], "", [
@@ -47,102 +47,129 @@
   ["Results", "Map", ["{1"], "Response Results", [
     [1, "versions", "Version", ["q", "[0", "]10"], "List of OpenC2 language versions supported by this Actuator"],
     [2, "profiles", "Nsid", ["q", "[0", "]0"], "List of profiles supported by this Actuator"],
-    [3, "pairs", "Pairs", ["[0"], "Targets applicable to each supported Action"],
+    [3, "pairs", "Action-Targets", ["[0"], "Targets applicable to each supported Action"],
     [4, "rate_limit", "Number", ["y0.0", "[0"], "Maximum number of requests per minute supported by design or policy"],
     [1036, "th", "AP-Results$th", ["[0", "<"], "TH-defined results"]
   ]],
+
+  ["Action-Targets", "ArrayOf", ["*Pairs"], "", []],
 
   ["Pairs", "Enumerated", [], "", [
     [3, "query: features, /huntbooks, /datasources", ""],
     [30, "investigate: /hunt", ""]
   ]],
 
-  ["AP-Target$th", "Choice", [], "TH targets defined in this profile", [
-    [1, "hunt", "String", [], "description here"],
-    [2, "huntbooks", "Huntbook-Specifiers$th", [], "description here"],
-    [3, "datasources", "Datasource-Specifiers$th", [], "description here"]
+  ["AP-Target$th", "Choice", [], "TH targets defined in this profile.", [
+    [1, "hunt", "String", [], "A procedure to find a set of entities in the monitored environment that associates with a cyberthreat."],
+    [2, "huntbooks", "Huntbook-Specifiers$th", [], "TH Huntbook specifiers."],
+    [3, "datasources", "String", ["[0"], ""]
   ]],
 
-  ["AP-Args$th", "Map", ["{2"], "TH command arguments defined in this profile", [
-    [1, "string_arg", "String", ["[0"], "string arguments supplied as huntargs"],
-    [2, "integer_arg", "Integer", ["[0"], "integer arguments supplied as huntargs"],
-    [3, "time_arg", "AP-Args$Time-arg$th", ["[0"], "Date-Time arguments supplied as huntargs"],
-    [4, "stix", "AP-Args$Stix$th", ["[0", "<"], "stix arguments supplied as huntargs"],
-    [5, "timerange", "Stix-Timerange$th", ["[0"], "string arguments supplied as huntargs"],
-    [6, "path", "Path-Format$th", ["[0"], "integer arguments supplied as huntargs"],
-    [7, "datasource", "String", ["{1"], "Date-Time arguments supplied as huntargs"],
-    [8, "hunt_process", "Hunt-Process$th", ["[0", "<"], "process targeted by hunt activity: specify type."],
-    [9, "ipv4_address", "IPv4-Addr", ["[0"], "IPv4 address as defined in [RFC0791]"],
-    [10, "ipv6_address", "IPv6-Addr", ["[0"], "IPv6 address as defined in [RFC8200]"],
-    [11, "ipv4_network", "IPv4-Net", ["[0"], "ipv4 network targeted by hunt activity"],
-    [12, "ipv6_network", "IPv6-Net", ["[0"], "ipv6 network targeted by hunt activity"],
-    [13, "endpoint", "String", ["[0"], "endpoint targeted by hunt activity"],
-    [14, "directory", "String", ["[0"], "directory targeted by hunt activity"]
+  ["AP-Args$th", "Map", ["{0"], "TH command arguments defined in this profile.", [
+    [1, "huntargs", "Huntargs$th", [], "Arguments for use in conjunction with huntbook implementation."]
   ]],
 
-  ["AP-Specifiers$th", "Map", [], "TH actuator specifiers (may be empty)", []],
-
-  ["Huntbook-Specifiers$th", "Map", ["{1"], "TH Huntbook specifiers", [
-    [1, "named", "String", ["[0"], "requests information from an element with the given name"],
-    [2, "full", "Boolean", [], "Specifies the return should include each supported huntbook with their full usage information"],
-    [3, "titles", "Boolean", ["[0"], "Specifies the return type should be a list of titles (Strings)"],
-    [4, "args", "String", ["[0"], "Specifies the returned data should include the required arguments for the given Huntbook"],
-    [5, "returns", "String", ["[0"], "Specifies the returned data should include the expected returns for the given Huntbook"]
+  ["Huntargs$th", "Record", ["{1"], "TH command arguments defined in this profile.", [
+    [1, "string_arg", "String", ["[0"], "string arguments supplied as huntargs."],
+    [2, "integer_arg", "Integer", ["[0"], "integer arguments supplied as huntargs."],
+    [3, "stix", "STIX-Array$th", ["[0", "<"], "STIX arguments supplied as huntargs."],
+    [4, "timeranges", "Timeranges$th", ["[0"], "Timeranges used in the execution of a hunt."],
+    [5, "datasources", "Datasource-Array$th", ["[0"], "Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc."],
+    [6, "ipv4_address", "IPv4-Addr", ["[0"], "IPv4 address as defined in [RFC0791]."],
+    [7, "ipv6_address", "IPv6-Addr", ["[0"], "IPv6 address as defined in [RFC8200]."],
+    [8, "ipv4_network", "IPv4-Net", ["[0"], "ipv4 network targeted by hunt activity."],
+    [9, "ipv6_network", "IPv6-Net", ["[0"], "ipv6 network targeted by hunt activity."]
   ]],
 
-  ["Datasource-Specifiers$th", "Map", ["{1"], "TH Datasource specifiers", [
-    [1, "named", "String", ["[0"], "requests information from an element with the given name"],
-    [2, "full", "Boolean", [], "Specifies the return should include each accessible datasource with their full usage information"],
-    [3, "titles", "Boolean", ["[0"], "Specifies the return type should be a list of titles (Strings)"]
+  ["AP-Specifiers$th", "Map", [], "TH actuator specifiers (may be empty).", []],
+
+  ["Huntbook-Specifiers$th", "Map", ["{0"], "TH Huntbook specifiers.", [
+    [1, "path", "String", ["[0"], "Return huntbooks at and below this filesystem location (absolute path)."],
+    [2, "tags", "Tags$th", ["[0"], "Return huntbooks with these keywords."],
+    [3, "arg_types", "Specified-Arg-Types$th", ["[0"], "Return huntbooks that take these argument types."],
+    [4, "arg_names", "Specified-Arg-Names$th", ["[0"], "Return huntbooks that take these argument types."],
+    [5, "format_types", "Return-Type$th", ["[0"], "Return huntbooks that produce these output types."],
+    [6, "return_format", "Huntbook-Sections$th", ["[0"], "For each huntbook returned, include these data items."]
   ]],
 
-  ["AP-Results$th", "Map", ["{1"], "TH results defined in this profile", [
-    [1, "huntbooks", "Ap-results$Huntbooks$th", ["[0"], "Huntbook names returned by query huntbooks"],
-    [2, "datasources", "Ap-results$Datasources$th", ["[0"], "Datasource identifiers returned by query datasources"]
+  ["Specified-Arg-Types$th", "ArrayOf", ["*Arg-Type$th"], "Return huntbooks that take these argument types.", []],
+
+  ["Specified-Arg-Names$th", "ArrayOf", ["*Arg-Name$th"], "Return huntbooks that take arguments with these names.", []],
+
+  ["AP-Results$th", "Map", ["{1"], "TH results defined in this profile.", [
+    [1, "huntbook_info", "Huntbook-Info$th", ["[0"], "Structured data returned by Query: Huntbooks."],
+    [2, "datasources", "Datasource-Array$th", ["[0"], "Datasource names and info returned by Query Datasources."]
   ]],
 
-  ["Hunt-Process$th", "Choice", [], "Identification of process to be targeted by hunt activity", [
-    [1, "name", "String", ["[0"], "targeted process name as a String"],
-    [2, "uuid", "String", ["[0"], "targeted process UUID"],
-    [3, "pid", "Integer", ["[0"], "targeted process PID"]
+  ["Timeranges$th", "ArrayOf", ["*Timerange$th"], "a timerange used in the execution of a hunt.", []],
+
+  ["Timerange$th", "Choice", [], "Identification of process to be targeted by Threat Hunting activity.", [
+    [1, "timerange_absolute", "Timerange-Abs$th", ["[0"], "Absolute timerange, defined by a start and end time in ISO 8601 format."],
+    [2, "timerange_relative", "Timerange-Rel$th", ["[0"], "Relative timerange, example '3, Days' for last 3 days."]
   ]],
 
-  ["Stix-Timerange$th", "Choice", [], "Identification of process to be targeted by hunt activity", [
-    [1, "timerange_absolute", "Timerange-Abs$th", ["[0"], "Absolute timerange, defined by a start and end time in ISO 8601 format"],
-    [2, "timerange_relative", "Timerange-Rel$th", ["[0"], "Relative timerange, example '3, Days' for last 3 days"]
-  ]],
-
-  ["Path-Format$th", "Choice", [], "Path referenced by hunt activity: choose format", [
-    [1, "path_absolute", "String", ["[0"], "absolute path to target"],
-    [2, "path_relative", "String", ["[0"], "relative path to target"]
-  ]],
-
-  ["Time-Unit$th", "Enumerated", [], "Units referenced by relative time arguments", [
+  ["Time-Unit$th", "Enumerated", [], "Time Unit Keywords.", [
     [1, "Days", ""],
     [2, "Hours", ""],
     [3, "Minutes", ""],
     [4, "Seconds", ""]
   ]],
 
-  ["Timerange-Abs$th", "Record", ["{2"], "string representation of ISO 8601 time", [
-    [1, "hunt_start_time", "String", ["[1"], "Start time, as a Stix time string"],
-    [2, "hunt_stop_time", "String", ["[1"], "Start time, as a Stix time string"]
+  ["Timerange-Abs$th", "Record", ["{2"], "Absolute timerange, defined by a start and end time in ISO 8601 format.", [
+    [1, "hunt_start_time", "STIX-Time$th", [], "Start time, as a STIX time string."],
+    [2, "hunt_stop_time", "STIX-Time$th", [], "Stop time, as a STIX time string."]
   ]],
 
-  ["Timerange-Rel$th", "Record", ["{2"], "string representation of ISO 8601 time", [
-    [1, "number", "Integer", ["[1"], "Start time, as a Stix time string"],
-    [2, "time_unit", "Time-Unit$th", ["[1"], "Start time, as a Stix time string"]
+  ["STIX-Time$th", "String", ["%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"], "string representation of ISO 8601 time.", []],
+
+  ["Timerange-Rel$th", "Record", ["{2"], "Relative timerange, example '3, Days' for last 3 days.", [
+    [1, "number", "Integer", ["[1"], "Number of specified Time Units used in Relative Timerange."],
+    [2, "time_unit", "Time-Unit$th", ["[1"], "Time Unit Keywords."]
   ]],
 
-  ["StixObject$th", "ArrayOf", ["*String", "{1"], "Stix cyber observables used in threat hunting. link to STIX table HERE", []],
+  ["Arg-Type$th", "String", ["{0"], "Argument types used by a Huntbook. Follow STIX naming conventions, with lowercase characters and hyphens replacing spaces. Common types include process, file, and network-traffic.", []],
 
-  ["AP-Args$Time-arg$th", "ArrayOf", ["*Date-Time", "{1"], "time arguments supplied as huntargs", []],
+  ["Arg-Name$th", "String", ["{0"], "Argument names used by a Huntbook. Follow C variable naming conventions. Examples include name, src_port, and x_unique_id.", []],
 
-  ["AP-Args$Stix$th", "ArrayOf", ["*StixObject$th", "{1"], "stix arguments supplied as huntargs", []],
+  ["Return-Type$th", "Record", ["{2"], "Variable names and types expected as returns when using a Huntbook.", [
+    [1, "var_name", "Arg-Name$th", ["[1"], "Variable name to be returned by use of Huntbook."],
+    [2, "var_type", "Arg-Type$th", ["[1"], "Type of data to be returned by use of Huntbook."]
+  ]],
 
-  ["Ap-results$Huntbooks$th", "ArrayOf", ["*String"], "Huntbook names returned by query huntbooks", []],
+  ["Datasource$th", "Record", ["{1"], "Datasource names and tags required for use with a particular Huntbook.", [
+    [1, "ds_name", "String", ["[1"], "Name of a Datasource used by a Huntbook in Kestrel runtime."],
+    [2, "ds_tags", "Tags$th", ["[0"], "Tags applied to a Datasource for search or filter purposes."]
+  ]],
 
-  ["Ap-results$Datasources$th", "ArrayOf", ["*String"], "Datasource identifiers returned by query datasources", []],
+  ["Huntbook-Sections$th", "ArrayOf", ["*Huntbook-Section$th", "{0"], "For each huntbook returned, include these data items.", []],
+
+  ["Huntbook-Section$th", "Enumerated", [], "Data format to be returned by Query Huntbooks. If none specified, return all.", [
+    [1, "path", "Specifies the return should include the path to each Huntbook specified by the query conditions."],
+    [2, "uniqueId", "Specifies the return should include the ID of each Huntbook specified by the query conditions."],
+    [3, "version", "Specifies the return should include the ID of each Huntbook specified by the query conditions."],
+    [4, "args_required", "Specifies the returned data should include the required arguments for the available Huntbooks."],
+    [5, "expected_returns", "Specifies the returned data should include the expected returns for the available Huntbooks."],
+    [6, "script", "Specifies the returned data should include the full text of the Huntflow for each available Huntbook."]
+  ]],
+
+  ["Huntbook-Info$th", "Record", ["{1"], "Structured data returned by Query: Huntbooks with specifiers for specific info.", [
+    [1, "path", "String", ["[0"], "Path used to identify a Huntbook in place of a name."],
+    [2, "uniqueId", "Integer", ["[0"], "Unique ID associated with a specified Huntbook."],
+    [3, "version", "String", ["[0"], "Unique ID associated with a specified Huntbook."],
+    [4, "args_required", "Typed-Arguments$th", ["[0"], "List of arguments used in the specified Huntflow."],
+    [5, "expected_returns", "Typed-Arguments$th", ["[0"], "Data returned by the specified Huntbooks."],
+    [6, "script", "String", ["[0"], "Text of Hunt logic imlemented by specified Huntbook."]
+  ]],
+
+  ["STIX-Array$th", "ArrayOf", ["*STIX-Object$th"], "STIX arguments supplied as huntargs.", []],
+
+  ["STIX-Object$th", "ArrayOf", ["*String"], "STIX cyber observables used in threat hunting. link to STIX table HERE.", []],
+
+  ["Datasource-Array$th", "ArrayOf", ["*Datasource$th"], "An Array of Datasources, with multiple uses in Threathunting", []],
+
+  ["Tags$th", "ArrayOf", ["*String"], "Tags applied for search or filter purposes.", []],
+
+  ["Typed-Arguments$th", "MapOf", ["+Arg-Name$th", "*Arg-Type$th"], "Argument names and types tied to a specific Huntbook.", []],
 
   ["Features", "ArrayOf", ["*Feature", "{0", "}10", "q"], "An array of zero to ten names used to query a Consume for its supported capabilities.", []],
 
