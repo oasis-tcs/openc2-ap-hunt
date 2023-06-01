@@ -700,6 +700,17 @@ http://docs.oasis-open.org/templates/TCHandbook/ConformanceGuidelines.html.
 
 Remove this note before submitting for publication.)
 
+**Rough approach to conformance for this AP:**
+
+* Define Producer & Consumer targets, each target:
+* SHALL
+  * conform to the Architecture and LS
+  * implement query features (per LS)
+  * implement query /huntbooks, investigate /hunt (per AP)
+* SHOULD
+  * implement at least one approved transfer spec
+  * implement query /datasources (per AP)
+* make adjustments for argument handling as need determined
 
 -------
 
