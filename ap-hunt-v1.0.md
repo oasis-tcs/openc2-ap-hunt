@@ -308,6 +308,14 @@ _This section is non-normative_
 
 ## 1.5 Overview
 
+Research links for threat hunting background:
+
+* https://www.ibm.com/topics/threat-hunting
+* https://www.crowdstrike.com/cybersecurity-101/threat-hunting/
+* https://www.trellix.com/en-us/security-awareness/operations/what-is-cyber-threat-hunting.html 
+
+
+
 ## 1.6 Goal
 
 ## 1.7 Purpose and Scope
