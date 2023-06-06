@@ -111,7 +111,7 @@ should be used:
 
 **[AP-Hunt-v1.0]**
 
-_OpenC2 Actuator Profile for Threat Hunting Version 1.0_. Edited by Duncan Sparrell. 02 December 2022. OASIS Committee Specification Draft 01. https://docs.oasis-open.org/openc2/ap-hunt/v1.0/csd01/ap-hunt-v1.0-csd01.html. Latest stage: https://docs.oasis-open.org/openc2/ap-hunt/v1.0/ap-hunt-v1.0.html.
+_OpenC2 Actuator Profile for Threat Hunting Version 1.0_. Edited by David Lemire. 02 December 2022. OASIS Committee Specification Draft 01. https://docs.oasis-open.org/openc2/ap-hunt/v1.0/csd01/ap-hunt-v1.0-csd01.html. Latest stage: https://docs.oasis-open.org/openc2/ap-hunt/v1.0/ap-hunt-v1.0.html.
 
 #### Notices
 Copyright © OASIS Open 2022. All Rights Reserved.
