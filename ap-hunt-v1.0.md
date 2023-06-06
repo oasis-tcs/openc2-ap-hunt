@@ -129,12 +129,13 @@ For complete copyright information please see the full Notices section in an App
   - [1.1 Changes from earlier versions](#11-changes-from-earlier-versions)
   - [1.2 Glossary](#12-glossary)
     - [1.2.1 Definitions of terms](#121-definitions-of-terms)
+      - [1.2.1.1  OpenC2 Terms](#1211--openc2-terms)
+      - [1.2.1.2  Threat Hunting Terms](#1212--threat-hunting-terms)
     - [1.2.2 Acronyms and abbreviations](#122-acronyms-and-abbreviations)
     - [1.2.3 Document conventions](#123-document-conventions)
   - [1.5 Overview](#15-overview)
-  - [1.6 Goal](#16-goal)
-  - [1.7 Purpose and Scope](#17-purpose-and-scope)
-- [2 2 OpenC2 Language Binding for Threat Hunting](#2-2-openc2-language-binding-for-threat-hunting)
+  - [1.6 Purpose and Scope](#16-purpose-and-scope)
+- [2 OpenC2 Language Binding for Threat Hunting](#2-openc2-language-binding-for-threat-hunting)
   - [2.1 OpenC2 Command Components](#21-openc2-command-components)
     - [2.1.1 Actions](#211-actions)
     - [2.1.2 Targets](#212-targets)
@@ -241,7 +242,7 @@ definitive criteria for conformance so that cyber security
 stakeholders can be assured that their products, instances and/or
 integrations are compatible with OpenC2.
 
-> **NOTE** - fill in informaiton about annexes / appendices as they are defined.
+> **NOTE** - fill in information about annexes / appendices as they are defined.
 
 
 ## 1.1 Changes from earlier versions
@@ -253,8 +254,6 @@ integrations are compatible with OpenC2.
 <!-- Optional section with suggested subsections -->
 
 ### 1.2.1 Definitions of terms
-
-> **NOTE:** copied from SBOM AP draft; review & update as appropriate. Remove this note when done.
 
 _This section is normative._
 
@@ -286,7 +285,9 @@ _This section is normative._
 
 #### 1.2.1.2  Threat Hunting Terms
 
-* **Threat Hunting**: ...
+* **Threat Hunting**: Cyber threat hunting is a proactive security search through networks, endpoints, and datasets to hunt malicious, suspicious, or risky activities that have evaded detection by existing tools.<br>
+Source: https://www.trellix.com/en-us/security-awareness/operations/what-is-cyber-threat-hunting.html
+
 * **Huntbook**: ...
 * **Datasource**: ...
 * **Hunt Arguments**: ...
@@ -320,20 +321,62 @@ _This section is non-normative_
 
 ## 1.5 Overview
 
-Research links for threat hunting background:
+Cyber threat hunting is a proactive security search through
+networks, endpoints, and datasets to hunt malicious, suspicious,
+or risky activities that have evaded detection by existing tools.
+Various aspects of threat hunting can be manual,
+machine-assisted, or automated. This AP defines the use of OpenC2
+to invoke machine-assisted or automated threat hunting
+activities.  It assumes the availability to the OpenC2 Consumer
+of relevant data sources that can be accessed and defined
+huntbooks that can be invoked, and applies the OpenC2
+introspection model to enable an OpenC2 Producer to determine the
+data sources and huntbooks available from a particular Consumer. 
 
-* https://www.ibm.com/topics/threat-hunting
-* https://www.crowdstrike.com/cybersecurity-101/threat-hunting/
-* https://www.trellix.com/en-us/security-awareness/operations/what-is-cyber-threat-hunting.html 
+> Research links for threat hunting background:
+> 
+> * https://www.ibm.com/topics/threat-hunting
+> * https://www.crowdstrike.com/cybersecurity-101/threat-hunting/
+> * https://www.trellix.com/en-us/security-awareness/operations/what-is-cyber-threat-hunting.html 
 
 
 
-## 1.6 Goal
+## 1.6 Purpose and Scope
 
-## 1.7 Purpose and Scope
+This Actuator profile specifies the set of Actions, Targets,
+Specifiers, and Command Arguments that integrates the
+investigation capabilities of threat hunting (TH) systems  with
+the OpenC2 Command set. Through this Command set, cyber security
+orchestrators may gain visibility into and provide control over
+TH functionality in a manner that is independent of the instance
+of the threat hunting solution.
+
+All components, devices and systems that provide TH functionality
+will implement the OpenC2 Actions, Targets, Specifiers and
+Arguments identified as required in this document. Actions that
+are applicable, but not necessarily required, for TH will be
+identified as optional.
+
+The purpose of this document is to:
+
+* Identify the required OpenC2 Actions for Consumers with TH
+  functionality
+* Identify the required and optional Target types for each Action
+  in the TH class of Actuators
+* Identify Actuator-Specifiers and Arguments for each
+  Action/Target pair that are applicable and/or unique to TH 
+* Annotate each Action/Target pair with a justification and
+  example, and provide sample OpenC2 Commands to a TH with
+  corresponding Responses
+
+This TH profile:
+
+* Does not define or implement Actions beyond those defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10)
+* Is consistent with Version 1.0 of the OpenC2 Language Specification
+
 -------
 
-# 2 2 OpenC2 Language Binding for Threat Hunting
+# 2 OpenC2 Language Binding for Threat Hunting
 
 > **NOTE:** copied from SBOM AP draft; review & update as
 > appropriate. Remove this note when done.
