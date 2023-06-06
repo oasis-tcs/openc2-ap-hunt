@@ -195,15 +195,16 @@ the OpenC2 Language Specification
 
 OpenC2 is a suite of specifications that enables command and
 control of cyber defense systems and components. OpenC2 typically
-uses a request-response paradigm where a  Command is encoded by a
-Producer  (managing application) and transferred to a  Consumer
+uses a request-response paradigm where a Command is encoded by a
+Producer (managing application) and transferred to a Consumer
 (managed device or virtualized function) using a secure transfer
 protocol, and the Consumer acts on the request and responds with
 status and any other requested information.
 
-This specification defines an Actuator profile for **Threat Hunting (TH)**. In particular, the specification comprises a
-set of Actions, Targets and Target Specifiers, Command Arguments,
-and Actuator Specifiers that integrates TH functionality with the
+This specification defines an Actuator profile for **Threat
+Hunting (TH)**. In particular, the specification comprises a set
+of Actions, Targets and Target Specifiers, Command Arguments, and
+Actuator Specifiers that integrates TH functionality with the
 OpenC2 Command set. Through this Command set, cyber security
 orchestrators may gain visibility into and provide control over
 PF functionality in a manner that is independent of the instance
@@ -223,11 +224,22 @@ The scope of this document is limited to TH.
 
 The rest of the specification is organized as follows: 
 
-The remaining of [Section One](#1-introduction) includes infomation about the terminology used, document conventions, and purpose of this Actuator profile specification.
+The remaining of [Section One](#1-introduction) includes
+infomation about the terminology used, document conventions, and
+purpose of this Actuator profile specification.
 
-[Section Two](#2-openc2-language-binding) (normative) binds this particular profile to the OpenC2 Language Specification. Section Two enumerates the components of the language specification that are meaningful in the context of TH and defines components that are applicable to this distinct profile. Section Two also defines the Commands (i.e., the Action/Target pairs) that are permitted in the context of TH.
+[Section Two](#2-openc2-language-binding) (normative) binds this
+particular profile to the OpenC2 Language Specification. Section
+Two enumerates the components of the language specification that
+are meaningful in the context of TH and defines components that
+are applicable to this distinct profile. Section Two also defines
+the Commands (i.e., the Action/Target pairs) that are permitted
+in the context of TH.
 
-[Section Three](#3-conformance-statements) (normative) presents definitive criteria for conformance so that cyber security stakeholders can be assured that their products, instances and/or integrations are compatible with OpenC2.
+[Section Three](#3-conformance-statements) (normative) presents
+definitive criteria for conformance so that cyber security
+stakeholders can be assured that their products, instances and/or
+integrations are compatible with OpenC2.
 
 > **NOTE** - fill in informaiton about annexes / appendices as they are defined.
 
