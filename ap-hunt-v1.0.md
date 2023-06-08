@@ -442,7 +442,7 @@ of threat hunting. The particular Action/Target pairs that are
 required or are optional are presented in [Section
 2.3](#23-openc2-commands).
 
-**Table 2.1.1-1. Actions Applicable to Threat Hunting**
+##### **Table 2.1.1-1. Actions Applicable to Threat Hunting**
 
 **_Type: Action (Enumerated)_**
 
@@ -462,7 +462,7 @@ required or are optional are presented in [Section 2.3](#23-openc2-commands).
 Table 2.1.2-1 lists the Targets defined in the OpenC2 Language
 Specification that are applicable to threat hunting.
 
-**Table 2.1.2-1. Targets Applicable to Threat Hunting**
+##### **Table 2.1.2-1. Targets Applicable to Threat Hunting**
 
 **_Type: Target (Choice)_**
 
@@ -477,7 +477,7 @@ The list of common Targets is extended to include the additional
 Targets defined in this section and referenced with the `th`
 namespace.
 
-**Table 2.1.2-2. Targets Unique to Threat Hunting**
+##### **Table 2.1.2-2. Targets Unique to Threat Hunting**
 
 **_Type: AP-Target (Choice)_**
 
@@ -494,7 +494,7 @@ namespace.
 
 ### 2.1.3 Type Definitions
 
-#### Table 2.1.3-1 AP Target Types
+##### Table 2.1.3-1 AP Target Types
 
 **_Type: AP-Target (Choice)_**
 
@@ -503,7 +503,7 @@ namespace.
 |  1 | **hunt**        | String              | 1 | A procedure to find a set of entities in the monitored environment that associates with a cyberthreat. |
 |  2 | **huntbooks**   | Huntbook-Specifiers | 1 | TH Huntbook specifiers.                                                                                |
 |  3 | **datasources** | String              | 1 |                                                                                                        |
-#### Table 2.1.3-2 AP Arg Types
+##### Table 2.1.3-2 AP Arg Types
 
 **_Type: AP-Args (Map)_**
 
@@ -511,7 +511,7 @@ namespace.
 |---:|:-------------|:---------|--:|:---------------------------------------------------------------|
 |  1 | **huntargs** | Huntargs | 1 | Arguments for use in conjunction with huntbook implementation. |
 
-#### Table 2.1.3-3 AP Huntargs Type
+##### Table 2.1.3-3 AP Huntargs Type
 
 
 **_Type: Huntargs (Record{1..*})_**
@@ -600,7 +600,7 @@ The list of common Command Arguments is extended to include the
 additional Command Arguments defined in this section and
 referenced with the `th` namespace.
 
-#### **Table 2.1.4-1. Command Arguments Unique to Theat Hunting**
+##### **Table 2.1.4-1. Command Arguments Unique to Theat Hunting**
 
 Standard OpenC2 Language arguments are available for using in threat hunting commands.
 
@@ -616,7 +616,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 
 ### 2.1.5 Actuator Specifiers
 
-#### Table 2.1.5-1 AP Huntbook Actuator Type
+##### Table 2.1.5-1 AP Huntbook Actuator Type
 
 **_Type: Actuator (Enumerated)_**
 
@@ -625,7 +625,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 | 1036 | **th** |             |
 
 
-#### Table 2.1.5-2 AP Huntbook Specifiers Type
+##### Table 2.1.5-2 AP Huntbook Specifiers Type
 
 **_Type: Huntbook-Specifiers (Map)_**
 
@@ -641,7 +641,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 
 ## 2.2 OpenC2 Response Components
 
-### Table 2.2-1 Threat Hunting Reponse Components
+##### Table 2.2-1 Threat Hunting Reponse Components
 
 **_Type: AP-Results (Map{1..*})_**
 
@@ -651,14 +651,14 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 |  2 | **datasources**   | Datasource-Array         | 1 | Datasource names and info returned by Query Datasources. |
 |  3 | **stix_returns**  | sco:STIX-Cybersecurity-Observables | 1 | STIX SCO object returns                        |
 
-### Table 2.2-2 Threat Hunting Reponse Type: Huntbook Info
+##### Table 2.2-2 Threat Hunting Reponse Type: Huntbook Info
 
 
 | Type Name                    | Type Definition        | Description                                   |
 |:-----------------------------|:-----------------------|:----------------------------------------------|
 | **Ap-results$Huntbook-info** | ArrayOf(Huntbook-Info) | Structured data returned by Query: Huntbooks. |
 
-### Table 2.2-3 Threat Hunting Reponse Type: Datasource Array
+##### Table 2.2-3 Threat Hunting Reponse Type: Datasource Array
 
 
 | Type Name            | Type Definition     | Description                                                  |
@@ -680,7 +680,7 @@ defines a valid Command. The subsequent subsections provide the
 property tables applicable to each OpenC2 Command.
 
 
-### **Table 2.3-1 Command Matrix**
+##### **Table 2.3-1 Command Matrix**
 
 |                  | **query** | **investigate** |
 |------------------|:---------:|:---------------:|
@@ -698,7 +698,7 @@ subsection identified at the intersection of the Command/Argument
 provides details applicable to each Command as influenced by the
 Argument.
 
-### **Table 2.3-2 Command Arguments Matrix**
+##### **Table 2.3-2 Command Arguments Matrix**
 
 |                        | **query <br>features** | **query<br>/huntbooks** | **query<br>/datasources** | **investigate<br>/hunt** |
 |------------------------|:----------------------:|:-----------------------:|:-------------------------:|:------------------------:|
