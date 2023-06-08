@@ -326,10 +326,10 @@ networks, endpoints, and datasets to hunt malicious, suspicious,
 or risky activities that have evaded detection by existing tools.
 Various aspects of threat hunting can be manual,
 machine-assisted, or automated. This AP defines the use of OpenC2
-to invoke machine-assisted or automated threat hunting
-activities.  It assumes the availability to the OpenC2 Consumer
-of relevant data sources that can be accessed and defined
-huntbooks that can be invoked, and applies the OpenC2
+to invoke machine-assisted or automated threat hunting activities
+and return associated results.  It assumes the availability to
+the OpenC2 Consumer of relevant data sources that can be accessed
+and defined huntbooks that can be invoked, and applies the OpenC2
 introspection model to enable an OpenC2 Producer to determine the
 data sources and huntbooks available from a particular Consumer. 
 
