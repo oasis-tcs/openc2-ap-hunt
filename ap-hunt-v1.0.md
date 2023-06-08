@@ -208,7 +208,7 @@ of Actions, Targets and Target Specifiers, Command Arguments, and
 Actuator Specifiers that integrates TH functionality with the
 OpenC2 Command set. Through this Command set, cyber security
 orchestrators may gain visibility into and provide control over
-PF functionality in a manner that is independent of the instance
+TH functionality in a manner that is independent of the instance
 of the TH function. 
 
 All components, devices, and systems that provide TH
