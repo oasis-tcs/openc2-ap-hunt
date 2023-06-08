@@ -494,6 +494,8 @@ namespace.
 
 ### 2.1.3 Type Definitions
 
+Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This section defines data types associated with TH activities.
+
 ##### Table 2.1.3-1 AP Target Types
 
 **_Type: AP-Target (Choice)_**
@@ -700,14 +702,13 @@ Argument.
 
 ##### **Table 2.3-2 Command Arguments Matrix**
 
-|                        | **query <br>features** | **query<br>/huntbooks** | **query<br>/datasources** | **investigate<br>/hunt** |
-|------------------------|:----------------------:|:-----------------------:|:-------------------------:|:------------------------:|
-| **response_requested** |                        |                         |                           |                          |
-| other argument #1      |                        |                         |                           |                          |
-| other argument #2      |                        |                         |                           |                          |
-|         **...**        |                        |                         |                           |                          |
-| other argument _n_     |                        |                         |                           |                          |
-
+|  |  | **query <br>features** | **query<br>/huntbooks** | **query<br>/datasources** | **investigate<br>/hunt** |  |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+|  | **response_requested** | [2.3.1.1](#2311-query-features) | [2.3.1.2](#2312-query-huntbooks) | [2.3.1.3](#2313-query-datasources) | [2.3.2](#232-investigate-hunt) |  |
+|  | other argument #1 |  |  |  |  |  |
+|  | other argument #2 |  |  |  |  |  |
+|  | **...** |  |  |  |  |  |
+|  | other argument _n_ |  |  |  |  |  |
 
 ### 2.3.1 Query
 
