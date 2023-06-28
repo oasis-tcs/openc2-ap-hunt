@@ -779,7 +779,11 @@ OpenC2 Consumers that receive a `investigate /hunt` Command:
 
 # 3 Conformance
 
+_This section is normative._
+
+--- 
 **Rough approach to conformance for this AP:**
+> this was discussed and approved at the 7 June 2023 working meeting
 
 * Define 
   * Producer conformance target
@@ -793,7 +797,70 @@ OpenC2 Consumers that receive a `investigate /hunt` Command:
     * implement at least one approved transfer spec
     * implement `query /datasources` (per AP)
   * make adjustments for argument handling as need determined
+--- 
 
+## 3.1 Conformance Targets
+
+This AP defines two conformance targets:
+
+ - **TH Producer** -- an OpenC2 Producer that creates and
+   transmits requests consistent with this AP
+ - **TH Consumer** -- an OpenC2 Consumer that receives and
+   processes requests consistent with this AP and returns
+   corresponding responses
+
+## 3.2 Conformance Requirements
+
+### 3.2.1 General TH Conformance Requirements
+
+All TH Producers and Consumers MUST:
+
+  1. Conform to the requirements of the [OpenC2 Architecture Specification](#openc2-arch-v10)
+  2. Conform to the requirements of the [OpenC2 Language Specification](#openc2-lang-v11)
+
+### 3.2.2 TH Producer Conformance Requirements
+
+TH Producers MUST:
+
+ 1. Generate and transmit the "`query features`" command as
+    defined in Section 4.1 of the [OpenC2 Language
+    Specification](#openc2-lang-v11).
+ 2. Generate and transmit the "`query /huntbooks`" command as
+    defined in this specification and process corresponding
+    responses.
+ 3. Generate and transmit the "`investigate /hunt`" command as
+    defined in this specification and process corresponding
+    responses.
+
+TH Producers SHOULD:
+ 
+ 1. Conform with at least one OpenC2 transfer specification.
+ 2. Generate and transmit the "`query /datasources`" command as
+    defined in this specification and process corresponding
+    responses.
+ 
+ 
+ ## 3.2.3 TH Consumer Conformance Requirements
+
+TH Consumers MUST:
+
+ 1. Receive and process the "`query features`" command as defined
+    in Section 4.1 of the [OpenC2 Language
+    Specification](#openc2-lang-v11) and return corresponding
+    responses. 
+ 2. Receive and process the "`query /huntbooks`" command as
+    defined in this specification and return corresponding
+    responses.
+ 3. Receive and process the "`investigate /hunt`" command as
+    defined in this specification and return corresponding
+    responses.
+
+TH Producers SHOULD:
+ 
+ 1. Conform with at least one OpenC2 transfer specification.
+ 2. Receive and process the "`query /datasources`" command as
+    defined in this specification and return corresponding
+    responses.
 -------
 
 # Annex A. Schemas
@@ -833,6 +900,10 @@ http://docs.oasis-open.org/templates/ietf-rfc-list/ietf-rfc-list.html.
 For references to W3C Recommendations, use the approved citation formats at:  
 http://docs.oasis-open.org/templates/w3c-recommendations-list/w3c-recommendations-list.html.  
 Remove this note before submitting for publication.)
+
+###### [OpenC2-Arch-v1.0]
+
+_Open Command and Control (OpenC2) Architecture Specification Version 1.0_. Edited by Duncan Sparrell. 30 September 2022. OASIS Committee Specification 01. https://docs.oasis-open.org/openc2/oc2arch/v1.0/cs01/oc2arch-v1.0-cs01.html. Latest stage: https://docs.oasis-open.org/openc2/oc2arch/v1.0/oc2arch-v1.0.html.
 
 ###### [OpenC2-Lang-v1.1]
 _Open Command and Control (OpenC2) Language Specification Version 1.1_. Edited by Duncan Sparrell and Toby Considine. Latest stage: https://docs.oasis-open.org/openc2/oc2ls/v1.1/oc2ls-v1.1.html
