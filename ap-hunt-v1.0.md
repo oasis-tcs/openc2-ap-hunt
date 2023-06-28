@@ -111,7 +111,7 @@ should be used:
 
 **[AP-Hunt-v1.0]**
 
-_OpenC2 Actuator Profile for Threat Hunting Version 1.0_. Edited by Duncan Sparrell. 02 December 2022. OASIS Committee Specification Draft 01. https://docs.oasis-open.org/openc2/ap-hunt/v1.0/csd01/ap-hunt-v1.0-csd01.html. Latest stage: https://docs.oasis-open.org/openc2/ap-hunt/v1.0/ap-hunt-v1.0.html.
+_OpenC2 Actuator Profile for Threat Hunting Version 1.0_. Edited by David Lemire. 02 December 2022. OASIS Committee Specification Draft 01. https://docs.oasis-open.org/openc2/ap-hunt/v1.0/csd01/ap-hunt-v1.0-csd01.html. Latest stage: https://docs.oasis-open.org/openc2/ap-hunt/v1.0/ap-hunt-v1.0.html.
 
 #### Notices
 Copyright © OASIS Open 2022. All Rights Reserved.
@@ -129,12 +129,13 @@ For complete copyright information please see the full Notices section in an App
   - [1.1 Changes from earlier versions](#11-changes-from-earlier-versions)
   - [1.2 Glossary](#12-glossary)
     - [1.2.1 Definitions of terms](#121-definitions-of-terms)
+      - [1.2.1.1  OpenC2 Terms](#1211--openc2-terms)
+      - [1.2.1.2  Threat Hunting Terms](#1212--threat-hunting-terms)
     - [1.2.2 Acronyms and abbreviations](#122-acronyms-and-abbreviations)
     - [1.2.3 Document conventions](#123-document-conventions)
   - [1.5 Overview](#15-overview)
-  - [1.6 Goal](#16-goal)
-  - [1.7 Purpose and Scope](#17-purpose-and-scope)
-- [2 2 OpenC2 Language Binding for Threat Hunting](#2-2-openc2-language-binding-for-threat-hunting)
+  - [1.6 Purpose and Scope](#16-purpose-and-scope)
+- [2 OpenC2 Language Binding for Threat Hunting](#2-openc2-language-binding-for-threat-hunting)
   - [2.1 OpenC2 Command Components](#21-openc2-command-components)
     - [2.1.1 Actions](#211-actions)
     - [2.1.2 Targets](#212-targets)
@@ -195,18 +196,19 @@ the OpenC2 Language Specification
 
 OpenC2 is a suite of specifications that enables command and
 control of cyber defense systems and components. OpenC2 typically
-uses a request-response paradigm where a  Command is encoded by a
-Producer  (managing application) and transferred to a  Consumer
+uses a request-response paradigm where a Command is encoded by a
+Producer (managing application) and transferred to a Consumer
 (managed device or virtualized function) using a secure transfer
 protocol, and the Consumer acts on the request and responds with
 status and any other requested information.
 
-This specification defines an Actuator profile for **Threat Hunting (TH)**. In particular, the specification comprises a
-set of Actions, Targets and Target Specifiers, Command Arguments,
-and Actuator Specifiers that integrates TH functionality with the
+This specification defines an Actuator profile for **Threat
+Hunting (TH)**. In particular, the specification comprises a set
+of Actions, Targets and Target Specifiers, Command Arguments, and
+Actuator Specifiers that integrates TH functionality with the
 OpenC2 Command set. Through this Command set, cyber security
 orchestrators may gain visibility into and provide control over
-PF functionality in a manner that is independent of the instance
+TH functionality in a manner that is independent of the instance
 of the TH function. 
 
 All components, devices, and systems that provide TH
@@ -223,13 +225,24 @@ The scope of this document is limited to TH.
 
 The rest of the specification is organized as follows: 
 
-The remaining of [Section One](#1-introduction) includes infomation about the terminology used, document conventions, and purpose of this Actuator profile specification.
+The remaining of [Section One](#1-introduction) includes
+infomation about the terminology used, document conventions, and
+purpose of this Actuator profile specification.
 
-[Section Two](#2-openc2-language-binding) (normative) binds this particular profile to the OpenC2 Language Specification. Section Two enumerates the components of the language specification that are meaningful in the context of TH and defines components that are applicable to this distinct profile. Section Two also defines the Commands (i.e., the Action/Target pairs) that are permitted in the context of TH.
+[Section Two](#2-openc2-language-binding) (normative) binds this
+particular profile to the OpenC2 Language Specification. Section
+Two enumerates the components of the language specification that
+are meaningful in the context of TH and defines components that
+are applicable to this distinct profile. Section Two also defines
+the Commands (i.e., the Action/Target pairs) that are permitted
+in the context of TH.
 
-[Section Three](#3-conformance-statements) (normative) presents definitive criteria for conformance so that cyber security stakeholders can be assured that their products, instances and/or integrations are compatible with OpenC2.
+[Section Three](#3-conformance-statements) (normative) presents
+definitive criteria for conformance so that cyber security
+stakeholders can be assured that their products, instances and/or
+integrations are compatible with OpenC2.
 
-> **NOTE** - fill in informaiton about annexes / appendices as they are defined.
+> **NOTE** - fill in information about annexes / appendices as they are defined.
 
 
 ## 1.1 Changes from earlier versions
@@ -241,8 +254,6 @@ The remaining of [Section One](#1-introduction) includes infomation about the te
 <!-- Optional section with suggested subsections -->
 
 ### 1.2.1 Definitions of terms
-
-> **NOTE:** copied from SBOM AP draft; review & update as appropriate. Remove this note when done.
 
 _This section is normative._
 
@@ -274,7 +285,9 @@ _This section is normative._
 
 #### 1.2.1.2  Threat Hunting Terms
 
-* **Threat Hunting**: ...
+* **Threat Hunting**: Cyber threat hunting is a proactive security search through networks, endpoints, and datasets to hunt malicious, suspicious, or risky activities that have evaded detection by existing tools.<br>
+Source: https://www.trellix.com/en-us/security-awareness/operations/what-is-cyber-threat-hunting.html
+
 * **Huntbook**: ...
 * **Datasource**: ...
 * **Hunt Arguments**: ...
@@ -308,24 +321,71 @@ _This section is non-normative_
 
 ## 1.5 Overview
 
-## 1.6 Goal
+Cyber threat hunting is a proactive security search through
+networks, endpoints, and datasets to hunt malicious, suspicious,
+or risky activities that have evaded detection by existing tools.
+Various aspects of threat hunting can be manual,
+machine-assisted, or automated. This AP defines the use of OpenC2
+to invoke machine-assisted or automated threat hunting activities
+and return associated results.  It assumes the availability to
+the OpenC2 Consumer of relevant data sources that can be accessed
+and defined huntbooks that can be invoked, and applies the OpenC2
+introspection model to enable an OpenC2 Producer to determine the
+data sources and huntbooks available from a particular Consumer. 
 
-## 1.7 Purpose and Scope
+> Research links for threat hunting background:
+> 
+> * https://www.ibm.com/topics/threat-hunting
+> * https://www.crowdstrike.com/cybersecurity-101/threat-hunting/
+> * https://www.trellix.com/en-us/security-awareness/operations/what-is-cyber-threat-hunting.html 
+
+
+
+## 1.6 Purpose and Scope
+
+This Actuator profile specifies the set of Actions, Targets,
+Specifiers, and Command Arguments that integrates the
+investigation capabilities of threat hunting (TH) systems  with
+the OpenC2 Command set. Through this Command set, cyber security
+orchestrators may gain visibility into and provide control over
+TH functionality in a manner that is independent of the instance
+of the threat hunting solution.
+
+All components, devices and systems that provide TH functionality
+will implement the OpenC2 Actions, Targets, Specifiers and
+Arguments identified as required in this document. Actions that
+are applicable, but not necessarily required, for TH will be
+identified as optional.
+
+The purpose of this document is to:
+
+* Identify the required OpenC2 Actions for Consumers with TH
+  functionality
+* Identify the required and optional Target types for each Action
+  in the TH class of Actuators
+* Identify Actuator-Specifiers and Arguments for each
+  Action/Target pair that are applicable and/or unique to TH 
+* Annotate each Action/Target pair with a justification and
+  example, and provide sample OpenC2 Commands to a TH with
+  corresponding Responses
+
+This TH profile:
+
+* Does not define or implement Actions beyond those defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10)
+* Is consistent with Version 1.0 of the OpenC2 Language Specification
+
 -------
 
-# 2 2 OpenC2 Language Binding for Threat Hunting
-
-> **NOTE:** copied from SBOM AP draft; review & update as
-> appropriate. Remove this note when done.
+# 2 OpenC2 Language Binding for Threat Hunting
 
 _This section is normative_
 
 This section defines the set of Actions, Targets, Specifiers, and
-Arguments that are meaningful in the context of theat hunting.
-This section also describes the appropriate format for the status
-and properties of a Response frame. This section is organized
-into three major subsections; Command Components, Response
-Components and Commands.
+Arguments that are meaningful in the context of TH. This section
+also describes the appropriate format for the status and
+properties of a Response frame. This section is organized into
+three major subsections; Command Components, Response Components
+and Commands.
 
 Extensions to the Language Specification are defined in
 accordance with [[OpenC2-Lang-v1.0]](#openc2-lang-v10), Section
@@ -340,8 +400,6 @@ accordance with [[OpenC2-Lang-v1.0]](#openc2-lang-v10), Section
 
 ## 2.1 OpenC2 Command Components
 
-> **NOTE:** copied from SBOM AP draft; review & update as appropriate. Remove this note when done.
-
 The components of an OpenC2 Command include Actions, Targets,
 Actuators and associated Arguments and Specifiers. Appropriate
 aggregation of the components will define a Command-body that is
@@ -354,8 +412,7 @@ OpenC2 Command. The components of an OpenC2 Command include:
   Specification that are meaningful in the context of threat
   hunting.
     * This profile SHALL NOT define Actions that are external to
-      Version 1.0 of the [OpenC2 Language
-      Specification](#openc2-lang-v10)
+      Version 1.0 of the [OpenC2 Language Specification](#openc2-lang-v10)
     * This profile MAY augment the definition of the Actions in
       the context of threat hunting
     * This profile SHALL NOT define Actions in a manner that is
@@ -385,7 +442,7 @@ of threat hunting. The particular Action/Target pairs that are
 required or are optional are presented in [Section
 2.3](#23-openc2-commands).
 
-**Table 2.1.1-1. Actions Applicable to Threat Hunting**
+##### **Table 2.1.1-1. Actions Applicable to Threat Hunting**
 
 **_Type: Action (Enumerated)_**
 
@@ -396,18 +453,16 @@ required or are optional are presented in [Section
 
 ### 2.1.2 Targets
 
-Table 2.1.2-1 summarizes the Targets defined in Version 1.0 of
-the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to
-threat hunting functionality. Table 2.1.2-2 summarizes the
-Targets that are defined in this specification.
+This threat hunting AP employs Targets defined by the OpenC2
+Language Specification and Targets specific to threat hunting
+functionality. The particular Action/Target pairs that are
+required or are optional are presented in [Section 2.3](#23-openc2-commands).
 
 #### 2.1.2.1 Common Targets
 Table 2.1.2-1 lists the Targets defined in the OpenC2 Language
-Specification that are applicable to threat hunting. The
-particular Action/Target pairs that are required or are optional
-are presented in [Section 2.3](#23-openc2-commands).
+Specification that are applicable to threat hunting.
 
-**Table 2.1.2-1. Targets Applicable to Threat Hunting**
+##### **Table 2.1.2-1. Targets Applicable to Threat Hunting**
 
 **_Type: Target (Choice)_**
 
@@ -416,19 +471,19 @@ are presented in [Section 2.3](#23-openc2-commands).
 | 9 | **features** | Features | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities |
 | 1036 | **th** | Theat Hunting | Hunts, Huntbooks, Data sources |
 
-The semantics/ requirements as they pertain to common targets:
-* fill in if we have any
 
 #### 2.1.2.2 Threat Hunting Targets
 The list of common Targets is extended to include the additional
 Targets defined in this section and referenced with the `th`
 namespace.
 
-**Table 2.1.2-2. Targets Unique to Threat Hunting**
-
-**_Type: Target (Choice)_**
+##### **Table 2.1.2-2. Targets Unique to Threat Hunting**
 
 **_Type: AP-Target (Choice)_**
+
+> **NOTE:** Need better description for huntbooks (or a
+> definition in 1.2.1.2) and a description for data sources (or a
+> definition in 1.2.1.2)
 
 | ID | Name            | Type                | # | Description                                                                                            |
 |---:|:----------------|:--------------------|--:|:-------------------------------------------------------------------------------------------------------|
@@ -439,7 +494,9 @@ namespace.
 
 ### 2.1.3 Type Definitions
 
-#### Table 2.1.3-1 AP Target Types
+Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This section defines data types associated with TH activities.
+
+##### Table 2.1.3-1 AP Target Types
 
 **_Type: AP-Target (Choice)_**
 
@@ -448,7 +505,7 @@ namespace.
 |  1 | **hunt**        | String              | 1 | A procedure to find a set of entities in the monitored environment that associates with a cyberthreat. |
 |  2 | **huntbooks**   | Huntbook-Specifiers | 1 | TH Huntbook specifiers.                                                                                |
 |  3 | **datasources** | String              | 1 |                                                                                                        |
-#### Table 2.1.3-2 AP Arg Types
+##### Table 2.1.3-2 AP Arg Types
 
 **_Type: AP-Args (Map)_**
 
@@ -456,7 +513,7 @@ namespace.
 |---:|:-------------|:---------|--:|:---------------------------------------------------------------|
 |  1 | **huntargs** | Huntargs | 1 | Arguments for use in conjunction with huntbook implementation. |
 
-#### Table 2.1.3-3 AP Huntargs Type
+##### Table 2.1.3-3 AP Huntargs Type
 
 
 **_Type: Huntargs (Record{1..*})_**
@@ -545,7 +602,7 @@ The list of common Command Arguments is extended to include the
 additional Command Arguments defined in this section and
 referenced with the `th` namespace.
 
-#### **Table 2.1.4-1. Command Arguments Unique to Theat Hunting**
+##### **Table 2.1.4-1. Command Arguments Unique to Theat Hunting**
 
 Standard OpenC2 Language arguments are available for using in threat hunting commands.
 
@@ -561,7 +618,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 
 ### 2.1.5 Actuator Specifiers
 
-#### Table 2.1.5-1 AP Huntbook Actuator Type
+##### Table 2.1.5-1 AP Huntbook Actuator Type
 
 **_Type: Actuator (Enumerated)_**
 
@@ -570,7 +627,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 | 1036 | **th** |             |
 
 
-#### Table 2.1.5-2 AP Huntbook Specifiers Type
+##### Table 2.1.5-2 AP Huntbook Specifiers Type
 
 **_Type: Huntbook-Specifiers (Map)_**
 
@@ -586,7 +643,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 
 ## 2.2 OpenC2 Response Components
 
-### Table 2.2-1 Threat Hunting Reponse Components
+##### Table 2.2-1 Threat Hunting Reponse Components
 
 **_Type: AP-Results (Map{1..*})_**
 
@@ -596,14 +653,14 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 |  2 | **datasources**   | Datasource-Array         | 1 | Datasource names and info returned by Query Datasources. |
 |  3 | **stix_returns**  | sco:STIX-Cybersecurity-Observables | 1 | STIX SCO object returns                        |
 
-### Table 2.2-2 Threat Hunting Reponse Type: Huntbook Info
+##### Table 2.2-2 Threat Hunting Reponse Type: Huntbook Info
 
 
 | Type Name                    | Type Definition        | Description                                   |
 |:-----------------------------|:-----------------------|:----------------------------------------------|
 | **Ap-results$Huntbook-info** | ArrayOf(Huntbook-Info) | Structured data returned by Query: Huntbooks. |
 
-### Table 2.2-3 Threat Hunting Reponse Type: Datasource Array
+##### Table 2.2-3 Threat Hunting Reponse Type: Datasource Array
 
 
 | Type Name            | Type Definition     | Description                                                  |
@@ -625,7 +682,7 @@ defines a valid Command. The subsequent subsections provide the
 property tables applicable to each OpenC2 Command.
 
 
-### **Table 2.3-1 Command Matrix**
+##### **Table 2.3-1 Command Matrix**
 
 |                  | **query** | **investigate** |
 |------------------|:---------:|:---------------:|
@@ -643,16 +700,15 @@ subsection identified at the intersection of the Command/Argument
 provides details applicable to each Command as influenced by the
 Argument.
 
-### **Table 2.3-2 Command Arguments Matrix**
+##### **Table 2.3-2 Command Arguments Matrix**
 
-|                        | **query <br>features** | **query<br>/huntbooks** | **query<br>/datasources** | **investigate<br>/hunt** |
-|------------------------|:----------------------:|:-----------------------:|:-------------------------:|:------------------------:|
-| **response_requested** |                        |                         |                           |                          |
-| other argument #1      |                        |                         |                           |                          |
-| other argument #2      |                        |                         |                           |                          |
-|         **...**        |                        |                         |                           |                          |
-| other argument _n_     |                        |                         |                           |                          |
-
+|  |  | **query <br>features** | **query<br>/huntbooks** | **query<br>/datasources** | **investigate<br>/hunt** |  |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+|  | **response_requested** | [2.3.1.1](#2311-query-features) | [2.3.1.2](#2312-query-huntbooks) | [2.3.1.3](#2313-query-datasources) | [2.3.2](#232-investigate-hunt) |  |
+|  | other argument #1 |  |  |  |  |  |
+|  | other argument #2 |  |  |  |  |  |
+|  | **...** |  |  |  |  |  |
+|  | other argument _n_ |  |  |  |  |  |
 
 ### 2.3.1 Query
 
@@ -666,11 +722,36 @@ with Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10).
 The `query /huntbooks` command is used to identify the set of
 huntbooks available from a specific threat hunting consumer.
 
+OpenC2 Consumers that receive a `query /huntbooks` Command:
+
+ *  but cannot parse or process the Command
+    -  MUST NOT respond with a OK/200
+    -  SHOULD respond with status code 400
+    -  MAY respond with the 500 status code
+ *  but do not support the `/huntbooks` Target
+    -  MUST NOT respond with a OK/200
+    -  SHOULD respond with status code 501
+    -  SHOULD respond with "Command not supported" in the status text
+    -  MAY respond with status code 500
+
 
 #### 2.3.1.3 Query /datasources
 
 The `query /datasources` command is used to identify the set of
 data sources available from a specific threat hunting consumer.
+
+OpenC2 Consumers that receive a `query /datasources` Command:
+
+ *  but cannot parse or process the Command
+    -  MUST NOT respond with a OK/200
+    -  SHOULD respond with status code 400
+    -  MAY respond with the 500 status code
+ *  but do not support the `/datasources` Target
+    -  MUST NOT respond with a OK/200
+    -  SHOULD respond with status code 501
+    -  SHOULD respond with "Command not supported" in the status text
+    -  MAY respond with status code 500
+
 
 ### 2.3.2 Investigate /hunt
 
@@ -678,39 +759,55 @@ The `investigate /hunt` command is used to instigate the use of a
 selected huntbook in combination with a specified set of threat
 hunting arguments.
 
+OpenC2 Producers that send `investigate /hunt` Commands:
+
+ * MAY populate the Command Arguments field with _fill in with appropriate TH arguments_
+ 
+OpenC2 Consumers that receive a `investigate /hunt` Command:
+
+ *  but cannot parse or process the Command
+    -  MUST NOT respond with a OK/200
+    -  SHOULD respond with status code 400
+    -  MAY respond with the 500 status code
+ *  but do not support the `/hunt` Target
+    -  MUST NOT respond with a OK/200
+    -  SHOULD respond with status code 501
+    -  SHOULD respond with "Command not supported" in the status text
+    -  MAY respond with status code 500
+
 -------
 
 # 3 Conformance
-<!-- Required section -->
-
-(Note: The [OASIS TC
-Process](https://www.oasis-open.org/policies-guidelines/tc-process#wpComponentsConfClause)
-requires that a specification approved by the TC at the Committee
-Specification Public Review Draft, Committee Specification or
-OASIS Standard level must include a separate section, listing a
-set of numbered conformance clauses, to which any implementation
-of the specification must adhere in order to claim conformance to
-the specification (or any optional portion thereof). This is done
-by listing the conformance clauses here. For the definition of
-"conformance clause," see [OASIS Defined
-Terms](https://www.oasis-open.org/policies-guidelines/oasis-defined-terms-2017-05-26#dConformanceClause).
-
-See "Guidelines to Writing Conformance Clauses":  
-http://docs.oasis-open.org/templates/TCHandbook/ConformanceGuidelines.html.
-
-Remove this note before submitting for publication.)
 
 **Rough approach to conformance for this AP:**
 
-* Define Producer & Consumer targets, each target:
-* SHALL
-  * conform to the Architecture and LS
-  * implement query features (per LS)
-  * implement query /huntbooks, investigate /hunt (per AP)
-* SHOULD
-  * implement at least one approved transfer spec
-  * implement query /datasources (per AP)
-* make adjustments for argument handling as need determined
+* Define 
+  * Producer conformance target
+  * Consumer conformance target
+* Each conformance target:
+  * MUST
+    * conform to the Architecture and LS
+    * implement `query features` (per LS)
+    * implement `query /huntbooks`, `investigate /hunt` (per AP)
+  * SHOULD
+    * implement at least one approved transfer spec
+    * implement `query /datasources` (per AP)
+  * make adjustments for argument handling as need determined
+
+-------
+
+# Annex A. Schemas
+
+> **NOTE:**  This will become a standard section of OpenC2 APs to
+> align with the ITU-T convention that an Annex is part of the
+> normative content, whereas an Appendix is not.
+
+This AP specification is composed of:
+ * This specification document
+ * The JADN schema for the TH AP, in the seperate file `ap-hunt.jadn`
+ * The JADN schema for the TH AP in JDIL format, in the separate file `ap-hunt.jidl`
+
+In the event of any conflict among these represenations, the contents of `ap-hunt.jadn` SHALL be considered authoritative.
 
 -------
 
