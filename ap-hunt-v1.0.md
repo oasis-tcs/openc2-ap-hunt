@@ -824,20 +824,20 @@ All TH Producers and Consumers MUST:
 
 TH Producers MUST:
 
- 1. Generate and transmit the "`query features`" command as
+ 1. Generate and transmit the `"query features"` command as
     defined in Section 4.1 of the [OpenC2 Language
     Specification](#openc2-lang-v11).
- 2. Generate and transmit the "`query /huntbooks`" command as
+ 2. Generate and transmit the `"query /huntbooks"` command as
     defined in this specification and process corresponding
     responses.
- 3. Generate and transmit the "`investigate /hunt`" command as
+ 3. Generate and transmit the `"investigate /hunt"` command as
     defined in this specification and process corresponding
     responses.
 
 TH Producers SHOULD:
  
  1. Conform with at least one OpenC2 transfer specification.
- 2. Generate and transmit the "`query /datasources`" command as
+ 2. Generate and transmit the `"query /datasources"` command as
     defined in this specification and process corresponding
     responses.
  
@@ -846,21 +846,21 @@ TH Producers SHOULD:
 
 TH Consumers MUST:
 
- 1. Receive and process the "`query features`" command as defined
+ 1. Receive and process the `"query features"` command as defined
     in Section 4.1 of the [OpenC2 Language
     Specification](#openc2-lang-v11) and return corresponding
     responses. 
- 2. Receive and process the "`query /huntbooks`" command as
+ 2. Receive and process the `"query /huntbooks"` command as
     defined in this specification and return corresponding
     responses.
- 3. Receive and process the "`investigate /hunt`" command as
+ 3. Receive and process the `"investigate /hunt"` command as
     defined in this specification and return corresponding
     responses.
 
 TH Producers SHOULD:
  
  1. Conform with at least one OpenC2 transfer specification.
- 2. Receive and process the "`query /datasources`" command as
+ 2. Receive and process the `"query /datasources"` command as
     defined in this specification and return corresponding
     responses.
 -------
