@@ -781,9 +781,10 @@ OpenC2 Consumers that receive a `investigate /hunt` Command:
 
 _This section is normative._
 
---- 
-**Rough approach to conformance for this AP:**
-> this was discussed and approved at the 7 June 2023 working meeting
+========================================
+>  The following rough approach to conformance was discussed and
+>  approved at the 7 June 2023 working meeting. Delete this
+>  material once the text in 3.1 and 3.2 is approved.
 
 * Define 
   * Producer conformance target
@@ -797,7 +798,8 @@ _This section is normative._
     * implement at least one approved transfer spec
     * implement `query /datasources` (per AP)
   * make adjustments for argument handling as need determined
---- 
+
+========================================
 
 ## 3.1 Conformance Targets
 
