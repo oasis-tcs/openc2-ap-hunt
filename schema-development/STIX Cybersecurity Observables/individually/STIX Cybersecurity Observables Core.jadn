@@ -1,0 +1,67 @@
+{
+  "info": {
+    "package": "https://openc2_stix_sco",
+    "version": "0-wd01 ",
+    "title": "STIX SCO Core jadn",
+    "exports": ["SCO-Core", "spec_version", "object_marking_refs", "granular_markings", "defanged", "extensions"],
+    "config": {
+      "$MaxBinary": 5555,
+      "$MaxString": 5555,
+      "$MaxElements": 555,
+      "$Sys": "$",
+      "$TypeName": "^[A-Za-z][-:_A-Za-z0-9]{0,63}$",
+      "$FieldName": "^[A-Za-z][-:_A-Za-z0-9]{0,63}$",
+      "$NSID": "^[A-Za-z][A-Za-z0-9]{0,7}$"
+    }
+  },
+  "types": [
+
+    ["SCO-Core", "Record", [], "collection object for SCO Core objects exported in this schema", [
+      [1, "Spec-Version", "spec_version", [], ""],
+      [2, "Object-Marking-Refs", "object_marking_refs", [], ""],
+      [3, "Granular-Markings", "granular_markings", [], ""],
+      [4, "Defanged", "defanged", [], ""],
+      [5, "Extensions", "extensions", [], ""]
+    ]],
+
+    ["spec_version", "Enumerated", [], "The version of the STIX specification used to represent the content in this cyber-observable.", [
+      [1, "2.0", ""],
+      [2, "2.1", ""]
+    ]],
+    ["object_marking_refs", "ArrayOf", ["*identifier", "{1"], "The list of marking-definition objects to be applied to this object."],
+    ["granular_marking", "Record", [], "", [
+      [1, "selectors", "identifier", ["[1"], "A list of selectors for content contained within the STIX object in which this property appears."],
+      [2, "lang", "String", [], "Identifies the language of the text identified by this marking."],
+      [3, "pattern", "identifier", ["[1"], "The marking_ref property specifies the ID of the marking-definition object that describes the marking."]
+    ]],
+    ["granular_markings", "ArrayOf", ["*granular_marking", "{1"], "The set of granular markings that apply to this object."],
+    ["defanged", "Boolean", [], "Defines whether or not the data contained within the object has been defanged."],
+    ["identifier", "String", ["%^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"], "Represents identifiers across the CTI specifications. The format consists of the name of the top-level object being identified, followed by two dashes (--), followed by a UUIDv4."],
+    ["extensions", "Record", ["{1"], "Specifies any extensions of the object, as a dictionary.", [
+      [1, "extension", "String", ["%^([a-z][a-z0-9]*)+(-[a-z0-9]+)*\\\\-ext$"], ""],
+      [2, "extension_definition", "extension", [], ""]
+    ]],
+    ["properties", "Array", ["{1"], "Rules for custom properties", [
+      [1, "binary", "Binary", ["[0"], ""],
+      [2, "hex", "Hex", ["[0"], "The hex data type encodes an array of octets (8-bit bytes) as hexadecimal. The string MUST consist of an even number of hexadecimal characters, which are the digits '0' through '9' and the letters 'a' through 'f'.  In order to allow pattern matching on custom objects, all properties that use the hex type, the property name MUST end with '_hex'."],
+      [3, "array", "ArrayOf", ["*String", "[0", "{1"], ""],
+      [4, "string", "String", ["[0"], ""],
+      [5, "integer", "Integer", ["[0"], ""],
+      [6, "boolean", "Boolean", ["[0"], ""],
+      [7, "number", "Number", ["[0"], ""],
+      [8, "object", "extensions", ["[0"], ""]
+    ]],
+    ["extension", "Record", ["{1"], "", [
+      [1, "extension_type", "extension_type_enum", [], "The type of extension."],
+      [2, "properties", "properties", [], ""]
+    ]],
+    ["extension_type_enum", "Enumerated", [], "", [
+      [1, "new-sdo", ""],
+      [2, "new-sco", ""],
+      [3, "new-sro", ""],
+      [4, "property-extension", ""],
+      [5, "toplevel-property-extension", ""]
+    ]]
+
+  ]
+}

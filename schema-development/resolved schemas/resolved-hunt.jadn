@@ -1,0 +1,927 @@
+{
+ "info": {
+  "package": "https://praxiseng.com/threat-hunter-9001",
+  "version": "0-wd01",
+  "title": "Threat Hunting Profile",
+  "description": "Data definitions for Threat Hunting (TH) functions",
+  "exports": ["OpenC2-Command", "OpenC2-Response", "SCO"],
+  "config": {
+    "$MaxBinary": 5555,
+    "$MaxString": 5555,
+    "$MaxElements": 555,
+    "$Sys": "$",
+    "$TypeName": "^[A-Za-z][-:_A-Za-z0-9]{0,63}$",
+    "$FieldName": "^[A-Za-z][-:_A-Za-z0-9]{0,63}$",
+    "$NSID": "^[A-Za-z][A-Za-z0-9]{0,7}$"
+  }
+ },
+
+ "types": [
+  ["OpenC2-Command", "Record", [], "The Command defines an Action to be performed on a Target", [
+    [1, "action", "Action", [], "The task or activity to be performed (i.e., the 'verb')."],
+    [2, "target", "Target", [], "The object of the Action. The Action is performed on the Target."],
+    [3, "args", "Args", ["[0"], "Additional information that applies to the Command."],
+    [4, "actuator", "Actuator", ["[0"], "The subject of the Action. The Actuator executes the Action on the Target."],
+    [5, "command_id", "Command-ID", ["[0"], "An identifier of this Command."]
+  ]],
+
+  ["OpenC2-Response", "Map", ["{1"], "", [
+    [1, "status", "Status-Code", [], "An integer status code"],
+    [2, "status_text", "String", ["[0"], "A free-form human-readable description of the Response status"],
+    [3, "results", "Results", ["[0"], "Map of key:value pairs that contain additional results based on the invoking Command."]
+  ]],
+
+  ["Action", "Enumerated", [], "", [
+    [3, "query", "Initiate a request for information."],
+    [30, "investigate", "Task the recipient to aggregate and report information as it pertains to a security event or incident."]
+  ]],
+  ["Target", "Choice", [], "", [
+    [9, "features", "Features", [], "A set of items used with the query Action to determine an Actuator's capabilities."],
+    [1036, "th", "AP-Target", ["<"], "Threat Hunting Profile-defined targets"]
+  ]],
+  ["Args", "Map", ["{1"], "", [
+    [1, "start_time", "Date-Time", ["[0"], ""],
+    [2, "stop_time", "Date-Time", ["[0"], ""],
+    [3, "duration", "Duration", ["[0"], ""],
+    [4, "response_requested", "Response-Type", ["[0"], ""],
+    [1036, "th", "AP-Args", ["[0"], ""]
+  ]],
+    ["Actuator", "Choice", [], "", [
+    [1036, "th", "AP-Specifiers", ["<"], "TH-defined actuator specifiers"]
+  ]],
+    ["Results", "Map", ["{1"], "Response Results", [
+    [1, "versions", "Version", ["q", "[0", "]10"], "List of OpenC2 language versions supported by this Actuator"],
+    [2, "profiles", "Nsid", ["q", "[0", "]0"], "List of profiles supported by this Actuator"],
+    [3, "pairs", "Pairs", ["[0"], "Targets applicable to each supported Action"],
+    [4, "rate_limit", "Number", ["y0.0", "[0"], "Maximum number of requests per minute supported by design or policy"],
+    [5, "args", "ArrayOf", ["*String", "[0"], ""],
+    [1036, "th", "AP-Results", ["[0", "<"], "TH-defined results"]
+  ]],
+  ["Pairs", "Enumerated", [], "", [
+    [3, "query: features, /huntflows, /datasources", ""],
+    [30, "investigate: /hunt", ""]
+  ]],
+  ["AP-Target", "Choice", [], "TH targets defined in this profile.", [
+    [1, "hunt", "String", [], "A procedure to find a set of entities in the monitored environment that associates with a cyberthreat."],
+    [2, "huntflows", "Huntflow-Specifiers", [], "TH Huntflow specifiers."],
+    [3, "datasources", "String", ["[0"], ""]
+  ]],
+  ["AP-Args", "Map", ["{0"], "TH command arguments defined in this profile.", [
+    [1, "huntargs", "Huntargs", [], "Arguments for use in conjunction with huntflow implementation."]
+  ]],  
+    ["Huntargs", "Record", ["{1"], "TH command arguments defined in this profile.", [
+      [1, "string_args", "ArrayOf", ["*String", "[0"], "string arguments supplied as huntargs."],
+      [2, "integer_args", "ArrayOf", ["*Integer", "[0"], "integer arguments supplied as huntargs."],
+      [3, "typed_args", "Typed-Arguments", ["[0"], "Paired strings of named arguments."],
+      [4, "native_oc2", "OC2-Data", ["[0"], "OC2 Language types supplied as huntargs."],
+      [5, "stix", "STIX-Cybersecurity-Observables", ["[0"], "STIX arguments supplied as huntargs."],
+      [6, "stix_extensions", "String", ["[0"], "OCA Extended STIX arguments supplied as huntargs. add a custom stix for oca-asset and event"],
+      [7, "timeranges", "Timeranges", ["[0"], "Timeranges used in the execution of a hunt."],
+      [8, "datasources", "Datasource-Array", ["[0"], "Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc."]
+    ]],   
+      
+    ["OC2-Data", "ArrayOf", ["*Language-Spec-Types", "{1"], "OC2-Data is an array of one or more types defined in the OpenC2 language spec"],
+  
+    ["Language-Spec-Types", "Record", [], "for each track there's a file with the audio and a metadata record", [
+      [1, "artifact", "Artifact", ["[0"], "An array of bytes representing a file-like object or a link to that object."],
+      [2, "device", "Device", ["[0"], "The properties of a hardware device."], 
+      [3, "domain_name", "Domain-Name", ["[0"], "A network domain name."],
+      [4, "email-address", "Email-Addr", ["[0"], "A single email address"],   
+      [5, "file", "File", ["[0"], "Properties of a file."],
+      [6, "hashes", "Hashes", ["[0"], "Not used as an entity; use inside File or other attribute of another type. May be used as a query value."],
+      [7, "hostname", "Hostname", ["[0"], "Value must be a hostname as defined in [RFC1034], Section 3.1"],
+      [8, "idn_domain_name", "IDN-Domain-Name", ["[0"], "An internationalized domain name."],
+      [9, "idn_email_address", "IDN-Email-Addr", ["[0"], "A single internationalized email address."],
+      [10, "ipv4_address", "IPv4-Addr", ["[0"], "IPv4 address as defined in [RFC0791]."],
+      [11, "ipv6_address", "IPv6-Addr", ["[0"], "IPv6 address as defined in [RFC8200]."],
+      [12, "ipv4_network", "IPv4-Net", ["[0"], "IPv4 network targeted by hunt activity."],
+      [13, "ipv6_network", "IPv6-Net", ["[0"], "IPv6 network targeted by hunt activity."],
+      [14, "ipv4_connection", "IPv4-Connection", ["[0"], "A 5-tuple of source and destination IPv4 address ranges, source and destination ports, and protocol."],
+      [15, "ipv6_connection", "IPv6-Connection", ["[0"], "A 5-tuple of source and destination IPv6 address ranges, source and destination ports, and protocol."],
+      [16, "iri", "IRI", ["[0"], "An internationalized resource identifier (IRI)."],
+      [17, "mac_address", "MAC-Addr", ["[0"], "A Media Access Control (MAC) address - EUI-48 or EUI-64 as defined in [EUI]."],
+      [18, "port", "Port", ["[0"], "Transport Protocol Port Number, [RFC6335]"],
+      [19, "process", "Process", ["[0"], "Common properties of an instance of a computer program as executed on an operating system."],
+      [20, "uri", "URI", ["[0"], "A uniform resource identifier (URI)."]
+    ]],
+
+
+    ["Artifact", "Record", ["{1"], "", [
+    [1, "mime_type", "String", ["[0"], "Permitted values specified in the IANA Media Types registry, [[RFC6838]](#rfc6838)"],
+    [2, "payload", "Payload", ["[0"], "Choice of literal content or URL"],
+    [3, "hashes", "Hashes", ["[0"], "Hashes of the payload content"]
+  ]],
+    ["Device", "Map", ["{1"], "", [
+    [1, "hostname", "Hostname", ["[0"], "A hostname that can be used to connect to this device over a network"],
+    [2, "idn_hostname", "IDN-Hostname", ["[0"], "An internationalized hostname that can be used to connect to this device over a network"],
+    [3, "device_id", "String", ["[0"], "An identifier that refers to this device within an inventory or management system"]
+  ]],
+    ["Domain-Name", "String", ["/hostname"], "[[RFC1034]](#rfc1034), Section 3.5"],
+    ["Email-Addr", "String", ["/email"], "Email address, [[RFC5322]](#rfc5322), Section 3.4.1"],
+    ["File", "Map", ["{1"], "", [
+    [1, "name", "String", ["[0"], "The name of the file as defined in the file system"],
+    [2, "path", "String", ["[0"], "The absolute path to the location of the file in the file system"],
+    [3, "hashes", "Hashes", ["[0"], "One or more cryptographic hash codes of the file contents"]
+  ]],
+    ["IDN-Domain-Name", "String", ["/idn-hostname"], "Internationalized Domain Name, [[RFC5890]](#rfc5890), Section 2.3.2.3."],
+    ["IDN-Email-Addr", "String", ["/idn-email"], "Internationalized email address, [[RFC6531]](#rfc6531)"],
+    ["IPv4-Net", "Array", ["/ipv4-net"], "", [
+    [1, "ipv4_addr", "IPv4-Addr", [], "IPv4 address as defined in [[RFC0791]](#rfc0791)"],
+    [2, "prefix_length", "Integer", ["[0"], "CIDR prefix-length. If omitted, refers to a single host address."]
+  ]],
+    ["IPv4-Connection", "Record", ["{1"], "5-tuple that specifies a tcp/ip connection", [
+    [1, "src_addr", "IPv4-Net", ["[0"], "IPv4 source address range"],
+    [2, "src_port", "Port", ["[0"], "source service per [[RFC6335]](#rfc6335)"],
+    [3, "dst_addr", "IPv4-Net", ["[0"], "IPv4 destination address range"],
+    [4, "dst_port", "Port", ["[0"], "destination service per [[RFC6335]](#rfc6335)"],
+    [5, "protocol", "L4-Protocol", ["[0"], "layer 4 protocol (e.g., TCP) - see [Section 3.4.2.10](#34210-l4-protocol)"]
+  ]],
+    ["IPv6-Net", "Array", ["/ipv6-net"], "", [
+    [1, "ipv6_addr", "IPv6-Addr", [], "IPv6 address as defined in [[RFC8200]](#rfc8200)"],
+    [2, "prefix_length", "Integer", ["[0"], "prefix length. If omitted, refers to a single host address."]
+  ]],
+    ["IPv6-Connection", "Record", ["{1"], "5-tuple that specifies a tcp/ip connection", [
+    [1, "src_addr", "IPv6-Net", ["[0"], "IPv6 source address range"],
+    [2, "src_port", "Port", ["[0"], "source service per [[RFC6335]](#rfc6335)"],
+    [3, "dst_addr", "IPv6-Net", ["[0"], "IPv6 destination address range"],
+    [4, "dst_port", "Port", ["[0"], "destination service per [[RFC6335]](#rfc6335)"],
+    [5, "protocol", "L4-Protocol", ["[0"], "layer 4 protocol (e.g., TCP) - [Section 3.4.2.10](#34210-l4-protocol)"]
+  ]],
+    ["IRI", "String", ["/iri"], "Internationalized Resource Identifier, [[RFC3987]](#rfc3987)."],
+    ["MAC-Addr", "Binary", ["/eui"], "Media Access Control / Extended Unique Identifier address - EUI-48 or EUI-64 as defined in [[EUI]](#eui)."],
+    ["Process", "Map", ["{1"], "", [
+    [1, "pid", "Integer", ["{0", "K", "[0"], "Process ID of the process"],
+    [2, "name", "String", ["[0"], "Name of the process"],
+    [3, "cwd", "String", ["[0"], "Current working directory of the process"],
+    [4, "executable", "File", ["[0"], "Executable that was executed to start the process"],
+    [5, "parent", "Process", ["L", "[0"], "Process that spawned this one"],
+    [6, "command_line", "String", ["[0"], "The full command line invocation used to start this process, including all arguments"]
+  ]],
+    ["URI", "String", ["/uri"], "Uniform Resource Identifier, [[RFC3986]](#rfc3986)."],
+
+    ["Hashes", "Map", ["{1"], "Cryptographic Hash values", [
+    [1, "md5", "Binary", ["/x", "[0"], "MD5 hash as defined in [[RFC1321]](#rfc1321)"],
+    [2, "sha1", "Binary", ["/x", "[0"], "SHA1 hash as defined in [[RFC6234]](#rfc6234)"],
+    [3, "sha256", "Binary", ["/x", "[0"], "SHA256 hash as defined in [[RFC6234]](#rfc6234)"]
+  ]],
+    ["Hostname", "String", ["/hostname"], "Internet host name as specified in [[RFC1123]](#rfc1123)"],
+    ["IDN-Hostname", "String", ["/idn-hostname"], "Internationalized Internet host name as specified in [[RFC5890]](#rfc5890), Section 2.3.2.3."],
+    ["IPv4-Addr", "Binary", ["/ipv4-addr"], "32 bit IPv4 address as defined in [[RFC0791]](#rfc0791)"],
+    ["IPv6-Addr", "Binary", ["/ipv6-addr"], "128 bit IPv6 address as defined in [[RFC8200]](#rfc8200)"],
+    ["Port", "Integer", ["{0", "}65535"], "Transport Protocol Port Number, [[RFC6335]](#rfc6335)"],
+
+
+
+
+
+
+
+
+
+
+
+  ["AP-Specifiers", "Map", [], "TH actuator specifiers (may be empty)."],
+  ["Huntflow-Specifiers", "Map", ["{0"], "TH Huntflow specifiers.", [
+    [1, "path", "String", ["[0"], "Return huntflows at and below this filesystem location (absolute path)."],
+    [2, "tags", "Tags", ["[0"], "Return huntflows with these keywords."],
+    [3, "arg_types", "Specified-Arg-Types", ["[0"], "Return huntflows that take these argument types."],
+    [4, "arg_names", "Specified-Arg-Names", ["[0"], "Return huntflows that take these argument types."],
+    [5, "format_types", "Return-Type", ["[0"], "Return huntflows that produce these output types."],
+    [6, "return_format", "Huntflow-Sections", ["[0"], "For each huntflow returned, include these data items."]
+  ]],
+  ["Specified-Arg-Types", "ArrayOf", ["*Arg-Type"], "Return huntflows that take these argument types."],
+  ["Specified-Arg-Names", "ArrayOf", ["*Arg-Name"], "Return huntflows that take arguments with these names."],
+  ["AP-Results", "Map", ["{1"], "TH results defined in this profile.", [
+    [1, "huntflow_info", "ArrayOf", ["*Huntflow-Info", "[0"], "Structured data returned by Query: Huntflows."],
+    [2, "datasources", "Datasource-Array", ["[0"], "Datasource names and info returned by Query Datasources."],
+    [3, "inv_returns", "Inv-Returns", ["[0"], "STIX SCO object returns"]
+  ]],
+
+  ["Inv-Returns", "ArrayOf", ["*Inv-Return", "{1"], "Array of returns from threat hunt investigations."],
+
+  ["Inv-Return", "Record", [], "Data returned by a threat hunt, in various formatted types.", [
+  [1, "string_returns", "ArrayOf", ["*String", "[0"], "String return from an investigation"],
+  [2, "stix_sco", "STIX-Cybersecurity-Observables", ["[0"], "STIX SCO object returns"]
+  ]],
+  ["Timeranges", "ArrayOf", ["*Timerange"], "a timerange used in the execution of a hunt."],
+  ["Timerange", "Choice", [], "Identification of process to be targeted by Threat Hunting activity.", [
+    [1, "timerange_absolute", "Timerange-Abs", ["[0"], "Absolute timerange, defined by a start and end time in ISO 8601 format."],
+    [2, "timerange_relative", "Timerange-Rel", ["[0"], "Relative timerange, example '3, Days' for last 3 days."]
+  ]],
+  ["Time-Unit", "Enumerated", [], "Time Unit Keywords.", [
+    [1, "Days", ""],
+    [2, "Hours", ""], 
+    [3, "Minutes", ""], 
+    [4, "Seconds", ""]
+  ]],
+  ["Timerange-Abs", "Record", ["{2"], "Absolute timerange, defined by a start and end time in ISO 8601 format.", [
+    [1, "hunt_start_time", "timestamp", [], "Start time, as a STIX time string."],
+    [2, "hunt_stop_time", "timestamp", [], "Stop time, as a STIX time string."]
+  ]],
+  ["Timerange-Rel", "Record", ["{2"], "Relative timerange, example '3, Days' for last 3 days.", [
+    [1, "number", "Integer", ["[1"], "Number of specified Time Units used in Relative Timerange."],
+    [2, "time_unit", "Time-Unit", ["[1"], "Time Unit Keywords."]
+  ]],
+
+  ["Return-Type", "Record", ["{2"], "Variable names and types expected as returns when using a Huntflow.", [
+    [1, "var_name", "Arg-Name", ["[1"], "Variable name to be returned by use of Huntflow."],
+    [2, "var_type", "Arg-Type", ["[1"], "Type of data to be returned by use of Huntflow."]
+  ]],
+  ["Datasource", "Record", ["{1"], "Datasource names and tags required for use with a particular Huntflow.", [
+    [1, "ds_name", "String", ["[1"], "Name of a Datasource used by a Huntflow in Kestrel runtime."],
+    [2, "ds_tags", "Tags", ["[0"], "Tags applied to a Datasource for search or filter purposes."]
+  ]],
+  ["Huntflow-Sections", "ArrayOf", ["*Huntflow-Section", "{0"], "For each huntflow returned, include these data items."],
+  ["Huntflow-Section", "Enumerated", [], "Data format to be returned by Query Huntflows. If none specified, return all.", [
+    [1, "path", "Specifies the return should include the path to each Huntflow specified by the query conditions."],
+    [2, "uniqueId", "Specifies the return should include the ID of each Huntflow specified by the query conditions."], 
+    [3, "version", "Specifies the return should include the ID of each Huntflow specified by the query conditions."], 
+    [4, "args_required", "Specifies the returned data should include the required arguments for the available Huntflows."],
+    [5, "expected_returns", "Specifies the returned data should include the expected returns for the available Huntflows."],
+    [6, "script", "Specifies the returned data should include the full text of the Huntflow for each available Huntflow."]
+  ]],
+  ["Huntflow-Info", "Record", ["{1"], "Structured data returned by Query: Huntflows with specifiers for specific info.", [
+    [1, "path", "String", ["[0"], "Path used to identify a Huntflow in place of a name."],
+    [2, "uniqueId", "Integer", ["[0"], "Unique ID associated with a specified Huntflow."], 
+    [3, "version", "String", ["[0"], "Unique ID associated with a specified Huntflow."], 
+    [4, "args_required", "Typed-Arguments", ["[0"], "List of arguments used in the specified Huntflow."],
+    [5, "expected_returns", "Typed-Arguments", ["[0"], "Data returned by the specified Huntflows."],
+    [6, "script", "String", ["[0"], "Text of Hunt logic implemented by specified Huntflow."]
+  ]],
+
+["Datasource-Array", "ArrayOf", ["*Datasource"], "An Array of Datasources, with multiple uses in Threathunting"],
+
+["Tags", "ArrayOf", ["*String"], "Tags applied for search or filter purposes."],
+  
+["Typed-Arguments", "MapOf", ["+Arg-Name", "*Arg-Type"], "Argument names and types tied to a specific Huntflow."],
+
+["Arg-Type", "String", ["{0"], "Argument types used by a Huntflow. Follow STIX naming conventions, with lowercase characters and hyphens replacing spaces. Common types include process, file, and network-traffic."],
+["Arg-Name", "String", ["{0"], "Argument names used by a Huntflow. Follow C variable naming conventions. Examples include name, src_port, and x_unique_id."],
+
+["STIX-Cybersecurity-Observables", "ArrayOf", ["*SCO"], "An Array of Cybersecurity Observables in STIX formatting"],
+["SCO", "Choice", [], "Availiable Cybersecurity Observables in the STIX language", [
+  [1, "Artifact", "artifact", [], ""],
+  [2, "Autonomous-System", "autonomous-system", [], ""],
+  [3, "Directory", "directory", [], ""],
+  [4, "Domain-Name", "domain-name", [], ""],
+  [5, "Email-Addr", "email-addr", [], ""],
+  [6, "Email-Message", "email-message", [], ""],
+  [7, "File", "file", [], ""],
+  [8, "IPv4-Addr", "ipv4-addr", [], ""],
+  [9, "IPv6-Addr", "ipv6-addr", [], ""],
+  [10, "Mac-Addr", "mac-addr", [], ""],
+  [11, "Mutex", "mutex", [], ""],
+  [12, "Network-Traffic", "network-traffic", [], ""],
+  [13, "Process", "process", [], ""],
+  [14, "Software", "software", [], ""],
+  [15, "URL", "url", [], ""],
+  [16, "User-Account", "user-account", [], ""],
+  [17, "Windows-Registry-Key", "windows-registry-key", [], ""],
+  [18, "X509-Certificate", "x509-certificate", [], ""]
+]],
+  
+["artifact", "Record", [], "The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded string, or linking to a file-like payload.", [
+  [1, "type", "String", ["%^artifact$"], "The value of this property MUST be `artifact`."],
+  [2, "id", "String", ["%^artifact--"], ""],
+  [3, "mime_type", "String", ["%^(application|audio|font|image|message|model|multipart|text|video)/[a-zA-Z0-9.+_-]+"], "The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry."],
+  [4, "payload_bin", "Binary", ["[0"], "Specifies the binary data contained in the artifact as a base64-encoded string."],
+  [5, "url", "url", [], "The value of this property MUST be a valid URL that resolves to the unencoded content."],
+  [6, "hashes", "ArrayOf", ["*hashes", "[0"], "Specifies a dictionary of hashes for the contents of the url or the payload_bin. This MUST be provided when the url property is present."],
+  [7, "encryption_algorithm", "encryption_algorithm_enum", ["[0"], "If the artifact is encrypted, specifies the type of encryption algorithm the binary data  (either via payload_bin or url) is encoded in."],
+  [8, "decryption_key", "String", ["[0"], "Specifies the decryption key for the encrypted binary data (either via payload_bin or url)."],
+  [9, "spec_version", "spec_version", ["[0"], ""],
+  [10, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+  [11, "granular_markings", "granular_markings", ["[0"], ""],
+  [12, "defanged", "defanged", ["[0"], ""],
+  [13, "core_extensions", "extensions", ["[0"], ""]
+]],
+
+["autonomous-system", "Record", [], "The AS object represents the properties of an Autonomous Systems (AS).", [
+  [1, "type", "String", ["%^autonomous-system$"], ""],
+  [2, "id", "String", ["%^autonomous-system--"], ""],
+  [3, "number", "Integer", ["[1"], "Specifies the number assigned to the AS. Such assignments are typically performed by a Regional Internet Registries (RIR)."],
+  [4, "name", "String", ["[0"], "Specifies the name of the AS. "],
+  [5, "rir", "String", ["[0"], "Specifies the name of the Regional Internet Registry (RIR) that assigned the number to the AS."],
+  [6, "spec_version", "spec_version", ["[0"], ""],
+  [7, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+  [8, "granular_markings", "granular_markings", ["[0"], ""],
+  [9, "defanged", "defanged", ["[0"], ""],
+  [10, "core_extensions", "extensions", ["[0"], ""]
+]],
+
+["directory", "Record", [], "The Directory Object represents the properties common to a file system directory.", [
+  [1, "type", "String", ["%^directory$"], ""],
+  [2, "id", "String", ["%^directory--"], ""],
+  [3, "path", "String", [], "Specifies the path, as originally observed, to the directory on the file system."],
+  [4, "path_enc", "String", ["%^[a-zA-Z0-9/\\\\.+_:-]{2,250}$"], "Specifies the observed encoding for the path."],
+  [5, "ctime", "timestamp", [], "Specifies the date/time the directory was created."],
+  [6, "mtime", "timestamp", [], "Specifies the date/time the directory was last written to/modified."],
+  [7, "atime", "timestamp", [], "Specifies the date/time the directory was last accessed."],
+  [8, "contains_refs", "ArrayOf", ["*String", "{1"], "Specifies a list of references to other File and/or Directory Objects contained within the directory."],
+  [9, "spec_version", "spec_version", ["[0"], ""],
+  [10, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+  [11, "granular_markings", "granular_markings", ["[0"], ""],
+  [12, "defanged", "defanged", ["[0"], ""],
+  [13, "core_extensions", "extensions", ["[0"], ""]
+]],
+
+["domain-name", "Record", [], "The Domain Name represents the properties of a network domain name.", [
+  [1, "type", "String", ["%^domain-name$"], ""],
+  [2, "id", "String", ["%^domain-name--"], ""],
+  [3, "domain_name", "String", [], "Specifies the value of the domain name."],
+  [4, "resolves_to_refs", "ArrayOf", ["*String", "{1", "[0"], "Specifies a list of references to one or more IP addresses or domain names that the domain name resolves to."],
+  [5, "spec_version", "spec_version", ["[0"], ""],
+  [6, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+  [7, "granular_markings", "granular_markings", ["[0"], ""],
+  [8, "defanged", "defanged", ["[0"], ""],
+  [9, "core_extensions", "extensions", ["[0"], ""]
+]],
+
+["email-addr", "Record", [], "The Email Address Object represents a single email address.", [
+  [1, "type", "String", ["%^email-addr$"], ""],
+  [2, "id", "String", ["%^email-addr--"], ""],
+  [3, "email_address", "String", ["[1"], "Specifies a single email address. This MUST not include the display name."],
+  [4, "display_name", "String", ["[0"], "Specifies a single email display name, i.e., the name that is displayed to the human user of a mail application."],
+  [5, "belongs_to_ref", "String", ["[0"], "Specifies the user account that the email address belongs to, as a reference to a User Account Object."],
+  [6, "spec_version", "spec_version", ["[0"], ""],
+  [7, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+  [8, "granular_markings", "granular_markings", ["[0"], ""],
+  [9, "defanged", "defanged", ["[0"], ""],
+  [10, "core_extensions", "extensions", ["[0"], ""]
+]],
+
+["email-message", "Record", [], "The Email Message Object represents an instance of an email message.", [
+  [1, "type", "String", ["%^email-message$"], ""],
+  [2, "id", "String", ["%^email-message--"], ""],
+  [3, "date", "timestamp", ["[0"], "Specifies the date/time that the email message was sent."],
+  [4, "content_type", "String", ["[0"], "Specifies the value of the 'Content-Type' header of the email message."],
+  [5, "from_ref", "String", ["[0"], "Specifies the value of the 'From:' header of the email message."],
+  [6, "sender_ref", "spec_version", ["[0"], "Specifies the value of the 'From' field of the email message."],
+  [7, "to_refs", "ArrayOf", ["*String", "[0", "{1"], "Specifies the mailboxes that are 'To:' recipients of the email message."],
+  [8, "cc_refs", "ArrayOf", ["*String", "[0", "{1"], "Specifies the mailboxes that are 'CC:' recipients of the email message."],
+  [9, "bcc_refs", "ArrayOf", ["*String", "[0", "{1"], "Specifies the mailboxes that are 'BCC:' recipients of the email message."],
+  [10, "message_id", "String", ["[0"], "Specifies the Message-ID field of the email message."],
+  [11, "subject", "String", ["[0"], "Specifies the subject of the email message."],
+  [12, "received_lines", "ArrayOf", ["*String", "[0"], "Specifies one or more Received header fields that may be included in the email headers."],
+  [13, "additional_header_fields", "ArrayOf", ["*email-additional-header-fields", "[0"], "Specifies any other header fields found in the email message, as a dictionary."],
+  [14, "raw_email_ref", "String", ["[0"], "Specifies the raw binary contents of the email message, including both the headers and body, as a reference to an Artifact Object."],
+  [15, "is_multipart", "Boolean", [], "Indicates whether the email body contains multiple MIME parts."],
+  [16, "body_multipart", "ArrayOf", ["*mime-part-type", "[0"], "Specifies a list of the MIME parts that make up the email body. This property MAY only be used if is_multipart is true."],
+  [17, "body", "String", ["[0"], "Specifies a string containing the email body. This field MAY only be used if is_multipart is false."],
+  [18, "spec_version", "spec_version", ["[0"], ""],
+  [19, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+  [20, "granular_markings", "granular_markings", ["[0"], ""],
+  [21, "defanged", "defanged", ["[0"], ""],
+  [22, "core_extensions", "extensions", ["[0"], ""]
+]],
+
+  ["file", "Record", [], "", [
+    [1, "type", "String", ["%^file$"], "The value of this property MUST be `file`."],
+    [2, "id", "String", ["%^file--"], ""],
+    [3, "extensions", "String", ["[0"], "The File Object defines the following extensions. In addition to these, producers MAY create their own. Extensions: ntfs-ext, raster-image-ext, pdf-ext, archive-ext, windows-pebinary-ext"],
+    [4, "hashes", "ArrayOf", ["*hashes", "[0"], "Specifies a dictionary of hashes for the file."],
+    [5, "size", "Integer", ["{0", "[0"], "Specifies the size of the file, in bytes, as a non-negative integer."],
+    [6, "name", "String", [], ""],
+    [7, "name_enc", "String", ["%^[a-zA-Z0-9/\\\\.+_:-]{2,250}$", "[0"], "Specifies the observed encoding for the name of the file."],
+    [8, "magic_number_hex", "Hex", ["[0"], "Specifies the hexadecimal constant ('magic number') associated with a specific file format that corresponds to the file, if applicable."],
+    [9, "mime_type", "String", ["[0"], "Specifies the MIME type name specified for the file, e.g., 'application/msword'."],
+    [10, "ctime", "timestamp", ["[0"], "Specifies the date/time the file was created."],
+    [11, "mtime", "timestamp", ["[0"], "Specifies the date/time the file was last written to/modified."],
+    [12, "atime", "timestamp", ["[0"], "Specifies the date/time the file was last accessed."],
+    [13, "parent_directory", "String", ["[0"], "Specifies the parent directory of the file, as a reference to a Directory Object."],
+    [14, "contains_refs", "ArrayOf", ["*String", "{1", "[0"], "Specifies a list of references to other Observable Objects contained within the file."],
+    [15, "content_ref", "String", ["[0"], "Specifies the content of the file, represented as an Artifact Object."],
+    [16, "spec_version", "spec_version", ["[0"], ""],
+    [17, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [18, "granular_markings", "granular_markings", ["[0"], ""],
+    [19, "defanged", "defanged", ["[0"], ""],
+    [20, "core_extensions", "extensions", ["[0"], ""]  
+  ]],
+
+  ["ipv4-addr", "Record", [], "The IPv4 Address Object represents one or more IPv4 addresses expressed using CIDR notation.", [
+    [1, "type", "String", ["%^ipv4-addr$"], ""],
+    [2, "id", "String", ["%^ipv4-addr--"], ""],
+    [3, "ipv4_addr", "String", ["%^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\\\/(3[0-2]|[1-2][0-9]|[0-9]))?$", "[1"], ""],
+    [4, "resolves_to_refs", "ArrayOf", ["*String", "{1", "[0"], ""],
+    [5, "belongs_to_refs", "ArrayOf", ["*String", "{1", "[0"], ""],
+    [6, "spec_version", "spec_version", ["[0"], ""],
+    [7, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [8, "granular_markings", "granular_markings", ["[0"], ""],
+    [9, "defanged", "defanged", ["[0"], ""],
+    [10, "core_extensions", "extensions", ["[0"], ""]
+  ]],
+
+  ["ipv6-addr", "Record", [], "", [
+    [1, "type", "String", ["%^ipv6-addr$"], ""],
+    [2, "id", "String", ["%^ipv6-addr--"], ""],
+    [3, "ipv6_addr", "String", ["%^s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))(%.+)?s*(\\\\/(12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9]))?$", "[1"], "The IPv6 Address Object represents one or more IPv6 addresses expressed using CIDR notation."],
+    [4, "resolves_to_refs", "ArrayOf", ["*String", "{0"], "Specifies a list of references to one or more Layer 2 Media Access Control (MAC) addresses that the IPv6 address resolves to."],
+    [5, "belongs_to_refs", "ArrayOf", ["*String", "{0"], "Specifies a reference to one or more autonomous systems (AS) that the IPv6 address belongs to."],
+    [6, "spec_version", "spec_version", ["[0"], ""],
+    [7, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [8, "granular_markings", "granular_markings", ["[0"], ""],
+    [9, "defanged", "defanged", ["[0"], ""],
+    [10, "core_extensions", "extensions", ["[0"], ""]
+  ]],
+
+  ["mac-addr", "Record", [], "Specifies one or more mac addresses expressed using CIDR notation.", [
+    [1, "type", "String", ["%^mac-addr$"], ""],
+    [2, "id", "String", ["%^mac-addr--"], ""],
+    [3, "mac_address_value", "String", ["%^([0-9a-f]{2}[:]){5}([0-9a-f]{2})$", "[1"], "Specifies one or more mac addresses expressed using CIDR notation."],
+    [4, "spec_version", "spec_version", ["[0"], ""],
+    [5, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [6, "granular_markings", "granular_markings", ["[0"], ""],
+    [7, "defanged", "defanged", ["[0"], ""],
+    [8, "core_extensions", "extensions", ["[0"], ""]
+  ]],
+
+  ["mutex", "Record", [], "The Mutex Object represents the properties of a mutual exclusion (mutex) object.", [
+    [1, "type", "String", ["%^mutex$"], ""],
+    [2, "id", "String", ["%^mutex--"], ""],
+    [3, "name", "String", [], "Specifies the name of the mutex object."],
+    [4, "spec_version", "spec_version", ["[0"], ""],
+    [5, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [6, "granular_markings", "granular_markings", ["[0"], ""],
+    [7, "defanged", "defanged", ["[0"], ""],
+    [8, "core_extensions", "extensions", ["[0"], ""]
+  ]],
+
+  ["network-traffic", "Record", [], "The Network Traffic Object represents arbitrary network traffic that originates from a source and is addressed to a destination.", [
+    [1, "type", "String", ["%^network-traffic$"], ""],
+    [2, "id", "String", ["%^network-traffic--"], ""],
+    [3, "extensions", "network_traffic_extensions_dictionary", ["[0"], "The Network Traffic Object defines the following extensions. In addition to these, producers MAY create their own. Extensions: http-ext, tcp-ext, icmp-ext, socket-ext"],
+    [4, "start", "String", ["%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"], "Specifies the date/time the network traffic was initiated, if known."],
+    [5, "stop", "String", ["%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"], "Specifies the date/time the network traffic ended, if known."],
+    [6, "is_active", "Boolean", [], "Indicates whether the network traffic is still ongoing."],
+    [7, "src_port", "Integer", ["}65535", "{0"], "Specifies the source port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535."],
+    [8, "dst_port", "Integer", ["{0", "}65535", "[0"], "Specifies the destination port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535."],
+    [9, "protocols", "ArrayOf", ["*String", "{1"], "Specifies the protocols observed in the network traffic, along with their corresponding state."],
+    [10, "src_byte_count", "Integer", ["[0"], "Specifies the number of bytes, as a positive integer, sent from the source to the destination."],
+    [11, "dst_byte_count", "Integer", ["[0"], "Specifies the number of bytes, as a positive integer, sent from the destination to the source."],
+    [12, "src_packets", "Integer", ["[0"], "Specifies the number of packets, as a positive integer, sent from the source to the destination."],
+    [13, "dst_packets", "Integer", ["[0"], "Specifies the number of packets, as a positive integer, sent from the destination to the source."],
+    [14, "ipfix", "ipfix_choice", ["[0"], "Specifies any IP Flow Information Export (IPFIX) data for the traffic."],
+    [15, "src_payload_ref", "String", ["[0"], "Specifies the bytes sent from the source to the destination."], 
+    [16, "dst_payload_ref", "String", ["[0"], "Specifies the bytes sent from the source to the destination."],  
+    [17, "encapsulates_refs", "ArrayOf", ["*String", "{1"], "Specifies the bytes sent from the source to the destination."], 
+    [18, "encapsulated_by_ref", "String", ["[0"], "Links to another network-traffic object which encapsulates this object."],
+    [19, "spec_version", "spec_version", ["[0"], ""],
+    [20, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [21, "granular_markings", "granular_markings", ["[0"], ""],
+    [22, "defanged", "defanged", ["[0"], ""],
+    [23, "core_extensions", "extensions", ["[0"], ""]   
+  ]],
+
+  ["process", "Record", [], "The Process Object represents common properties of an instance of a computer program as executed on an operating system.", [
+    [1, "type", "String", ["%^process$"], ""],
+    [2, "id", "String", ["%^process--"], ""],
+    [3, "extensions", "process_extensions_dictionary", ["[0"], ""],
+    [4, "is_hidden", "Boolean", ["[0"], ""],
+    [5, "pid", "Integer", ["[0"], "Specifies the Process ID, or PID, of the process."],
+    [6, "created_time", "timestamp", ["[0"], "Specifies the date/time at which the process was created."],
+    [7, "cwd", "String", ["[0"], "Specifies the current working directory of the process."],
+    [8, "command_line", "String", ["[0"], "Specifies the full command line used in executing the process, including the process name (which may be specified individually via the binary_ref.name property) and any arguments."],
+    [9, "environment_variables", "ArrayOf", ["*String", "[0"], "Specifies the list of environment variables associated with the process as a dictionary."],
+    [10, "opened_connection_refs", "String", ["[0"], "Specifies the list of network connections opened by the process, as a reference to one or more Network Traffic Objects."],
+    [11, "creator_user_ref", "ArrayOf", ["*String", "{1", "[0"], "Specifies the user that created the process, as a reference to a User Account Object."],
+    [12, "image_ref", "String", ["[0"], "Specifies the executable binary that was executed as the process image, as a reference to a File Object."],
+    [13, "parent_ref", "String", ["[0"], "Specifies the other process that spawned (i.e. is the parent of) this one, as represented by a Process Object."],
+    [14, "child_refs", "ArrayOf", ["*String", "{1", "[0"], "Specifies the other processes that were spawned by (i.e. children of) this process, as a reference to one or more other Process Objects."],
+    [15, "spec_version", "spec_version", ["[0"], ""],
+    [16, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [17, "granular_markings", "granular_markings", ["[0"], ""],
+    [18, "defanged", "defanged", ["[0"], ""],
+    [19, "core_extensions", "extensions", ["[0"], ""]
+  ]],  
+
+  ["software", "Record", [], "The Software Object represents high-level properties associated with software, including software products.", [
+    [1, "type", "String", ["%^software$"], ""],
+    [2, "id", "String", [], "%^software--"],
+    [3, "name", "String", ["{1"], "Specifies the name of the software."],
+    [4, "cpe", "String", ["%cpe:2\\\\.3:[aho\\\\*\\\\-](:(((\\\\?*|\\\\*?)([a-zA-Z0-9\\\\-\\\\._]|(\\\\\\\\[\\\\\\\\\\\\*\\\\?!\\\"#$$%&'\\\\(\\\\)\\\\+,/:;<=>@\\\\[\\\\]\\\\^`\\\\{\\\\|}~]))+(\\\\?*|\\\\*?))|[\\\\*\\\\-])){5}(:(([a-zA-Z]{2,3}(-([a-zA-Z]{2}|[0-9]{3}))?)|[\\\\*\\\\-]))(:(((\\\\?*|\\\\*?)([a-zA-Z0-9\\\\-\\\\._]|(\\\\\\\\[\\\\\\\\\\\\*\\\\?!\\\"#$$%&'\\\\(\\\\)\\\\+,/:;<=>@\\\\[\\\\]\\\\^`\\\\{\\\\|}~]))+(\\\\?*|\\\\*?))|[\\\\*\\\\-])){4}", "[0"], "Specifies the Common Platform Enumeration (CPE) entry for the software, if available. The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary."],
+    [5, "swid", "String", ["{0"], "Specifies the Software Identification (SWID) Tags entry for the software, if available."],
+    [6, "languages", "ArrayOf", ["*String", "{0"], "Specifies the languages supported by the software. The value of each list member MUST be an ISO 639-2 language code."],
+    [7, "vendor", "String", ["{0"], "Specifies the name of the vendor of the software."],
+    [8, "version", "String", ["{0"], "Specifies the version of the software."],
+    [9, "spec_version", "spec_version", ["[0"], ""],
+    [10, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [11, "granular_markings", "granular_markings", ["[0"], ""],
+    [12, "defanged", "defanged", ["[0"], ""],
+    [13, "core_extensions", "extensions", ["[0"], ""]
+  ]],
+
+  ["user-account", "Record", [], "The Software Object represents high-level properties associated with software, including software products.", [
+    [1, "type", "String", ["%^user-account$"], "The value of this property MUST be `user-account`."],
+    [2, "id", "String", ["%^user-account--"], ""],
+    [3, "user_account_extensions", "user_account_extensions_dictionary", ["[0"], "The User Account Object defines the following extensions. In addition to these, producers MAY create their own. Extensions: unix-account-ext."],
+    [4, "user_id", "String", ["[0"], "Specifies the identifier of the account."],
+    [5, "credential", "String", ["[0"], "Specifies a cleartext credential. This is only intended to be used in capturing metadata from malware analysis (e.g., a hard-coded domain administrator password that the malware attempts to use for lateral movement) and SHOULD NOT be used for sharing of PII."],
+    [6, "account_login", "String", ["[0"], "Specifies the account login string, used in cases where the user_id property specifies something other than what a user would type when they login."],
+    [7, "account_type", "String", ["[0"], "Specifies the type of the account. This is an open vocabulary and values SHOULD come from the account-type-ov vocabulary."],
+    [8, "display_name", "String", ["[0"], "Specifies the display name of the account, to be shown in user interfaces, if applicable."],
+    [9, "is_service_account", "Boolean", ["[0"], "Indicates that the account is associated with a network service or system process (daemon), not a specific individual."],
+    [10, "is_privileged", "Boolean", ["[0"], "Specifies that the account has elevated privileges (i.e., in the case of root on Unix or the Windows Administrator account)."],
+    [11, "can_escalate_privs", "Boolean", ["[0"], "Specifies that the account has the ability to escalate privileges (i.e., in the case of sudo on Unix or a Windows Domain Admin account)."],
+    [12, "is_disabled", "Boolean", ["[0"], "Specifies if the account is disabled."],
+    [13, "account_created", "timestamp", ["[0"], "Specifies when the account was created."],
+    [14, "account_expires", "timestamp", ["[0"], "Specifies the expiration date of the account."],
+    [15, "credential_last_changed", "timestamp", ["[0"], "Specifies when the account credential was last changed."],
+    [16, "account_first_login", "timestamp", ["[0"], "Specifies when the account was first accessed."],
+    [17, "account_last_login", "timestamp", ["[0"], "Specifies when the account was last accessed."],
+    [18, "spec_version", "spec_version", ["[0"], ""],
+    [19, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [20, "granular_markings", "granular_markings", ["[0"], ""],
+    [21, "defanged", "defanged", ["[0"], ""],
+    [22, "core_extensions", "extensions", ["[0"], ""]
+  ]],
+
+  ["url", "Record", [], "The URL Object represents the properties of a uniform resource locator (URL).", [
+    [1, "type", "String", ["%^url$"], "The value of this property MUST be `url`."],
+    [2, "id", "String", ["%^url"], ""],        
+    [3, "url_value", "String", ["%^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?"], "Specifies the value of the URL."],
+    [4, "spec_version", "spec_version", ["[0"], ""],
+    [5, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [6, "granular_markings", "granular_markings", ["[0"], ""],
+    [7, "defanged", "defanged", ["[0"], ""],
+    [8, "core_extensions", "extensions", ["[0"], ""]
+  ]],
+
+  ["windows-registry-key", "Record", [], "The Registry Key Object represents the properties of a Windows registry key.", [
+    [1, "type", "String", ["%^windows-registry-key$"], "The value of this property MUST be `windows-registry-key`."],
+    [2, "id", "String", ["%^windows-registry-key--"], ""],        
+    [3, "key", "String", ["%^((?!((^|, )(HKLM|HKCC|HKCR|HKCU|HKU|hklm|hkcc|hkcr|hkcu|hku))+$).)*$"], "Specifies the full registry key including the hive."],
+    [4, "registry_values", "ArrayOf", ["*windows_registry_value_type", "[0"], "Specifies the values found under the registry key."],
+    [5, "modified_time", "timestamp", ["[0"], "Specifies the last date/time that the registry key was modified."],
+    [6, "creator_user_ref", "String", ["[0"], "Specifies a reference to a user account, represented as a User Account Object, that created the registry key."],
+    [7, "number_of_subkeys", "Integer", ["[0"], "Specifies the number of subkeys contained under the registry key."],
+    [8, "spec_version", "spec_version", ["[0"], ""],
+    [9, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [10, "granular_markings", "granular_markings", ["[0"], ""],
+    [11, "defanged", "defanged", ["[0"], ""],
+    [12, "core_extensions", "extensions", ["[0"], ""]
+  ]],
+
+  ["x509-certificate", "Record", [], "The X509 Certificate Object represents the properties of an X.509 certificate.", [
+    [1, "type", "String", ["%^x509-certificate$"], "The value of this property MUST be `x509-certificate`."],
+    [2, "id", "String", ["%^x509-certificate--"], ""],        
+    [3, "is_self_signed", "Boolean", ["[0"], "Specifies whether the certificate is self-signed, i.e., whether it is signed by the same entity whose identity it certifies."],
+    [4, "hashes", "ArrayOf", ["*hashes", "[0"], "Specifies any hashes that were calculated for the entire contents of the certificate."],
+    [5, "version", "String", ["[0"], "Specifies the version of the encoded certificate."],
+    [6, "serial_number", "String", ["[0"], "Specifies the unique identifier for the certificate, as issued by a specific Certificate Authority."],
+    [7, "signature_algorithm", "String", ["[0"], "Specifies the name of the algorithm used to sign the certificate."],
+    [8, "issuer", "String", ["[0"], "Specifies the name of the Certificate Authority that issued the certificate."],
+    [9, "validity_not_before", "timestamp", ["[0"], "Specifies the date on which the certificate validity period begins."],
+    [10, "validity_not_after", "timestamp", ["[0"], "Specifies the date on which the certificate validity period ends."],
+    [11, "subject", "spec_version", ["[0"], "Specifies the name of the entity associated with the public key stored in the subject public key field of the certificate."],
+    [12, "subject_public_key_algorithm", "String", ["[0"], "Specifies the name of the algorithm with which to encrypt data being sent to the subject."],
+    [13, "subject_public_key_modulus", "String", ["[0"], "Specifies the modulus portion of the subject’s public RSA key."],
+    [14, "subject_public_key_extensions", "Integer", ["[0"], "Specifies the exponent portion of the subject’s public RSA key, as an integer."],
+    [15, "x509_v3_extensions", "ArrayOf", ["*x509_v3_extensions_type", "[0"], "Specifies any standard X.509 v3 extensions that may be used in the certificate."],
+    [16, "spec_version", "spec_version", ["[0"], ""],
+    [17, "object_marking_refs", "object_marking_refs", ["[0"], ""],
+    [18, "granular_markings", "granular_markings", ["[0"], ""],
+    [19, "defanged", "defanged", ["[0"], ""],
+    [20, "core_extensions", "extensions", ["[0"], ""]
+  ]],
+
+  ["encryption_algorithm_enum", "Enumerated", [], "", [
+    [1, "AES-256-GCM", ""],
+    [2, "ChaCha20-Poly1305", ""],
+    [3, "mime-type-indicated", ""]
+  ]],
+
+  ["mime-part-type", "Record", [], "Specifies a component of a multi-part email body.", [
+    [1, "body", "String", ["[0"], "Specifies the contents of the MIME part if the content_type is not provided OR starts with text/"],
+    [2, "body_raw_ref", "String", ["[0"], "Specifies the contents of non-textual MIME parts, that is those whose content_type does not start with text/, as a reference to an Artifact Object or File Object."],
+    [3, "content_type", "String", ["[0"], "Specifies the value of the 'Content-Type' header field of the MIME part."],
+    [4, "content_disposition", "String", ["[0"], "Specifies the value of the 'Content-Disposition' header field of the MIME part."]
+  ]],
+
+  ["email-additional-header-fields", "ArrayOf", ["*email_additional_header_field"], "Specifies any other header fields (except for date, received_lines, content_type, from_ref, sender_ref, to_refs, cc_refs, bcc_refs, and subject) found in the email message, as a dictionary."],
+
+  ["email_additional_header_field", "MapOf", ["+email_additional_header_fieldname", "*email_additional_header_value"], "Specifies any other header fields (except for date, received_lines, content_type, from_ref, sender_ref, to_refs, cc_refs, bcc_refs, and subject) found in the email message, as a dictionary."],
+
+  ["email_additional_header_fieldname", "String", ["%^((?!((^|, )(date|received_lines|content_type|from_ref|sender_ref|to_refs|cc_refs|bcc_refs|subject))+$).)*$"], "Specifies any other header fields (except for date, received_lines, content_type, from_ref, sender_ref, to_refs, cc_refs, bcc_refs, and subject) found in the email message, as a dictionary."],
+    
+  ["email_additional_header_value", "Choice", [], "", [
+    [1, "String_Value", "String", ["%[a-zA-Z0-9_-]{0,250}^$"], ""],
+    [2, "String_Array", "ArrayOf", ["*String", "{2"], ""]
+  ]],
+
+  ["windows_registry_value_type", "Record", [], "", [
+    [1, "name", "String", ["[0"], "Specifies the name of the registry value. For specifying the default value in a registry key, an empty string MUST be used."],
+    [2, "data", "String", ["[0"], "Specifies the data contained in the registry value."],
+    [3, "registry_data_type", "win_registry_data_type", ["[0"], "Specifies the registry (REG_*) data type used in the registry value."]
+  ]],
+
+  ["win_registry_data_type", "Enumerated", [], "Specifies the registry (REG_*) data type used in the registry value.", [
+    [1, "REG_NONE", ""],
+    [2, "REG_SZ", ""],
+    [3, "REG_EXPAND_SZ", ""],
+    [4, "REG_BINARY", ""],
+    [5, "REG_DWORD", ""],
+    [6, "REG_DWORD_BIG_ENDIAN", ""],
+    [7, "REG_DWORD_LITTLE_ENDIAN", ""],
+    [8, "REG_LINK", ""],
+    [9, "REG_MULTI_SZ", ""],
+    [10, "REG_RESOURCE_LIST", ""],
+    [11, "REG_FULL_RESOURCE_DESCRIPTION", ""],
+    [12, "REG_RESOURCE_REQUIREMENTS_LIST", ""],
+    [13, "REG_QWORD", ""],
+    [14, "REG_INVALID_TYPE", ""]
+  ]],
+
+  ["x509_v3_extensions_type", "Record", [], "", [
+    [1, "basic_constraints", "String", ["[0"], "Specifies a multi-valued extension which indicates whether a certificate is a CA certificate."],
+    [2, "name_constraints", "String", ["[0"], "Specifies a namespace within which all subject names in subsequent certificates in a certification path MUST be located."],
+    [3, "policy_constraints", "String", ["[0"], "Specifies any constraints on path validation for certificates issued to CAs."],
+    [4, "key_usage", "String", ["[0"], "Specifies a multi-valued extension consisting of a list of names of the permitted key usages."],
+    [5, "extend_key_usage", "String", ["[0"], "Specifies a list of usages indicating purposes for which the certificate public key can be used for."],
+    [6, "subject_key_identifier", "String", ["[0"], "Specifies the identifier that provides a means of identifying certificates that contain a particular public key."],
+    [7, "authority_key_identifier", "String", ["[0"], "Specifies the identifier that provides a means of identifying the public key corresponding to the private key used to sign a certificate."],
+    [8, "subject_alternative_name", "String", ["[0"], "Specifies the additional identities to be bound to the subject of the certificate."],
+    [9, "issuer_alternative_name", "String", ["[0"], "Specifies the additional identities to be bound to the issuer of the certificate."],
+    [10, "subject_directory_attributes", "String", ["[0"], "Specifies the identification attributes (e.g., nationality) of the subject."],
+    [11, "crt_distribution_points", "String", ["[0"], "Specifies how CRL information is obtained."],
+    [12, "inhibit_any_policy", "String", ["[0"], "Specifies the number of additional certificates that may appear in the path before anyPolicy is no longer permitted."],
+    [13, "private_key_usage_period_not_before", "timestamp", ["[0"], "Specifies the date on which the validity period begins for the private key, if it is different from the validity period of the certificate."],
+    [14, "private_key_usage_period_not_after", "timestamp", ["[0"], "Specifies the date on which the validity period ends for the private key, if it is different from the validity period of the certificate."],
+    [15, "certificate_policies", "String", ["[0"], "Specifies a sequence of one or more policy information terms, each of which consists of an object identifier (OID) and optional qualifiers."],
+    [16, "policy_mappings", "String", ["[0"], "Specifies one or more pairs of OIDs; each pair includes an issuerDomainPolicy and a subjectDomainPolicy"]
+  ]],
+
+  ["file_extensions_dictionary", "Record", [], "", [
+    [1, "ntfs_ext", "ntfs_ext", ["[0"], "The NTFS file extension specifies a default extension for capturing properties specific to the storage of the file on the NTFS file system."]
+  ]],
+
+  ["ntfs_ext", "Record", [], "The NTFS file extension specifies a default extension for capturing properties specific to the storage of the file on the NTFS file system.", [
+    [1, "sid", "String", ["[0"], "Specifies the security ID (SID) value assigned to the file."],  
+    [2, "alternate_data_streams", "ArrayOf", ["*ntfs_atlternate_data_stream", "[0"], "Specifies a list of NTFS alternate data streams that exist for the file."]
+  ]],
+  ["ntfs_atlternate_data_stream", "Record", [], "", [
+    [1, "name", "String", [], "Specifies the name of the alternate data stream."],
+    [2, "hashes", "ArrayOf", ["*hashes", "[0"], "Specifies a dictionary of hashes for the data contained in the alternate data stream."],
+    [3, "size", "Integer", ["[0", "{0"], "Specifies the size of the alternate data stream, in bytes, as a non-negative integer."]
+  ]],
+
+  ["ipfix_choice", "Choice", [], "Specifies any IP Flow Information Export (IPFIX) data for the traffic.", [
+    [1, "ipfix_string", "String", [], ""],
+    [2, "ipfix_integer", "Integer", [], ""]
+  ]],
+
+  ["hashes", "Record", [], "The Hashes type represents one or more cryptographic hashes, as a special set of key/value pairs", [
+    [1, "MD5", "String", ["%^[a-fA-F0-9]{32}$", "[0"], "Specifies the MD5 message digest algorithm."],
+    [2, "SHA-1", "String", ["%^[a-fA-F0-9]{40}$", "[0"], "Specifies the MD5 message digest algorithm."],
+    [3, "SHA-256", "String", ["%^[a-fA-F0-9]{64}$", "[0"], "Specifies the MD5 message digest algorithm."],
+    [4, "SHA-512", "String", ["%^[a-fA-F0-9]{128}$", "[0"], "Specifies the MD5 message digest algorithm."],
+    [5, "SHA3-256", "String", ["%^[a-fA-F0-9]{64}$", "[0"], "Specifies the MD5 message digest algorithm."],
+    [6, "SHA3-512", "String", ["%^[a-fA-F0-9]{128}$", "[0"], "Specifies the MD5 message digest algorithm."],
+    [7, "SSDEEP", "String", ["%^[a-zA-Z0-9/+:.]{1,128}$", "[0"], "Specifies the MD5 message digest algorithm."],
+    [8, "TLSH", "String", ["%^[a-zA-Z0-9]{70}$", "[0"], "Specifies the MD5 message digest algorithm."]
+  ]],
+
+  ["network_traffic_extensions_dictionary", "Record", [], "The User Account Object defines the following extensions. In addition to these, producers MAY create their own.", [
+    [1, "http_request_ext", "http_request_ext", ["[0"], "The HTTP request extension specifies a default extension for capturing network traffic properties specific to HTTP requests."],
+    [2, "icmp_ext", "icmp_ext", ["[0"], "The ICMP extension specifies a default extension for capturing network traffic properties specific to ICMP."],
+    [3, "socket_ext", "socket_ext", ["[0"], "The Network Socket extension specifies a default extension for capturing network traffic properties associated with network sockets."],
+    [4, "tcp_ext", "tcp_ext", ["[0"], "The TCP extension specifies a default extension for capturing network traffic properties specific to TCP."]
+  ]],
+
+  ["http_request_ext", "Record", [], "The HTTP request extension specifies a default extension for capturing network traffic properties specific to HTTP requests.", [
+    [1, "request_method", "String", [], "Specifies the HTTP method portion of the HTTP request line, as a lowercase string."],  
+    [2, "request_value", "String", [], "Specifies the value (typically a resource path) portion of the HTTP request line."],
+    [3, "request_version", "String", ["[0"], "Specifies the HTTP method portion of the HTTP request line, as a lowercase string."],  
+    [4, "request_header", "ArrayOf", ["*String", "[0"], "Specifies the value (typically a resource path) portion of the HTTP request line."],
+    [5, "message_body_length", "String", ["[0"], "Specifies the HTTP method portion of the HTTP request line, as a lowercase string."],  
+    [6, "message_body_data_ref", "String", ["[0"], "Specifies the value (typically a resource path) portion of the HTTP request line."]
+  ]],
+
+  ["icmp_ext", "Record", [], "The ICMP extension specifies a default extension for capturing network traffic properties specific to ICMP.", [
+    [1, "icmp_type_hex", "Hex", [], "Specifies the ICMP type byte."],  
+    [2, "icmp_code_hex", "Hex", [], "Specifies the ICMP code byte."]
+  ]],
+
+  ["socket_ext", "Record", [], "The Network Socket extension specifies a default extension for capturing network traffic properties associated with network sockets.", [
+    [1, "address_family", "address_family", [], "Specifies the address family (AF_*) that the socket is configured for."],  
+    [2, "is_blocking", "Boolean", ["[0"], "Specifies whether the socket is in blocking mode."],
+    [3, "is_listening", "String", ["[0"], "Specifies whether the socket is in listening mode."],  
+    [4, "options", "ArrayOf", ["*socket_option", "[0"], "Specifies any options (SO_*) that may be used by the socket, as a dictionary."],
+    [5, "socket_type", "socket_type", ["[0"], "Specifies the type of the socket."],  
+    [6, "socket_descriptor", "Integer", ["{0", "[0"], "Specifies the socket file descriptor value associated with the socket, as a non-negative integer."],
+    [7, "socket_handle", "Integer", ["[0"], "Specifies the handle or inode value associated with the socket."]
+  ]],
+
+  ["tcp_ext", "Record", [], "The TCP extension specifies a default extension for capturing network traffic properties specific to TCP.", [
+    [1, "src_flags_hex", "Hex", [], "Specifies the source TCP flags, as the union of all TCP flags observed between the start of the traffic (as defined by the start property) and the end of the traffic (as defined by the end property)."],  
+    [2, "dst_flags_hex", "Hex", [], "Specifies the destination TCP flags, as the union of all TCP flags observed between the start of the traffic (as defined by the start property) and the end of the traffic (as defined by the end property)."]
+  ]],
+
+  ["address_family", "Enumerated", [], "Specifies the current status of the service. windows-service-status-enum", [
+    [1, "AF_UNSPEC", ""],
+    [2, "AF_INET", ""],
+    [3, "AF_IPX", ""],
+    [4, "AF_APPLETALK", ""],
+    [5, "AF_NETBIOS", ""],
+    [6, "AF_INET6", ""],
+    [7, "AF_IRDA", ""],
+    [8, "AF_BTH", ""]
+  ]],
+
+  ["socket_option", "Record", [], "Specifies any options (SO_*) that may be used by the socket, as a dictionary.", [
+    [1, "socket_option", "String", ["%^(SO|ICMP|ICMP6|IP|IPV6|MCAST|TCP|IRLMP)(_[A-Z]+)+$"], ""],  
+    [2, "option_value", "Integer", [], ""]
+  ]],
+
+  ["socket_type", "Enumerated", [], "Specifies the type of the socket.", [
+    [1, "SOCK_STREAM", ""],
+    [2, "SOCK_DGRAM", ""],
+    [3, "SOCK_RAW", ""],
+    [4, "SOCK_RDM", ""],
+    [5, "SOCK_SEQPACKET", ""]
+  ]],
+
+  ["user_account_extensions_dictionary", "Record", [], "The User Account Object defines the following extensions. In addition to these, producers MAY create their own.", [
+    [1, "unix_account_ext", "unix_account_ext", ["[0"], "The User Account Object defines the following extensions. In addition to these, producers MAY create their own."]
+  ]],
+
+  ["unix_account_ext", "Record", [], "", [
+    [1, "gid", "Number", ["[0"], "Specifies the primary group ID of the account."]
+
+  ]],
+
+  ["process_extensions_dictionary", "Record", [], "", [
+    [1, "windows_proccess_extension", "windows_proccess_extension", ["[0"], "The Windows Process extension specifies a default extension for capturing properties specific to Windows processes."],  
+    [2, "windows_service_ext", "windows_service_ext", ["[0"], "The Windows Service extension specifies a default extension for capturing properties specific to Windows services."]
+  ]],
+
+  ["windows_proccess_extension", "Record", [], "The Windows Process extension specifies a default extension for capturing properties specific to Windows processes.", [ 
+    [1, "aslr_enabled", "Boolean", ["[0"], "Specifies whether Address Space Layout Randomization (ASLR) is enabled for the process."],
+    [2, "dep_enabled", "Boolean", ["[0"], "Specifies whether Data Execution Prevention (DEP) is enabled for the process."],
+    [3, "priority", "String", ["[0"], "Specifies the current priority class of the process in Windows."],
+    [4, "owner_sid", "String", ["[0"], "Specifies the Security ID (SID) value of the owner of the process."],
+    [5, "window_title", "String", ["[0"], "Specifies the title of the main window of the process."],
+    [6, "startup_info", "startup_info_dictionary", ["[0"], "Specifies the STARTUP_INFO struct used by the process, as a dictionary."],
+    [7, "integrity_level", "windows_integrity_level_enum", ["[0"], "Specifies the Windows integrity level, or trustworthiness, of the process."]
+  ]],  
+
+  ["startup_info_dictionary", "Array", [], "", [
+    [1, "lpDesktop", "String", ["[0"], ""],
+    [2, "lpTitle", "String", ["[0"], ""],
+    [3, "dwFillAttribute", "String", ["[0"], ""],
+    [4, "dwFlags", "String", ["[0"], ""],
+    [5, "wShowWindow", "String", ["[0"], ""],
+    [6, "hStdInput", "String", ["[0"], ""],
+    [7, "hStdOutput", "String", ["[0"], ""],
+    [8, "hStdError", "String", ["[0"], ""],
+    [9, "lpReserved", "String", ["[0", "{0", "}0"], ""],
+    [10, "lpReserved2", "String", ["[0", "{0", "}0"], ""],
+    [11, "cb", "Integer", ["[0"], ""],
+    [12, "dwX", "Integer", ["[0"], ""],
+    [13, "dwY", "Integer", ["[0"], ""],
+    [14, "dwXSize", "Integer", ["[0"], ""],
+    [15, "dwYSize", "Integer", ["[0"], ""],
+    [16, "dwXCountChars", "Integer", ["[0"], ""],
+    [17, "dwYCountChars", "Integer", ["[0"], ""],
+    [18, "cbReserved2", "Integer", ["[0", "{0", "}0"], ""]
+  ]],
+
+  ["windows_integrity_level_enum", "Enumerated", [], "", [
+    [1, "low", ""],
+    [2, "medium", ""],
+    [3, "high", ""],
+    [4, "system", ""]
+  ]],
+
+  ["service_status", "Enumerated", [], "Specifies the current status of the service. windows-service-status-enum", [
+    [1, "SERVICE_CONTINUE_PENDING", ""],
+    [2, "SERVICE_PAUSE_PENDING", ""],
+    [3, "SERVICE_PAUSED", ""],
+    [4, "SERVICE_RUNNING", ""],
+    [5, "SERVICE_START_PENDING", ""],
+    [6, "SERVICE_STOP_PENDING", ""],
+    [7, "SERVICE_STOPPED", ""]
+  ]],
+
+  ["service_type", "Enumerated", [], "Specifies the type of the service. windows-service-enum", [
+    [1, "SERVICE_KERNEL_DRIVER", ""],
+    [2, "SERVICE_FILE_SYSTEM_DRIVER", ""],
+    [3, "SERVICE_WIN32_OWN_PROCESS", ""],
+    [4, "SERVICE_WIN32_SHARE_PROCESS", ""]
+  ]],
+
+  ["windows_service_ext", "Record", [], "The Windows Service extension specifies a default extension for capturing properties specific to Windows services.", [
+    [1, "service_name", "String", ["[0"], "Specifies the name of the service."],
+    [2, "descriptions", "ArrayOf", ["*String", "{1", "[0"], "Specifies the descriptions defined for the service."],
+    [3, "display_name", "String", ["[0"], "Specifies the displayed name of the service in Windows GUI controls."],
+    [4, "group_name", "String", ["[0"], "Specifies the name of the load ordering group of which the service is a member."],
+    [5, "start_type", "start_type", ["[0"], "Specifies the start options defined for the service. windows-service-start-enum"],
+    [6, "service_dll_refs", "ArrayOf", ["*String", "[0"], "Specifies the DLLs loaded by the service, as a reference to one or more File Objects."],
+    [7, "service_type", "service_type", ["[0"], "Specifies the type of the service. windows-service-enum"],
+    [8, "service_status", "service_status", ["[0"], "Specifies the current status of the service. windows-service-status-enum"]
+  ]],
+
+  ["start_type", "Enumerated", [], "Specifies the start options defined for the service. windows-service-start-enum", [
+    [1, "SERVICE_AUTO_START", ""],
+    [2, "SERVICE_BOOT_START", ""],
+    [3, "SERVICE_DEMAND_START", ""],
+    [4, "SERVICE_DISABLED", ""],
+    [5, "SERVICE_SYSTEM_ALERT", ""]
+  ]],
+
+  ["spec_version", "Enumerated", [], "The version of the STIX specification used to represent the content in this cyber-observable.", [
+    [1, "2.0", ""],
+    [2, "2.1", ""]
+  ]],
+  ["object_marking_refs", "ArrayOf", ["*identifier", "{1"], "The list of marking-definition objects to be applied to this object."],
+  ["granular_marking", "Record", [], "", [
+    [1, "selectors", "identifier", ["[1"], "A list of selectors for content contained within the STIX object in which this property appears."],
+    [2, "lang", "String", [], "Identifies the language of the text identified by this marking."],
+    [3, "pattern", "identifier", ["[1"], "The marking_ref property specifies the ID of the marking-definition object that describes the marking."]
+  ]],
+  ["granular_markings", "ArrayOf", ["*granular_marking", "{1"], "The set of granular markings that apply to this object."],
+  ["defanged", "Boolean", [], "Defines whether or not the data contained within the object has been defanged."],
+  ["identifier", "String", ["%^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"], "Represents identifiers across the CTI specifications. The format consists of the name of the top-level object being identified, followed by two dashes (--), followed by a UUIDv4."],
+  ["extensions", "Record", ["{1"], "Specifies any extensions of the object, as a dictionary.", [
+    [1, "extension", "String", ["%^([a-z][a-z0-9]*)+(-[a-z0-9]+)*\\\\-ext$"], ""],
+    [2, "extension_definition", "extension", [], ""]
+  ]],
+  ["properties", "Array", ["{1"], "Rules for custom properties", [
+    [1, "binary", "Binary", ["[0"], ""],
+    [2, "hex", "Hex", ["[0"], "The hex data type encodes an array of octets (8-bit bytes) as hexadecimal. The string MUST consist of an even number of hexadecimal characters, which are the digits '0' through '9' and the letters 'a' through 'f'.  In order to allow pattern matching on custom objects, all properties that use the hex type, the property name MUST end with '_hex'."],
+    [3, "array", "ArrayOf", ["*String", "[0", "{1"], ""],
+    [4, "string", "String", ["[0"], ""],
+    [5, "integer", "Integer", ["[0"], ""],
+    [6, "boolean", "Boolean", ["[0"], ""],
+    [7, "number", "Number", ["[0"], ""],
+    [8, "object", "extensions", ["[0"], ""]
+  ]],
+  
+  ["extension", "Record", ["{1"], "", [
+    [1, "extension_type", "extension_type_enum", [], "The type of extension."],
+    [2, "properties", "properties", [], ""]
+  ]],
+
+  ["extension_type_enum", "Enumerated", [], "", [
+    [1, "new-sdo", ""],
+    [2, "new-sco", ""],
+    [3, "new-sro", ""],
+    [4, "property-extension", ""],
+    [5, "toplevel-property-extension", ""]
+  ]], 
+
+  ["Hex", "String", ["%^([a-fA-F0-9]{2})+$"], ""], 
+
+  ["timestamp", "String", ["%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"], ""],
+
+  ["Features", "ArrayOf", ["*Feature", "{0", "}10", "q"], "An array of zero to ten names used to query a Consume for its supported capabilities.", []],
+
+  ["Date-Time", "Integer", ["{0"], "Date and Time", []],
+
+  ["Duration", "Integer", ["{0"], "A length of time", []],
+
+  ["Feature", "Enumerated", [], "Specifies the results to be returned from a query features Command", [
+    [1, "versions", "List of OpenC2 Language versions supported by this Consumer"],
+    [2, "profiles", "List of profiles supported by this Consumer"],
+    [3, "pairs", "List of supported Actions and applicable Targets"],
+    [4, "rate_limit", "Maximum number of Commands per minute supported by design or policy"]
+  ]],
+
+
+  ["L4-Protocol", "Enumerated", [], "Value of the protocol (IPv4) or next header (IPv6) field in an IP packet. Any IANA value, [RFC5237]", [
+    [1, "icmp", "Internet Control Message Protocol - [RFC0792]"],
+    [6, "tcp", "Transmission Control Protocol - [RFC0793]"],
+    [17, "udp", "User Datagram Protocol - [RFC0768]"],
+    [132, "sctp", "Stream Control Transmission Protocol - [RFC4960]"]
+  ]],
+  ["Payload", "Choice", [], "", [
+    [1, "bin", "Binary", [], "Specifies the data contained in the artifact"],
+    [2, "url", "URI", [], "MUST be a valid URL that resolves to the un-encoded content"]
+  ]],
+
+  ["Nsid", "String", ["{1", "}16"], "A short identifier that refers to a namespace.", []],
+
+  ["Response-Type", "Enumerated", [], "", [
+    [0, "none", "No response"],
+    [1, "ack", "Respond when Command received"],
+    [2, "status", "Respond with progress toward Command completion"],
+    [3, "complete", "Respond when all aspects of Command completed"]
+  ]],
+
+  ["Status-Code", "Enumerated", ["="], "", [
+    [102, "Processing", "an interim Response used to inform the Producer that the Consumer has accepted the Command but has not yet completed it"],
+    [200, "OK", "the Command has succeeded"],
+    [201, "Created", "the Command has succeeded and a new resource has been created as a result of it"],
+    [400, "Bad Request", "the Consumer cannot process the Command due to something that is perceived to be a Producer error (e.g., malformed Command syntax)"],
+    [401, "Unauthorized", "the Command Message lacks valid authentication credentials for the target resource or authorization has been refused for the submitted credentials"],
+    [403, "Forbidden", "the Consumer understood the Command but refuses to authorize it"],
+    [404, "Not Found", "the Consumer has not found anything matching the Command"],
+    [500, "Internal Error", "the Consumer encountered an unexpected condition that prevented it from performing the Command"],
+    [501, "Not Implemented", "the Consumer does not support the functionality required to perform the Command"],
+    [503, "Service Unavailable", "the Consumer is currently unable to perform the Command due to a temporary overloading or maintenance of the Consumer"]
+  ]],
+
+  ["Command-ID", "String", ["%^\\S{0,36}$"], "Command Identifier", []],
+
+  ["Version", "String", [], "Major.Minor version number", []]
+ ]
+}

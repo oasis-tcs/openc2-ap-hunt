@@ -1,0 +1,690 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://praxiseng.com/threat-hunter-9001",
+  "title": "Threat Hunting Profile",
+  "version": "0-wd01",
+  "description": "Data definitions for Threat Hunting (TH) functions",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "openc2_command": {
+      "$ref": "#/definitions/OpenC2-Command"
+    },
+    "openc2_response": {
+      "$ref": "#/definitions/OpenC2-Response"
+    },
+    "sco": {
+      "$ref": "#/definitions/SCO"
+    }
+  },
+  "definitions": {
+
+    "Action": {
+      "title": "Action",
+      "type": "string",
+      "enum": [
+        "query",
+        "investigate"
+      ]
+    },
+    "Target": {
+      "title": "Target",
+      "type": "string",
+      "enum": [
+        "features",
+        "th"
+      ]
+    },
+    "Args": {
+      "title": "Args",
+      "type": "string",
+      "enum": [
+        "start_time",
+        "stop_time",
+        "duration",
+        "response_requested",
+        "th"
+      ]
+    },
+    "Actuator": {
+      "title": "Actuator",
+      "type": "string",
+      "enum": [
+        "th"
+      ]
+    },
+    "Results": {
+      "title": "Results",
+      "type": "string",
+      "enum": [
+        "versions",
+        "profiles",
+        "pairs",
+        "rate_limit",
+        "args",
+        "th"
+      ]
+    },
+    "Pairs": {
+      "title": "Pairs",
+      "type": "string",
+      "enum": [
+        "query: features, /huntflows, /datasources",
+        "investigate: /hunt"
+      ]
+    },
+    "AP-Target": {
+      "title": "AP Target",
+      "type": "object",
+      "description": "TH targets defined in this profile.",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "maxProperties": 1,
+      "properties": {
+        "hunt": {
+          "type": "string",
+          "description": "A procedure to find a set of entities in the monitored environment that associates with a cyberthreat.",
+          "maxLength": 5555
+        },
+        "huntflows": {
+          "$ref": "#/definitions/Huntflow-Specifiers",
+          "description": "TH Huntflow specifiers."
+        },
+        "datasources": {
+          "type": "string",
+          "maxLength": 5555
+        }
+      }
+    },
+    "AP-Args": {
+      "title": "AP Args",
+      "type": "object",
+      "description": "TH command arguments defined in this profile.",
+      "additionalProperties": false,
+      "required": [
+        "huntargs"
+      ],
+      "maxProperties": 555,
+      "properties": {
+        "huntargs": {
+          "$ref": "#/definitions/Huntargs",
+          "description": "Arguments for use in conjunction with huntflow implementation."
+        }
+      }
+    },
+    "Huntargs": {
+      "title": "Huntargs",
+      "type": "object",
+      "description": "TH command arguments defined in this profile.",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "maxProperties": 555,
+      "properties": {
+        "string_args": {
+          "type": "array",
+          "description": "string arguments supplied as huntargs.",
+          "maxItems": 555,
+          "items": {
+            "type": "string"
+          }
+        },
+        "integer_args": {
+          "type": "array",
+          "description": "integer arguments supplied as huntargs.",
+          "maxItems": 555,
+          "items": {
+            "type": "integer"
+          }
+        },
+        "typed_args": {
+          "$ref": "#/definitions/Typed-Arguments",
+          "description": "Paired strings of named arguments."
+        },
+        "native_oc2": {
+          "$ref": "#/definitions/OC2-Data",
+          "description": "OC2 Language types supplied as huntargs."
+        },
+        "stix": {
+          "$ref": "#/definitions/STIX-Cybersecurity-Observables",
+          "description": "STIX arguments supplied as huntargs."
+        },
+        "stix_extensions": {
+          "type": "string",
+          "description": "OCA Extended STIX arguments supplied as huntargs. add a custom stix for oca-asset and event",
+          "maxLength": 5555
+        },
+        "timeranges": {
+          "$ref": "#/definitions/Timeranges",
+          "description": "Timeranges used in the execution of a hunt."
+        },
+        "datasources": {
+          "$ref": "#/definitions/Datasource-Array",
+          "description": "Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc."
+        }
+      }
+    },
+    "OC2-Data": {
+      "title": "OC2 Data",
+      "type": "array",
+      "description": "OC2-Data is an array of one or more types defined in the OpenC2 language spec",
+      "minItems": 1,
+      "maxItems": 555,
+      "items": {
+        "$ref": "#/definitions/Language-Spec-Types"
+      }
+    },
+    "Language-Spec-Types": {
+      "title": "Language Spec Types",
+      "type": "object",
+      "description": "for each track there's a file with the audio and a metadata record",
+      "additionalProperties": false,
+      "maxProperties": 555,
+      "properties": {
+        "artifact": {
+          "$ref": "#/definitions/Artifact",
+          "description": "An array of bytes representing a file-like object or a link to that object."
+        },
+        "device": {
+          "$ref": "#/definitions/Device",
+          "description": "The properties of a hardware device."
+        },
+        "domain_name": {
+          "$ref": "#/definitions/Domain-Name",
+          "description": "A network domain name."
+        },
+        "email-address": {
+          "$ref": "#/definitions/Email-Addr",
+          "description": "A single email address"
+        },
+        "file": {
+          "$ref": "#/definitions/File",
+          "description": "Properties of a file."
+        },
+        "hashes": {
+          "$ref": "#/definitions/Hashes",
+          "description": "Not used as an entity; use inside File or other attribute of another type. May be used as a query value."
+        },
+        "hostname": {
+          "$ref": "#/definitions/Hostname",
+          "description": "Value must be a hostname as defined in [RFC1034], Section 3.1"
+        },
+        "idn_domain_name": {
+          "$ref": "#/definitions/IDN-Domain-Name",
+          "description": "An internationalized domain name."
+        },
+        "idn_email_address": {
+          "$ref": "#/definitions/IDN-Email-Addr",
+          "description": "A single internationalized email address."
+        },
+        "ipv4_address": {
+          "$ref": "#/definitions/IPv4-Addr",
+          "description": "IPv4 address as defined in [RFC0791]."
+        },
+        "ipv6_address": {
+          "$ref": "#/definitions/IPv6-Addr",
+          "description": "IPv6 address as defined in [RFC8200]."
+        },
+        "ipv4_network": {
+          "$ref": "#/definitions/IPv4-Net",
+          "description": "IPv4 network targeted by hunt activity."
+        },
+        "ipv6_network": {
+          "$ref": "#/definitions/IPv6-Net",
+          "description": "IPv6 network targeted by hunt activity."
+        },
+        "ipv4_connection": {
+          "$ref": "#/definitions/IPv4-Connection",
+          "description": "A 5-tuple of source and destination IPv4 address ranges, source and destination ports, and protocol."
+        },
+        "ipv6_connection": {
+          "$ref": "#/definitions/IPv6-Connection",
+          "description": "A 5-tuple of source and destination IPv6 address ranges, source and destination ports, and protocol."
+        },
+        "iri": {
+          "$ref": "#/definitions/IRI",
+          "description": "An internationalized resource identifier (IRI)."
+        },
+        "mac_address": {
+          "$ref": "#/definitions/MAC-Addr",
+          "description": "A Media Access Control (MAC) address - EUI-48 or EUI-64 as defined in [EUI]."
+        },
+        "port": {
+          "$ref": "#/definitions/Port",
+          "description": "Transport Protocol Port Number, [RFC6335]"
+        },
+        "process": {
+          "$ref": "#/definitions/Process",
+          "description": "Common properties of an instance of a computer program as executed on an operating system."
+        },
+        "uri": {
+          "$ref": "#/definitions/URI",
+          "description": "A uniform resource identifier (URI)."
+        }
+      }
+    },
+
+
+    "AP-Specifiers": {
+      "title": "AP Specifiers",
+      "type": "object",
+      "description": "TH actuator specifiers (may be empty).",
+      "additionalProperties": false,
+      "maxProperties": 555,
+      "properties": {}
+    },
+    "Huntflow-Specifiers": {
+      "title": "Huntflow Specifiers",
+      "type": "object",
+      "description": "TH Huntflow specifiers.",
+      "additionalProperties": false,
+      "maxProperties": 555,
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Return huntflows at and below this filesystem location (absolute path).",
+          "maxLength": 5555
+        },
+        "tags": {
+          "$ref": "#/definitions/Tags",
+          "description": "Return huntflows with these keywords."
+        },
+        "arg_types": {
+          "$ref": "#/definitions/Specified-Arg-Types",
+          "description": "Return huntflows that take these argument types."
+        },
+        "arg_names": {
+          "$ref": "#/definitions/Specified-Arg-Names",
+          "description": "Return huntflows that take these argument types."
+        },
+        "format_types": {
+          "$ref": "#/definitions/Return-Type",
+          "description": "Return huntflows that produce these output types."
+        },
+        "return_format": {
+          "$ref": "#/definitions/Huntflow-Sections",
+          "description": "For each huntflow returned, include these data items."
+        }
+      }
+    },
+    "Specified-Arg-Types": {
+      "title": "Specified Arg Types",
+      "type": "array",
+      "description": "Return huntflows that take these argument types.",
+      "maxItems": 555,
+      "items": {
+        "$ref": "#/definitions/Arg-Type"
+      }
+    },
+    "Specified-Arg-Names": {
+      "title": "Specified Arg Names",
+      "type": "array",
+      "description": "Return huntflows that take arguments with these names.",
+      "maxItems": 555,
+      "items": {
+        "$ref": "#/definitions/Arg-Name"
+      }
+    },
+    "AP-Results": {
+      "title": "AP Results",
+      "type": "object",
+      "description": "TH results defined in this profile.",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "maxProperties": 555,
+      "properties": {
+        "huntflow_info": {
+          "type": "array",
+          "description": "Structured data returned by Query: Huntflows.",
+          "maxItems": 555,
+          "items": {
+            "$ref": "#/definitions/Huntflow-Info"
+          }
+        },
+        "datasources": {
+          "$ref": "#/definitions/Datasource-Array",
+          "description": "Datasource names and info returned by Query Datasources."
+        },
+        "inv_returns": {
+          "$ref": "#/definitions/Inv-Returns",
+          "description": "STIX SCO object returns"
+        }
+      }
+    },
+    "Inv-Returns": {
+      "title": "Inv Returns",
+      "type": "array",
+      "description": "Array of returns from threat hunt investigations.",
+      "minItems": 1,
+      "maxItems": 555,
+      "items": {
+        "$ref": "#/definitions/Inv-Return"
+      }
+    },
+    "Inv-Return": {
+      "title": "Inv Return",
+      "type": "object",
+      "description": "Data returned by a threat hunt, in various formatted types.",
+      "additionalProperties": false,
+      "maxProperties": 555,
+      "properties": {
+        "string_returns": {
+          "type": "array",
+          "description": "String return from an investigation",
+          "maxItems": 555,
+          "items": {
+            "type": "string"
+          }
+        },
+        "stix_sco": {
+          "$ref": "#/definitions/STIX-Cybersecurity-Observables",
+          "description": "STIX SCO object returns"
+        }
+      }
+    },
+    "Timeranges": {
+      "title": "Timeranges",
+      "type": "array",
+      "description": "a timerange used in the execution of a hunt.",
+      "maxItems": 555,
+      "items": {
+        "$ref": "#/definitions/Timerange"
+      }
+    },
+    "Timerange": {
+      "title": "Timerange",
+      "type": "object",
+      "description": "Identification of process to be targeted by Threat Hunting activity.",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "maxProperties": 1,
+      "properties": {
+        "timerange_absolute": {
+          "$ref": "#/definitions/Timerange-Abs",
+          "description": "Absolute timerange, defined by a start and end time in ISO 8601 format."
+        },
+        "timerange_relative": {
+          "$ref": "#/definitions/Timerange-Rel",
+          "description": "Relative timerange, example '3, Days' for last 3 days."
+        }
+      }
+    },
+    "Time-Unit": {
+      "title": "Time Unit",
+      "type": "string",
+      "description": "Time Unit Keywords.",
+      "enum": [
+        "Days",
+        "Hours",
+        "Minutes",
+        "Seconds"
+      ]
+    },
+    "Timerange-Abs": {
+      "title": "Timerange Abs",
+      "type": "object",
+      "description": "Absolute timerange, defined by a start and end time in ISO 8601 format.",
+      "additionalProperties": false,
+      "required": [
+        "hunt_start_time",
+        "hunt_stop_time"
+      ],
+      "minProperties": 2,
+      "maxProperties": 555,
+      "properties": {
+        "hunt_start_time": {
+          "$ref": "#/definitions/timestamp",
+          "description": "Start time, as a STIX time string."
+        },
+        "hunt_stop_time": {
+          "$ref": "#/definitions/timestamp",
+          "description": "Stop time, as a STIX time string."
+        }
+      }
+    },
+    "Timerange-Rel": {
+      "title": "Timerange Rel",
+      "type": "object",
+      "description": "Relative timerange, example '3, Days' for last 3 days.",
+      "additionalProperties": false,
+      "required": [
+        "number",
+        "time_unit"
+      ],
+      "minProperties": 2,
+      "maxProperties": 555,
+      "properties": {
+        "number": {
+          "type": "integer",
+          "description": "Number of specified Time Units used in Relative Timerange."
+        },
+        "time_unit": {
+          "$ref": "#/definitions/Time-Unit",
+          "description": "Time Unit Keywords."
+        }
+      }
+    },
+    "Return-Type": {
+      "title": "Return Type",
+      "type": "object",
+      "description": "Variable names and types expected as returns when using a Huntflow.",
+      "additionalProperties": false,
+      "required": [
+        "var_name",
+        "var_type"
+      ],
+      "minProperties": 2,
+      "maxProperties": 555,
+      "properties": {
+        "var_name": {
+          "$ref": "#/definitions/Arg-Name",
+          "description": "Variable name to be returned by use of Huntflow."
+        },
+        "var_type": {
+          "$ref": "#/definitions/Arg-Type",
+          "description": "Type of data to be returned by use of Huntflow."
+        }
+      }
+    },
+    "Datasource": {
+      "title": "Datasource",
+      "type": "object",
+      "description": "Datasource names and tags required for use with a particular Huntflow.",
+      "additionalProperties": false,
+      "required": [
+        "ds_name"
+      ],
+      "minProperties": 1,
+      "maxProperties": 555,
+      "properties": {
+        "ds_name": {
+          "type": "string",
+          "description": "Name of a Datasource used by a Huntflow in Kestrel runtime.",
+          "maxLength": 5555
+        },
+        "ds_tags": {
+          "$ref": "#/definitions/Tags",
+          "description": "Tags applied to a Datasource for search or filter purposes."
+        }
+      }
+    },
+    "Huntflow-Sections": {
+      "title": "Huntflow Sections",
+      "type": "array",
+      "description": "For each huntflow returned, include these data items.",
+      "maxItems": 555,
+      "items": {
+        "$ref": "#/definitions/Huntflow-Section"
+      }
+    },
+    "Huntflow-Section": {
+      "title": "Huntflow Section",
+      "type": "string",
+      "description": "Data format to be returned by Query Huntflows. If none specified, return all.",
+      "enum": [
+        "path",
+        "uniqueId",
+        "version",
+        "args_required",
+        "expected_returns",
+        "script"
+      ]
+    },
+    "Huntflow-Info": {
+      "title": "Huntflow Info",
+      "type": "object",
+      "description": "Structured data returned by Query: Huntflows with specifiers for specific info.",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "maxProperties": 555,
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Path used to identify a Huntflow in place of a name.",
+          "maxLength": 5555
+        },
+        "uniqueId": {
+          "type": "integer",
+          "description": "Unique ID associated with a specified Huntflow."
+        },
+        "version": {
+          "type": "string",
+          "description": "Unique ID associated with a specified Huntflow.",
+          "maxLength": 5555
+        },
+        "args_required": {
+          "$ref": "#/definitions/Typed-Arguments",
+          "description": "List of arguments used in the specified Huntflow."
+        },
+        "expected_returns": {
+          "$ref": "#/definitions/Typed-Arguments",
+          "description": "Data returned by the specified Huntflows."
+        },
+        "script": {
+          "type": "string",
+          "description": "Text of Hunt logic implemented by specified Huntflow.",
+          "maxLength": 5555
+        }
+      }
+    },
+    "Datasource-Array": {
+      "title": "Datasource Array",
+      "type": "array",
+      "description": "An Array of Datasources, with multiple uses in Threathunting",
+      "maxItems": 555,
+      "items": {
+        "$ref": "#/definitions/Datasource"
+      }
+    },
+    "Tags": {
+      "title": "Tags",
+      "type": "array",
+      "description": "Tags applied for search or filter purposes.",
+      "maxItems": 555,
+      "items": {
+        "type": "string"
+      }
+    },
+    "Typed-Arguments": {
+      "title": "Typed Arguments",
+      "type": "object",
+      "description": "Argument names and types tied to a specific Huntflow.",
+      "additionalProperties": false,
+      "maxProperties": 555
+    },
+    "Arg-Type": {
+      "title": "Arg Type",
+      "type": "string",
+      "description": "Argument types used by a Huntflow. Follow STIX naming conventions, with lowercase characters and hyphens replacing spaces. Common types include process, file, and network-traffic.",
+      "maxLength": 5555
+    },
+    "Arg-Name": {
+      "title": "Arg Name",
+      "type": "string",
+      "description": "Argument names used by a Huntflow. Follow C variable naming conventions. Examples include name, src_port, and x_unique_id.",
+      "maxLength": 5555
+    },
+    "STIX-Cybersecurity-Observables": {
+      "title": "STIX Cybersecurity Observables",
+      "type": "array",
+      "description": "An Array of Cybersecurity Observables in STIX formatting",
+      "maxItems": 555,
+      "items": {
+        "$ref": "#/definitions/SCO"
+      }
+    },
+    "Hex": {
+      "title": "Hex",
+      "type": "string",
+      "maxLength": 5555,
+      "pattern": "^([a-fA-F0-9]{2})+$"
+    },
+    "timestamp": {
+      "title": "timestamp",
+      "type": "string",
+      "maxLength": 5555,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "Features": {
+      "title": "Features",
+      "type": "array",
+      "description": "An array of zero to ten names used to query a Consume for its supported capabilities.",
+      "uniqueItems": true,
+      "maxItems": 10,
+      "items": {
+        "$ref": "#/definitions/Feature"
+      }
+    },
+    "Date-Time": {
+      "title": "Date Time",
+      "type": "integer",
+      "description": "Date and Time",
+      "minimum": 0
+    },
+    "Duration": {
+      "title": "Duration",
+      "type": "integer",
+      "description": "A length of time",
+      "minimum": 0
+    },
+    "Feature": {
+      "title": "Feature",
+      "type": "string",
+      "description": "Specifies the results to be returned from a query features Command",
+      "enum": [
+        "versions",
+        "profiles",
+        "pairs",
+        "rate_limit"
+      ]
+    },
+    "L4-Protocol": {
+      "title": "L4 Protocol",
+      "type": "string",
+      "description": "Value of the protocol (IPv4) or next header (IPv6) field in an IP packet. Any IANA value, [RFC5237]",
+      "enum": [
+        "icmp",
+        "tcp",
+        "udp",
+        "sctp"
+      ]
+    },
+    "Payload": {
+      "title": "Payload",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "maxProperties": 1,
+      "properties": {
+        "bin": {
+          "type": "string",
+          "description": "Specifies the data contained in the artifact",
+          "contentEncoding": "base64url"
+        },
+        "url": {
+          "$ref": "#/definitions/URI",
+          "description": "MUST be a valid URL that resolves to the un-encoded content"
+        }
+      }
+    }
+  }
+}
