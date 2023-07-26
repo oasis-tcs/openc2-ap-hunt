@@ -45,5 +45,5 @@ Results = Map{1..*}                             // Response Results
 Action-Targets = ArrayOf(Pairs)
 
 Pairs = Enumerated
-   3 query: features, /huntbooks, /datasources
+   3 query: features, /huntflows, /datasources
   30 investigate: /hunt

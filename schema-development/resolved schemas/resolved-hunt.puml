@@ -1,0 +1,737 @@
+@startuml
+' package: https://praxiseng.com/threat-hunter-9001
+' version: 0-wd01
+' title: Threat Hunting Profile
+' description: Data definitions for Threat Hunting (TH) functions
+' exports: ['OpenC2-Command', 'OpenC2-Response', 'SCO']
+' config: {'$MaxBinary': 5555, '$MaxString': 5555, '$MaxElements': 555, '$Sys': '$', '$TypeName': '^[A-Za-z][-:_A-Za-z0-9]{0,63}$', '$FieldName': '^[A-Za-z][-:_A-Za-z0-9]{0,63}$', '$NSID': '^[A-Za-z][A-Za-z0-9]{0,7}$'}
+
+' !theme spacelab
+hide empty members
+hide circle
+
+class "OpenC2-Command" as n0 <<Record>>
+  n0 : 1 action : Action
+  n0 : 2 target : Target
+  n0 : 3 args : Args [0..1]
+  n0 : 4 actuator : Actuator [0..1]
+  n0 : 5 command_id : Command-ID [0..1]
+class "OpenC2-Response" as n1 <<Map>>
+  n1 : 1 status : Status-Code
+  n1 : 2 status_text : String [0..1]
+  n1 : 3 results : Results [0..1]
+class "Target" as n3 <<Choice>>
+  n3 : 9 features : Features
+  n3 : 1036 th/ : AP-Target
+class "Args" as n4 <<Map>>
+  n4 : 1 start_time : Date-Time [0..1]
+  n4 : 2 stop_time : Date-Time [0..1]
+  n4 : 3 duration : Duration [0..1]
+  n4 : 4 response_requested : Response-Type [0..1]
+  n4 : 1036 th : AP-Args [0..1]
+class "Actuator" as n5 <<Choice>>
+  n5 : 1036 th/ : AP-Specifiers
+class "Results" as n6 <<Map>>
+  n6 : 1 versions : Version unique [0..10]
+  n6 : 2 profiles : Nsid unique [0..*]
+  n6 : 3 pairs : Pairs [0..1]
+  n6 : 4 rate_limit : Number{0.0..*} [0..1]
+  n6 : 5 args : ArrayOf{String} [0..1]
+  n6 : 1036 th/ : AP-Results [0..1]
+class "AP-Target" as n8 <<Choice>>
+  n8 : 1 hunt : String
+  n8 : 2 huntflows : Huntflow-Specifiers
+  n8 : 3 datasources : String [0..1]
+class "AP-Args" as n9 <<Map>>
+  n9 : 1 huntargs : Huntargs
+class "Huntargs" as n10 <<Record>>
+  n10 : 1 string_args : ArrayOf{String} [0..1]
+  n10 : 2 integer_args : ArrayOf{Integer} [0..1]
+  n10 : 3 typed_args : Typed-Arguments [0..1]
+  n10 : 4 native_oc2 : OC2-Data [0..1]
+  n10 : 5 stix : STIX-Cybersecurity-Observables [0..1]
+  n10 : 6 stix_extensions : String [0..1]
+  n10 : 7 timeranges : Timeranges [0..1]
+  n10 : 8 datasources : Datasource-Array [0..1]
+class "OC2-Data" as n11 <<ArrayOf>>
+class "Language-Spec-Types" as n12 <<Record>>
+  n12 : 1 artifact : Artifact [0..1]
+  n12 : 2 device : Device [0..1]
+  n12 : 3 domain_name : Domain-Name [0..1]
+  n12 : 4 email-address : Email-Addr [0..1]
+  n12 : 5 file : File [0..1]
+  n12 : 6 hashes : Hashes [0..1]
+  n12 : 7 hostname : Hostname [0..1]
+  n12 : 8 idn_domain_name : IDN-Domain-Name [0..1]
+  n12 : 9 idn_email_address : IDN-Email-Addr [0..1]
+  n12 : 10 ipv4_address : IPv4-Addr [0..1]
+  n12 : 11 ipv6_address : IPv6-Addr [0..1]
+  n12 : 12 ipv4_network : IPv4-Net [0..1]
+  n12 : 13 ipv6_network : IPv6-Net [0..1]
+  n12 : 14 ipv4_connection : IPv4-Connection [0..1]
+  n12 : 15 ipv6_connection : IPv6-Connection [0..1]
+  n12 : 16 iri : IRI [0..1]
+  n12 : 17 mac_address : MAC-Addr [0..1]
+  n12 : 18 port : Port [0..1]
+  n12 : 19 process : Process [0..1]
+  n12 : 20 uri : URI [0..1]
+class "Artifact" as n13 <<Record>>
+  n13 : 1 mime_type : String [0..1]
+  n13 : 2 payload : Payload [0..1]
+  n13 : 3 hashes : Hashes [0..1]
+class "Device" as n14 <<Map>>
+  n14 : 1 hostname : Hostname [0..1]
+  n14 : 2 idn_hostname : IDN-Hostname [0..1]
+  n14 : 3 device_id : String [0..1]
+class "File" as n17 <<Map>>
+  n17 : 1 name : String [0..1]
+  n17 : 2 path : String [0..1]
+  n17 : 3 hashes : Hashes [0..1]
+class "IPv4-Net" as n20 <<Array>>
+  n20 : 1  : IPv4-Addr
+  n20 : 2  : Integer [0..1]
+class "IPv4-Connection" as n21 <<Record>>
+  n21 : 1 src_addr : IPv4-Net [0..1]
+  n21 : 2 src_port : Port [0..1]
+  n21 : 3 dst_addr : IPv4-Net [0..1]
+  n21 : 4 dst_port : Port [0..1]
+  n21 : 5 protocol : L4-Protocol [0..1]
+class "IPv6-Net" as n22 <<Array>>
+  n22 : 1  : IPv6-Addr
+  n22 : 2  : Integer [0..1]
+class "IPv6-Connection" as n23 <<Record>>
+  n23 : 1 src_addr : IPv6-Net [0..1]
+  n23 : 2 src_port : Port [0..1]
+  n23 : 3 dst_addr : IPv6-Net [0..1]
+  n23 : 4 dst_port : Port [0..1]
+  n23 : 5 protocol : L4-Protocol [0..1]
+class "Process" as n26 <<Map>>
+  n26 : 1 pid : Key{Integer{0..*}} [0..1]
+  n26 : 2 name : String [0..1]
+  n26 : 3 cwd : String [0..1]
+  n26 : 4 executable : File [0..1]
+  n26 : 5 parent : Link{Process} [0..1]
+  n26 : 6 command_line : String [0..1]
+class "Hashes" as n28 <<Map>>
+  n28 : 1 md5 : Binary /x [0..1]
+  n28 : 2 sha1 : Binary /x [0..1]
+  n28 : 3 sha256 : Binary /x [0..1]
+class "AP-Specifiers" as n34 <<Map>>
+class "Huntflow-Specifiers" as n35 <<Map>>
+  n35 : 1 path : String [0..1]
+  n35 : 2 tags : Tags [0..1]
+  n35 : 3 arg_types : Specified-Arg-Types [0..1]
+  n35 : 4 arg_names : Specified-Arg-Names [0..1]
+  n35 : 5 format_types : Return-Type [0..1]
+  n35 : 6 return_format : Huntflow-Sections [0..1]
+class "Specified-Arg-Types" as n36 <<ArrayOf>>
+class "Specified-Arg-Names" as n37 <<ArrayOf>>
+class "AP-Results" as n38 <<Map>>
+  n38 : 1 huntflow_info : ArrayOf{Huntflow-Info} [0..1]
+  n38 : 2 datasources : Datasource-Array [0..1]
+  n38 : 3 inv_returns : Inv-Returns [0..1]
+class "Inv-Returns" as n39 <<ArrayOf>>
+class "Inv-Return" as n40 <<Record>>
+  n40 : 1 string_returns : ArrayOf{String} [0..1]
+  n40 : 2 stix_sco : STIX-Cybersecurity-Observables [0..1]
+class "Timeranges" as n41 <<ArrayOf>>
+class "Timerange" as n42 <<Choice>>
+  n42 : 1 timerange_absolute : Timerange-Abs [0..1]
+  n42 : 2 timerange_relative : Timerange-Rel [0..1]
+class "Timerange-Abs" as n44 <<Record>>
+  n44 : 1 hunt_start_time : timestamp
+  n44 : 2 hunt_stop_time : timestamp
+class "Timerange-Rel" as n45 <<Record>>
+  n45 : 1 number : Integer
+  n45 : 2 time_unit : Time-Unit
+class "Return-Type" as n46 <<Record>>
+  n46 : 1 var_name : Arg-Name
+  n46 : 2 var_type : Arg-Type
+class "Datasource" as n47 <<Record>>
+  n47 : 1 ds_name : String
+  n47 : 2 ds_tags : Tags [0..1]
+class "Huntflow-Sections" as n48 <<ArrayOf>>
+class "Huntflow-Info" as n50 <<Record>>
+  n50 : 1 path : String [0..1]
+  n50 : 2 uniqueId : Integer [0..1]
+  n50 : 3 version : String [0..1]
+  n50 : 4 args_required : Typed-Arguments [0..1]
+  n50 : 5 expected_returns : Typed-Arguments [0..1]
+  n50 : 6 script : String [0..1]
+class "Datasource-Array" as n51 <<ArrayOf>>
+class "Tags" as n52 <<ArrayOf>>
+class "Typed-Arguments" as n53 <<MapOf>>
+class "STIX-Cybersecurity-Observables" as n56 <<ArrayOf>>
+class "SCO" as n57 <<Choice>>
+  n57 : 1 Artifact : artifact
+  n57 : 2 Autonomous-System : autonomous-system
+  n57 : 3 Directory : directory
+  n57 : 4 Domain-Name : domain-name
+  n57 : 5 Email-Addr : email-addr
+  n57 : 6 Email-Message : email-message
+  n57 : 7 File : file
+  n57 : 8 IPv4-Addr : ipv4-addr
+  n57 : 9 IPv6-Addr : ipv6-addr
+  n57 : 10 Mac-Addr : mac-addr
+  n57 : 11 Mutex : mutex
+  n57 : 12 Network-Traffic : network-traffic
+  n57 : 13 Process : process
+  n57 : 14 Software : software
+  n57 : 15 URL : url
+  n57 : 16 User-Account : user-account
+  n57 : 17 Windows-Registry-Key : windows-registry-key
+  n57 : 18 X509-Certificate : x509-certificate
+class "artifact" as n58 <<Record>>
+  n58 : 1 type : String{pattern="^artifact$"}
+  n58 : 2 id : String{pattern="^artifact--"}
+  n58 : 3 mime_type : String{pattern="^{application|audio|font|image|message|model|multipart|text|video}/[a-zA-Z0-9.+_-]+"}
+  n58 : 4 payload_bin : Binary [0..1]
+  n58 : 5 url : url
+  n58 : 6 hashes : ArrayOf{hashes} [0..1]
+  n58 : 7 encryption_algorithm : encryption_algorithm_enum [0..1]
+  n58 : 8 decryption_key : String [0..1]
+  n58 : 9 spec_version : spec_version [0..1]
+  n58 : 10 object_marking_refs : object_marking_refs [0..1]
+  n58 : 11 granular_markings : granular_markings [0..1]
+  n58 : 12 defanged : defanged [0..1]
+  n58 : 13 core_extensions : extensions [0..1]
+class "autonomous-system" as n59 <<Record>>
+  n59 : 1 type : String{pattern="^autonomous-system$"}
+  n59 : 2 id : String{pattern="^autonomous-system--"}
+  n59 : 3 number : Integer
+  n59 : 4 name : String [0..1]
+  n59 : 5 rir : String [0..1]
+  n59 : 6 spec_version : spec_version [0..1]
+  n59 : 7 object_marking_refs : object_marking_refs [0..1]
+  n59 : 8 granular_markings : granular_markings [0..1]
+  n59 : 9 defanged : defanged [0..1]
+  n59 : 10 core_extensions : extensions [0..1]
+class "directory" as n60 <<Record>>
+  n60 : 1 type : String{pattern="^directory$"}
+  n60 : 2 id : String{pattern="^directory--"}
+  n60 : 3 path : String
+  n60 : 4 path_enc : String{pattern="^[a-zA-Z0-9/\\.+_:-]{2,250}$"}
+  n60 : 5 ctime : timestamp
+  n60 : 6 mtime : timestamp
+  n60 : 7 atime : timestamp
+  n60 : 8 contains_refs : ArrayOf{String}{1..*}
+  n60 : 9 spec_version : spec_version [0..1]
+  n60 : 10 object_marking_refs : object_marking_refs [0..1]
+  n60 : 11 granular_markings : granular_markings [0..1]
+  n60 : 12 defanged : defanged [0..1]
+  n60 : 13 core_extensions : extensions [0..1]
+class "domain-name" as n61 <<Record>>
+  n61 : 1 type : String{pattern="^domain-name$"}
+  n61 : 2 id : String{pattern="^domain-name--"}
+  n61 : 3 domain_name : String
+  n61 : 4 resolves_to_refs : ArrayOf{String}{1..*} [0..1]
+  n61 : 5 spec_version : spec_version [0..1]
+  n61 : 6 object_marking_refs : object_marking_refs [0..1]
+  n61 : 7 granular_markings : granular_markings [0..1]
+  n61 : 8 defanged : defanged [0..1]
+  n61 : 9 core_extensions : extensions [0..1]
+class "email-addr" as n62 <<Record>>
+  n62 : 1 type : String{pattern="^email-addr$"}
+  n62 : 2 id : String{pattern="^email-addr--"}
+  n62 : 3 email_address : String
+  n62 : 4 display_name : String [0..1]
+  n62 : 5 belongs_to_ref : String [0..1]
+  n62 : 6 spec_version : spec_version [0..1]
+  n62 : 7 object_marking_refs : object_marking_refs [0..1]
+  n62 : 8 granular_markings : granular_markings [0..1]
+  n62 : 9 defanged : defanged [0..1]
+  n62 : 10 core_extensions : extensions [0..1]
+class "email-message" as n63 <<Record>>
+  n63 : 1 type : String{pattern="^email-message$"}
+  n63 : 2 id : String{pattern="^email-message--"}
+  n63 : 3 date : timestamp [0..1]
+  n63 : 4 content_type : String [0..1]
+  n63 : 5 from_ref : String [0..1]
+  n63 : 6 sender_ref : spec_version [0..1]
+  n63 : 7 to_refs : ArrayOf{String}{1..*} [0..1]
+  n63 : 8 cc_refs : ArrayOf{String}{1..*} [0..1]
+  n63 : 9 bcc_refs : ArrayOf{String}{1..*} [0..1]
+  n63 : 10 message_id : String [0..1]
+  n63 : 11 subject : String [0..1]
+  n63 : 12 received_lines : ArrayOf{String} [0..1]
+  n63 : 13 additional_header_fields : ArrayOf{email-additional-header-fields} [0..1]
+  n63 : 14 raw_email_ref : String [0..1]
+  n63 : 15 is_multipart : Boolean
+  n63 : 16 body_multipart : ArrayOf{mime-part-type} [0..1]
+  n63 : 17 body : String [0..1]
+  n63 : 18 spec_version : spec_version [0..1]
+  n63 : 19 object_marking_refs : object_marking_refs [0..1]
+  n63 : 20 granular_markings : granular_markings [0..1]
+  n63 : 21 defanged : defanged [0..1]
+  n63 : 22 core_extensions : extensions [0..1]
+class "file" as n64 <<Record>>
+  n64 : 1 type : String{pattern="^file$"}
+  n64 : 2 id : String{pattern="^file--"}
+  n64 : 3 extensions : String [0..1]
+  n64 : 4 hashes : ArrayOf{hashes} [0..1]
+  n64 : 5 size : Integer{0..*} [0..1]
+  n64 : 6 name : String
+  n64 : 7 name_enc : String{pattern="^[a-zA-Z0-9/\\.+_:-]{2,250}$"} [0..1]
+  n64 : 8 magic_number_hex : Hex [0..1]
+  n64 : 9 mime_type : String [0..1]
+  n64 : 10 ctime : timestamp [0..1]
+  n64 : 11 mtime : timestamp [0..1]
+  n64 : 12 atime : timestamp [0..1]
+  n64 : 13 parent_directory : String [0..1]
+  n64 : 14 contains_refs : ArrayOf{String}{1..*} [0..1]
+  n64 : 15 content_ref : String [0..1]
+  n64 : 16 spec_version : spec_version [0..1]
+  n64 : 17 object_marking_refs : object_marking_refs [0..1]
+  n64 : 18 granular_markings : granular_markings [0..1]
+  n64 : 19 defanged : defanged [0..1]
+  n64 : 20 core_extensions : extensions [0..1]
+class "ipv4-addr" as n65 <<Record>>
+  n65 : 1 type : String{pattern="^ipv4-addr$"}
+  n65 : 2 id : String{pattern="^ipv4-addr--"}
+  n65 : 3 ipv4_addr : String{pattern="^{{[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]}\\.}{3}{[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]}{\\/{3[0-2]|[1-2][0-9]|[0-9]}}?$"}
+  n65 : 4 resolves_to_refs : ArrayOf{String}{1..*} [0..1]
+  n65 : 5 belongs_to_refs : ArrayOf{String}{1..*} [0..1]
+  n65 : 6 spec_version : spec_version [0..1]
+  n65 : 7 object_marking_refs : object_marking_refs [0..1]
+  n65 : 8 granular_markings : granular_markings [0..1]
+  n65 : 9 defanged : defanged [0..1]
+  n65 : 10 core_extensions : extensions [0..1]
+class "ipv6-addr" as n66 <<Record>>
+  n66 : 1 type : String{pattern="^ipv6-addr$"}
+  n66 : 2 id : String{pattern="^ipv6-addr--"}
+  n66 : 3 ipv6_addr : String{pattern="^s*{{{[0-9A-Fa-f]{1,4}:}{7}{[0-9A-Fa-f]{1,4}|:}}|{{[0-9A-Fa-f]{1,4}:}{6}{:[0-9A-Fa-f]{1,4}|{{25[0-5]|2[0-4]d|1dd|[1-9]?d}{.{25[0-5]|2[0-4]d|1dd|[1-9]?d}}{3}}|:}}|{{[0-9A-Fa-f]{1,4}:}{5}{{{:[0-9A-Fa-f]{1,4}}{1,2}}|:{{25[0-5]|2[0-4]d|1dd|[1-9]?d}{.{25[0-5]|2[0-4]d|1dd|[1-9]?d}}{3}}|:}}|{{[0-9A-Fa-f]{1,4}:}{4}{{{:[0-9A-Fa-f]{1,4}}{1,3}}|{{:[0-9A-Fa-f]{1,4}}?:{{25[0-5]|2[0-4]d|1dd|[1-9]?d}{.{25[0-5]|2[0-4]d|1dd|[1-9]?d}}{3}}}|:}}|{{[0-9A-Fa-f]{1,4}:}{3}{{{:[0-9A-Fa-f]{1,4}}{1,4}}|{{:[0-9A-Fa-f]{1,4}}{0,2}:{{25[0-5]|2[0-4]d|1dd|[1-9]?d}{.{25[0-5]|2[0-4]d|1dd|[1-9]?d}}{3}}}|:}}|{{[0-9A-Fa-f]{1,4}:}{2}{{{:[0-9A-Fa-f]{1,4}}{1,5}}|{{:[0-9A-Fa-f]{1,4}}{0,3}:{{25[0-5]|2[0-4]d|1dd|[1-9]?d}{.{25[0-5]|2[0-4]d|1dd|[1-9]?d}}{3}}}|:}}|{{[0-9A-Fa-f]{1,4}:}{1}{{{:[0-9A-Fa-f]{1,4}}{1,6}}|{{:[0-9A-Fa-f]{1,4}}{0,4}:{{25[0-5]|2[0-4]d|1dd|[1-9]?d}{.{25[0-5]|2[0-4]d|1dd|[1-9]?d}}{3}}}|:}}|{:{{{:[0-9A-Fa-f]{1,4}}{1,7}}|{{:[0-9A-Fa-f]{1,4}}{0,5}:{{25[0-5]|2[0-4]d|1dd|[1-9]?d}{.{25[0-5]|2[0-4]d|1dd|[1-9]?d}}{3}}}|:}}}{%.+}?s*{\\/{12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9]}}?$"}
+  n66 : 4 resolves_to_refs : ArrayOf{String}
+  n66 : 5 belongs_to_refs : ArrayOf{String}
+  n66 : 6 spec_version : spec_version [0..1]
+  n66 : 7 object_marking_refs : object_marking_refs [0..1]
+  n66 : 8 granular_markings : granular_markings [0..1]
+  n66 : 9 defanged : defanged [0..1]
+  n66 : 10 core_extensions : extensions [0..1]
+class "mac-addr" as n67 <<Record>>
+  n67 : 1 type : String{pattern="^mac-addr$"}
+  n67 : 2 id : String{pattern="^mac-addr--"}
+  n67 : 3 mac_address_value : String{pattern="^{[0-9a-f]{2}[:]}{5}{[0-9a-f]{2}}$"}
+  n67 : 4 spec_version : spec_version [0..1]
+  n67 : 5 object_marking_refs : object_marking_refs [0..1]
+  n67 : 6 granular_markings : granular_markings [0..1]
+  n67 : 7 defanged : defanged [0..1]
+  n67 : 8 core_extensions : extensions [0..1]
+class "mutex" as n68 <<Record>>
+  n68 : 1 type : String{pattern="^mutex$"}
+  n68 : 2 id : String{pattern="^mutex--"}
+  n68 : 3 name : String
+  n68 : 4 spec_version : spec_version [0..1]
+  n68 : 5 object_marking_refs : object_marking_refs [0..1]
+  n68 : 6 granular_markings : granular_markings [0..1]
+  n68 : 7 defanged : defanged [0..1]
+  n68 : 8 core_extensions : extensions [0..1]
+class "network-traffic" as n69 <<Record>>
+  n69 : 1 type : String{pattern="^network-traffic$"}
+  n69 : 2 id : String{pattern="^network-traffic--"}
+  n69 : 3 extensions : network_traffic_extensions_dictionary [0..1]
+  n69 : 4 start : String{pattern="^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"}
+  n69 : 5 stop : String{pattern="^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"}
+  n69 : 6 is_active : Boolean
+  n69 : 7 src_port : Integer{0..65535}
+  n69 : 8 dst_port : Integer{0..65535} [0..1]
+  n69 : 9 protocols : ArrayOf{String}{1..*}
+  n69 : 10 src_byte_count : Integer [0..1]
+  n69 : 11 dst_byte_count : Integer [0..1]
+  n69 : 12 src_packets : Integer [0..1]
+  n69 : 13 dst_packets : Integer [0..1]
+  n69 : 14 ipfix : ipfix_choice [0..1]
+  n69 : 15 src_payload_ref : String [0..1]
+  n69 : 16 dst_payload_ref : String [0..1]
+  n69 : 17 encapsulates_refs : ArrayOf{String}{1..*}
+  n69 : 18 encapsulated_by_ref : String [0..1]
+  n69 : 19 spec_version : spec_version [0..1]
+  n69 : 20 object_marking_refs : object_marking_refs [0..1]
+  n69 : 21 granular_markings : granular_markings [0..1]
+  n69 : 22 defanged : defanged [0..1]
+  n69 : 23 core_extensions : extensions [0..1]
+class "process" as n70 <<Record>>
+  n70 : 1 type : String{pattern="^process$"}
+  n70 : 2 id : String{pattern="^process--"}
+  n70 : 3 extensions : process_extensions_dictionary [0..1]
+  n70 : 4 is_hidden : Boolean [0..1]
+  n70 : 5 pid : Integer [0..1]
+  n70 : 6 created_time : timestamp [0..1]
+  n70 : 7 cwd : String [0..1]
+  n70 : 8 command_line : String [0..1]
+  n70 : 9 environment_variables : ArrayOf{String} [0..1]
+  n70 : 10 opened_connection_refs : String [0..1]
+  n70 : 11 creator_user_ref : ArrayOf{String}{1..*} [0..1]
+  n70 : 12 image_ref : String [0..1]
+  n70 : 13 parent_ref : String [0..1]
+  n70 : 14 child_refs : ArrayOf{String}{1..*} [0..1]
+  n70 : 15 spec_version : spec_version [0..1]
+  n70 : 16 object_marking_refs : object_marking_refs [0..1]
+  n70 : 17 granular_markings : granular_markings [0..1]
+  n70 : 18 defanged : defanged [0..1]
+  n70 : 19 core_extensions : extensions [0..1]
+class "software" as n71 <<Record>>
+  n71 : 1 type : String{pattern="^software$"}
+  n71 : 2 id : String
+  n71 : 3 name : String{1..*}
+  n71 : 4 cpe : String{pattern="cpe:2\\.3:[aho\\*\\-]{:{{{\\?*|\\*?}{[a-zA-Z0-9\\-\\._]|{\\\\[\\\\\\*\\?!\"#$$%&'\\{\\}\\+,/:;<=>@\\[\\]\\^`\\{\\|}~]}}+{\\?*|\\*?}}|[\\*\\-]}}{5}{:{{[a-zA-Z]{2,3}{-{[a-zA-Z]{2}|[0-9]{3}}}?}|[\\*\\-]}}{:{{{\\?*|\\*?}{[a-zA-Z0-9\\-\\._]|{\\\\[\\\\\\*\\?!\"#$$%&'\\{\\}\\+,/:;<=>@\\[\\]\\^`\\{\\|}~]}}+{\\?*|\\*?}}|[\\*\\-]}}{4}"} [0..1]
+  n71 : 5 swid : String
+  n71 : 6 languages : ArrayOf{String}
+  n71 : 7 vendor : String
+  n71 : 8 version : String
+  n71 : 9 spec_version : spec_version [0..1]
+  n71 : 10 object_marking_refs : object_marking_refs [0..1]
+  n71 : 11 granular_markings : granular_markings [0..1]
+  n71 : 12 defanged : defanged [0..1]
+  n71 : 13 core_extensions : extensions [0..1]
+class "user-account" as n72 <<Record>>
+  n72 : 1 type : String{pattern="^user-account$"}
+  n72 : 2 id : String{pattern="^user-account--"}
+  n72 : 3 user_account_extensions : user_account_extensions_dictionary [0..1]
+  n72 : 4 user_id : String [0..1]
+  n72 : 5 credential : String [0..1]
+  n72 : 6 account_login : String [0..1]
+  n72 : 7 account_type : String [0..1]
+  n72 : 8 display_name : String [0..1]
+  n72 : 9 is_service_account : Boolean [0..1]
+  n72 : 10 is_privileged : Boolean [0..1]
+  n72 : 11 can_escalate_privs : Boolean [0..1]
+  n72 : 12 is_disabled : Boolean [0..1]
+  n72 : 13 account_created : timestamp [0..1]
+  n72 : 14 account_expires : timestamp [0..1]
+  n72 : 15 credential_last_changed : timestamp [0..1]
+  n72 : 16 account_first_login : timestamp [0..1]
+  n72 : 17 account_last_login : timestamp [0..1]
+  n72 : 18 spec_version : spec_version [0..1]
+  n72 : 19 object_marking_refs : object_marking_refs [0..1]
+  n72 : 20 granular_markings : granular_markings [0..1]
+  n72 : 21 defanged : defanged [0..1]
+  n72 : 22 core_extensions : extensions [0..1]
+class "url" as n73 <<Record>>
+  n73 : 1 type : String{pattern="^url$"}
+  n73 : 2 id : String{pattern="^url"}
+  n73 : 3 url_value : String{pattern="^{{[^:/?#]+}:}?{//{[^/?#]*}}?{[^?#]*}{\?{[^#]*}}?{#{.*}}?"}
+  n73 : 4 spec_version : spec_version [0..1]
+  n73 : 5 object_marking_refs : object_marking_refs [0..1]
+  n73 : 6 granular_markings : granular_markings [0..1]
+  n73 : 7 defanged : defanged [0..1]
+  n73 : 8 core_extensions : extensions [0..1]
+class "windows-registry-key" as n74 <<Record>>
+  n74 : 1 type : String{pattern="^windows-registry-key$"}
+  n74 : 2 id : String{pattern="^windows-registry-key--"}
+  n74 : 3 key : String{pattern="^{{?!{{^|, }{HKLM|HKCC|HKCR|HKCU|HKU|hklm|hkcc|hkcr|hkcu|hku}}+$}.}*$"}
+  n74 : 4 registry_values : ArrayOf{windows_registry_value_type} [0..1]
+  n74 : 5 modified_time : timestamp [0..1]
+  n74 : 6 creator_user_ref : String [0..1]
+  n74 : 7 number_of_subkeys : Integer [0..1]
+  n74 : 8 spec_version : spec_version [0..1]
+  n74 : 9 object_marking_refs : object_marking_refs [0..1]
+  n74 : 10 granular_markings : granular_markings [0..1]
+  n74 : 11 defanged : defanged [0..1]
+  n74 : 12 core_extensions : extensions [0..1]
+class "x509-certificate" as n75 <<Record>>
+  n75 : 1 type : String{pattern="^x509-certificate$"}
+  n75 : 2 id : String{pattern="^x509-certificate--"}
+  n75 : 3 is_self_signed : Boolean [0..1]
+  n75 : 4 hashes : ArrayOf{hashes} [0..1]
+  n75 : 5 version : String [0..1]
+  n75 : 6 serial_number : String [0..1]
+  n75 : 7 signature_algorithm : String [0..1]
+  n75 : 8 issuer : String [0..1]
+  n75 : 9 validity_not_before : timestamp [0..1]
+  n75 : 10 validity_not_after : timestamp [0..1]
+  n75 : 11 subject : spec_version [0..1]
+  n75 : 12 subject_public_key_algorithm : String [0..1]
+  n75 : 13 subject_public_key_modulus : String [0..1]
+  n75 : 14 subject_public_key_extensions : Integer [0..1]
+  n75 : 15 x509_v3_extensions : ArrayOf{x509_v3_extensions_type} [0..1]
+  n75 : 16 spec_version : spec_version [0..1]
+  n75 : 17 object_marking_refs : object_marking_refs [0..1]
+  n75 : 18 granular_markings : granular_markings [0..1]
+  n75 : 19 defanged : defanged [0..1]
+  n75 : 20 core_extensions : extensions [0..1]
+class "mime-part-type" as n77 <<Record>>
+  n77 : 1 body : String [0..1]
+  n77 : 2 body_raw_ref : String [0..1]
+  n77 : 3 content_type : String [0..1]
+  n77 : 4 content_disposition : String [0..1]
+class "email-additional-header-fields" as n78 <<ArrayOf>>
+class "email_additional_header_field" as n79 <<MapOf>>
+class "email_additional_header_value" as n81 <<Choice>>
+  n81 : 1 String_Value : String{pattern="[a-zA-Z0-9_-]{0,250}^$"}
+  n81 : 2 String_Array : ArrayOf{String}{2..*}
+class "windows_registry_value_type" as n82 <<Record>>
+  n82 : 1 name : String [0..1]
+  n82 : 2 data : String [0..1]
+  n82 : 3 registry_data_type : win_registry_data_type [0..1]
+class "x509_v3_extensions_type" as n84 <<Record>>
+  n84 : 1 basic_constraints : String [0..1]
+  n84 : 2 name_constraints : String [0..1]
+  n84 : 3 policy_constraints : String [0..1]
+  n84 : 4 key_usage : String [0..1]
+  n84 : 5 extend_key_usage : String [0..1]
+  n84 : 6 subject_key_identifier : String [0..1]
+  n84 : 7 authority_key_identifier : String [0..1]
+  n84 : 8 subject_alternative_name : String [0..1]
+  n84 : 9 issuer_alternative_name : String [0..1]
+  n84 : 10 subject_directory_attributes : String [0..1]
+  n84 : 11 crt_distribution_points : String [0..1]
+  n84 : 12 inhibit_any_policy : String [0..1]
+  n84 : 13 private_key_usage_period_not_before : timestamp [0..1]
+  n84 : 14 private_key_usage_period_not_after : timestamp [0..1]
+  n84 : 15 certificate_policies : String [0..1]
+  n84 : 16 policy_mappings : String [0..1]
+class "file_extensions_dictionary" as n85 <<Record>>
+  n85 : 1 ntfs_ext : ntfs_ext [0..1]
+class "ntfs_ext" as n86 <<Record>>
+  n86 : 1 sid : String [0..1]
+  n86 : 2 alternate_data_streams : ArrayOf{ntfs_atlternate_data_stream} [0..1]
+class "ntfs_atlternate_data_stream" as n87 <<Record>>
+  n87 : 1 name : String
+  n87 : 2 hashes : ArrayOf{hashes} [0..1]
+  n87 : 3 size : Integer{0..*} [0..1]
+class "ipfix_choice" as n88 <<Choice>>
+  n88 : 1 ipfix_string : String
+  n88 : 2 ipfix_integer : Integer
+class "hashes" as n89 <<Record>>
+  n89 : 1 MD5 : String{pattern="^[a-fA-F0-9]{32}$"} [0..1]
+  n89 : 2 SHA-1 : String{pattern="^[a-fA-F0-9]{40}$"} [0..1]
+  n89 : 3 SHA-256 : String{pattern="^[a-fA-F0-9]{64}$"} [0..1]
+  n89 : 4 SHA-512 : String{pattern="^[a-fA-F0-9]{128}$"} [0..1]
+  n89 : 5 SHA3-256 : String{pattern="^[a-fA-F0-9]{64}$"} [0..1]
+  n89 : 6 SHA3-512 : String{pattern="^[a-fA-F0-9]{128}$"} [0..1]
+  n89 : 7 SSDEEP : String{pattern="^[a-zA-Z0-9/+:.]{1,128}$"} [0..1]
+  n89 : 8 TLSH : String{pattern="^[a-zA-Z0-9]{70}$"} [0..1]
+class "network_traffic_extensions_dictionary" as n90 <<Record>>
+  n90 : 1 http_request_ext : http_request_ext [0..1]
+  n90 : 2 icmp_ext : icmp_ext [0..1]
+  n90 : 3 socket_ext : socket_ext [0..1]
+  n90 : 4 tcp_ext : tcp_ext [0..1]
+class "http_request_ext" as n91 <<Record>>
+  n91 : 1 request_method : String
+  n91 : 2 request_value : String
+  n91 : 3 request_version : String [0..1]
+  n91 : 4 request_header : ArrayOf{String} [0..1]
+  n91 : 5 message_body_length : String [0..1]
+  n91 : 6 message_body_data_ref : String [0..1]
+class "icmp_ext" as n92 <<Record>>
+  n92 : 1 icmp_type_hex : Hex
+  n92 : 2 icmp_code_hex : Hex
+class "socket_ext" as n93 <<Record>>
+  n93 : 1 address_family : address_family
+  n93 : 2 is_blocking : Boolean [0..1]
+  n93 : 3 is_listening : String [0..1]
+  n93 : 4 options : ArrayOf{socket_option} [0..1]
+  n93 : 5 socket_type : socket_type [0..1]
+  n93 : 6 socket_descriptor : Integer{0..*} [0..1]
+  n93 : 7 socket_handle : Integer [0..1]
+class "tcp_ext" as n94 <<Record>>
+  n94 : 1 src_flags_hex : Hex
+  n94 : 2 dst_flags_hex : Hex
+class "socket_option" as n96 <<Record>>
+  n96 : 1 socket_option : String{pattern="^{SO|ICMP|ICMP6|IP|IPV6|MCAST|TCP|IRLMP}{_[A-Z]+}+$"}
+  n96 : 2 option_value : Integer
+class "user_account_extensions_dictionary" as n98 <<Record>>
+  n98 : 1 unix_account_ext : unix_account_ext [0..1]
+class "unix_account_ext" as n99 <<Record>>
+  n99 : 1 gid : Number [0..1]
+class "process_extensions_dictionary" as n100 <<Record>>
+  n100 : 1 windows_proccess_extension : windows_proccess_extension [0..1]
+  n100 : 2 windows_service_ext : windows_service_ext [0..1]
+class "windows_proccess_extension" as n101 <<Record>>
+  n101 : 1 aslr_enabled : Boolean [0..1]
+  n101 : 2 dep_enabled : Boolean [0..1]
+  n101 : 3 priority : String [0..1]
+  n101 : 4 owner_sid : String [0..1]
+  n101 : 5 window_title : String [0..1]
+  n101 : 6 startup_info : startup_info_dictionary [0..1]
+  n101 : 7 integrity_level : windows_integrity_level_enum [0..1]
+class "startup_info_dictionary" as n102 <<Array>>
+  n102 : 1  : String [0..1]
+  n102 : 2  : String [0..1]
+  n102 : 3  : String [0..1]
+  n102 : 4  : String [0..1]
+  n102 : 5  : String [0..1]
+  n102 : 6  : String [0..1]
+  n102 : 7  : String [0..1]
+  n102 : 8  : String [0..1]
+  n102 : 9  : String{0..0} [0..1]
+  n102 : 10  : String{0..0} [0..1]
+  n102 : 11  : Integer [0..1]
+  n102 : 12  : Integer [0..1]
+  n102 : 13  : Integer [0..1]
+  n102 : 14  : Integer [0..1]
+  n102 : 15  : Integer [0..1]
+  n102 : 16  : Integer [0..1]
+  n102 : 17  : Integer [0..1]
+  n102 : 18  : Integer{0..0} [0..1]
+class "windows_service_ext" as n106 <<Record>>
+  n106 : 1 service_name : String [0..1]
+  n106 : 2 descriptions : ArrayOf{String}{1..*} [0..1]
+  n106 : 3 display_name : String [0..1]
+  n106 : 4 group_name : String [0..1]
+  n106 : 5 start_type : start_type [0..1]
+  n106 : 6 service_dll_refs : ArrayOf{String} [0..1]
+  n106 : 7 service_type : service_type [0..1]
+  n106 : 8 service_status : service_status [0..1]
+class "object_marking_refs" as n109 <<ArrayOf>>
+class "granular_marking" as n110 <<Record>>
+  n110 : 1 selectors : identifier
+  n110 : 2 lang : String
+  n110 : 3 pattern : identifier
+class "granular_markings" as n111 <<ArrayOf>>
+class "extensions" as n114 <<Record>>
+  n114 : 1 extension : String{pattern="^{[a-z][a-z0-9]*}+{-[a-z0-9]+}*\\-ext$"}
+  n114 : 2 extension_definition : extension
+class "properties" as n115 <<Array>>
+  n115 : 1  : Binary [0..1]
+  n115 : 2  : Hex [0..1]
+  n115 : 3  : ArrayOf{String}{1..*} [0..1]
+  n115 : 4  : String [0..1]
+  n115 : 5  : Integer [0..1]
+  n115 : 6  : Boolean [0..1]
+  n115 : 7  : Number [0..1]
+  n115 : 8  : extensions [0..1]
+class "extension" as n116 <<Record>>
+  n116 : 1 extension_type : extension_type_enum
+  n116 : 2 properties : properties
+class "Features" as n120 <<ArrayOf>>
+class "Payload" as n125 <<Choice>>
+  n125 : 1 bin : Binary
+  n125 : 2 url : URI
+  n0 "1 "--> "1" n3 : target
+  n0 "1 "--> "0..1" n4 : args
+  n0 "1 "--> "0..1" n5 : actuator
+  n1 "1 "--> "0..1" n6 : results
+  n3 "1 "--> "1" n120 : features
+  n3 "1 "--> "1" n8 : th
+  n4 "1 "--> "0..1" n9 : th
+  n5 "1 "--> "1" n34 : th
+  n6 "1 "--> "0..1" n38 : th
+  n8 "1 "--> "1" n35 : huntflows
+  n9 "1 "--> "1" n10 : huntargs
+  n10 "1 "--> "0..1" n53 : typed_args
+  n10 "1 "--> "0..1" n11 : native_oc2
+  n10 "1 "--> "0..1" n56 : stix
+  n10 "1 "--> "0..1" n41 : timeranges
+  n10 "1 "--> "0..1" n51 : datasources
+  n12 "1 "--> "0..1" n13 : artifact
+  n12 "1 "--> "0..1" n14 : device
+  n12 "1 "--> "0..1" n17 : file
+  n12 "1 "--> "0..1" n28 : hashes
+  n12 "1 "--> "0..1" n20 : ipv4_network
+  n12 "1 "--> "0..1" n22 : ipv6_network
+  n12 "1 "--> "0..1" n21 : ipv4_connection
+  n12 "1 "--> "0..1" n23 : ipv6_connection
+  n12 "1 "--> "0..1" n26 : process
+  n13 "1 "--> "0..1" n125 : payload
+  n13 "1 "--> "0..1" n28 : hashes
+  n17 "1 "--> "0..1" n28 : hashes
+  n21 "1 "--> "0..1" n20 : src_addr
+  n21 "1 "--> "0..1" n20 : dst_addr
+  n23 "1 "--> "0..1" n22 : src_addr
+  n23 "1 "--> "0..1" n22 : dst_addr
+  n26 "1 "--> "0..1" n17 : executable
+  n26 "1 ".> "0..1" n26 : parent
+  n35 "1 "--> "0..1" n52 : tags
+  n35 "1 "--> "0..1" n36 : arg_types
+  n35 "1 "--> "0..1" n37 : arg_names
+  n35 "1 "--> "0..1" n46 : format_types
+  n35 "1 "--> "0..1" n48 : return_format
+  n38 "1 "--> "0..1" n51 : datasources
+  n38 "1 "--> "0..1" n39 : inv_returns
+  n40 "1 "--> "0..1" n56 : stix_sco
+  n42 "1 "--> "0..1" n44 : timerange_absolute
+  n42 "1 "--> "0..1" n45 : timerange_relative
+  n47 "1 "--> "0..1" n52 : ds_tags
+  n50 "1 "--> "0..1" n53 : args_required
+  n50 "1 "--> "0..1" n53 : expected_returns
+  n57 "1 "--> "1" n58 : Artifact
+  n57 "1 "--> "1" n59 : Autonomous-System
+  n57 "1 "--> "1" n60 : Directory
+  n57 "1 "--> "1" n61 : Domain-Name
+  n57 "1 "--> "1" n62 : Email-Addr
+  n57 "1 "--> "1" n63 : Email-Message
+  n57 "1 "--> "1" n64 : File
+  n57 "1 "--> "1" n65 : IPv4-Addr
+  n57 "1 "--> "1" n66 : IPv6-Addr
+  n57 "1 "--> "1" n67 : Mac-Addr
+  n57 "1 "--> "1" n68 : Mutex
+  n57 "1 "--> "1" n69 : Network-Traffic
+  n57 "1 "--> "1" n70 : Process
+  n57 "1 "--> "1" n71 : Software
+  n57 "1 "--> "1" n73 : URL
+  n57 "1 "--> "1" n72 : User-Account
+  n57 "1 "--> "1" n74 : Windows-Registry-Key
+  n57 "1 "--> "1" n75 : X509-Certificate
+  n58 "1 "--> "1" n73 : url
+  n58 "1 "--> "0..1" n109 : object_marking_refs
+  n58 "1 "--> "0..1" n111 : granular_markings
+  n58 "1 "--> "0..1" n114 : core_extensions
+  n59 "1 "--> "0..1" n109 : object_marking_refs
+  n59 "1 "--> "0..1" n111 : granular_markings
+  n59 "1 "--> "0..1" n114 : core_extensions
+  n60 "1 "--> "0..1" n109 : object_marking_refs
+  n60 "1 "--> "0..1" n111 : granular_markings
+  n60 "1 "--> "0..1" n114 : core_extensions
+  n61 "1 "--> "0..1" n109 : object_marking_refs
+  n61 "1 "--> "0..1" n111 : granular_markings
+  n61 "1 "--> "0..1" n114 : core_extensions
+  n62 "1 "--> "0..1" n109 : object_marking_refs
+  n62 "1 "--> "0..1" n111 : granular_markings
+  n62 "1 "--> "0..1" n114 : core_extensions
+  n63 "1 "--> "0..1" n109 : object_marking_refs
+  n63 "1 "--> "0..1" n111 : granular_markings
+  n63 "1 "--> "0..1" n114 : core_extensions
+  n64 "1 "--> "0..1" n109 : object_marking_refs
+  n64 "1 "--> "0..1" n111 : granular_markings
+  n64 "1 "--> "0..1" n114 : core_extensions
+  n65 "1 "--> "0..1" n109 : object_marking_refs
+  n65 "1 "--> "0..1" n111 : granular_markings
+  n65 "1 "--> "0..1" n114 : core_extensions
+  n66 "1 "--> "0..1" n109 : object_marking_refs
+  n66 "1 "--> "0..1" n111 : granular_markings
+  n66 "1 "--> "0..1" n114 : core_extensions
+  n67 "1 "--> "0..1" n109 : object_marking_refs
+  n67 "1 "--> "0..1" n111 : granular_markings
+  n67 "1 "--> "0..1" n114 : core_extensions
+  n68 "1 "--> "0..1" n109 : object_marking_refs
+  n68 "1 "--> "0..1" n111 : granular_markings
+  n68 "1 "--> "0..1" n114 : core_extensions
+  n69 "1 "--> "0..1" n90 : extensions
+  n69 "1 "--> "0..1" n88 : ipfix
+  n69 "1 "--> "0..1" n109 : object_marking_refs
+  n69 "1 "--> "0..1" n111 : granular_markings
+  n69 "1 "--> "0..1" n114 : core_extensions
+  n70 "1 "--> "0..1" n100 : extensions
+  n70 "1 "--> "0..1" n109 : object_marking_refs
+  n70 "1 "--> "0..1" n111 : granular_markings
+  n70 "1 "--> "0..1" n114 : core_extensions
+  n71 "1 "--> "0..1" n109 : object_marking_refs
+  n71 "1 "--> "0..1" n111 : granular_markings
+  n71 "1 "--> "0..1" n114 : core_extensions
+  n72 "1 "--> "0..1" n98 : user_account_extensions
+  n72 "1 "--> "0..1" n109 : object_marking_refs
+  n72 "1 "--> "0..1" n111 : granular_markings
+  n72 "1 "--> "0..1" n114 : core_extensions
+  n73 "1 "--> "0..1" n109 : object_marking_refs
+  n73 "1 "--> "0..1" n111 : granular_markings
+  n73 "1 "--> "0..1" n114 : core_extensions
+  n74 "1 "--> "0..1" n109 : object_marking_refs
+  n74 "1 "--> "0..1" n111 : granular_markings
+  n74 "1 "--> "0..1" n114 : core_extensions
+  n75 "1 "--> "0..1" n109 : object_marking_refs
+  n75 "1 "--> "0..1" n111 : granular_markings
+  n75 "1 "--> "0..1" n114 : core_extensions
+  n85 "1 "--> "0..1" n86 : ntfs_ext
+  n90 "1 "--> "0..1" n91 : http_request_ext
+  n90 "1 "--> "0..1" n92 : icmp_ext
+  n90 "1 "--> "0..1" n93 : socket_ext
+  n90 "1 "--> "0..1" n94 : tcp_ext
+  n98 "1 "--> "0..1" n99 : unix_account_ext
+  n100 "1 "--> "0..1" n101 : windows_proccess_extension
+  n100 "1 "--> "0..1" n106 : windows_service_ext
+  n101 "1 "--> "0..1" n102 : startup_info
+  n114 "1 "--> "1" n116 : extension_definition
+  n115 "1 "--> "0..1" n114 : object
+  n116 "1 "--> "1" n115 : properties
+@enduml

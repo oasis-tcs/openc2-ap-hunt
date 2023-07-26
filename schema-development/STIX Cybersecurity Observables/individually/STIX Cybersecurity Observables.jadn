@@ -1,9 +1,9 @@
 {
   "info": {
-    "package": "http://openc2_stix_sco",
+    "package": "https://openc2_stix_sco",
     "version": "0-wd01 ",
     "title": "STIX SCO Core jadn",
-    "exports": ["STIX-Cybersecurity-Observables", "SCO"],
+    "exports": ["STIX-Cybersecurity-Observables", "SCO", "artifact", "autonomous_system", "directory", "domain_name", "email_addr", "email_message", "file", "ipv4_addr", "ipv6_addr", "mac_addr", "mutex", "network_traffic", "process", "software", "url", "user_account", "windows_registry_key" ],
     "config": {
       "$MaxBinary": 5555,
       "$MaxString": 5555,
@@ -18,24 +18,23 @@
 
     ["STIX-Cybersecurity-Observables", "ArrayOf", ["*SCO"], "An Array of Cybersecurity Observables in STIX formatting"],
     ["SCO", "Choice", [], "Availiable Cybersecurity Observables in the STIX language", [
-      [1, "Artifact", "artifact", [], ""],
-      [2, "Autonomous-System", "autonomous-system", [], ""],
-      [3, "Directory", "directory", [], ""],
-      [4, "Domain-Name", "domain-name", [], ""],
-      [5, "Email-Addr", "email-addr", [], ""],
-      [6, "Email-Message", "email-message", [], ""],
-      [7, "File", "file", [], ""],
-      [8, "IPv4-Addr", "ipv4-addr", [], ""],
-      [9, "IPv6-Addr", "ipv6-addr", [], ""],
-      [10, "Mac-Addr", "mac-addr", [], ""],
-      [11, "Mutex", "mutex", [], ""],
-      [12, "Network-Traffic", "network-traffic", [], ""],
-      [13, "Process", "process", [], ""],
-      [14, "Software", "software", [], ""],
-      [15, "URL", "url", [], ""],
-      [16, "User-Account", "user-account", [], ""],
-      [17, "Windows-Registry-Key", "windows-registry-key", [], ""],
-      [18, "X509-Certificate", "x509-certificate", [], ""]
+      [1, "Artifact", "artifact", ["[0"], ""],
+      [2, "Autonomous-System", "autonomous-system", ["[0"], ""],
+      [3, "Directory", "directory", ["[0"], ""],
+      [4, "Domain-Name", "domain-name", ["[0"], ""],
+      [5, "Email-Addr", "email-addr", ["[0"], ""],
+      [6, "File", "file", ["[0"], ""],
+      [7, "IPv4-Addr", "ipv4-addr", ["[0"], ""],
+      [8, "IPv6-Addr", "ipv6-addr", ["[0"], ""],
+      [9, "Mac-Addr", "mac-addr", ["[0"], ""],
+      [10, "Mutex", "mutex", ["[0"], ""],
+      [11, "Network-Traffic", "network-traffic", ["[0"], ""],
+      [12, "Process", "process", ["[0"], ""],
+      [13, "Software", "software", ["[0"], ""],
+      [14, "URL", "url", ["[0"], ""],
+      [15, "User-Account", "user-account", ["[0"], ""],
+      [16, "Windows-Registry-Key", "windows-registry-key", ["[0"], ""],
+      [17, "X509-Certificate", "x509-certificate", ["[0"], ""]
     ]],
       
     ["artifact", "Record", [], "The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded string, or linking to a file-like payload.", [
@@ -89,7 +88,7 @@
       [1, "type", "String", ["%^domain-name$"], ""],
       [2, "id", "String", ["%^domain-name--"], ""],
       [3, "domain_name", "String", [], "Specifies the value of the domain name."],
-      [4, "resolves_to_refs", "ArrayOf", ["*String", "{1", "[0"], "Specifies a list of references to one or more IP addresses or domain names that the domain name resolves to."],
+      [4, "resolves_to_refs", "ArrayOf", ["*String", "{0"], "Specifies a list of references to one or more IP addresses or domain names that the domain name resolves to."],
       [5, "spec_version", "spec_version", ["[0"], ""],
       [6, "object_marking_refs", "object_marking_refs", ["[0"], ""],
       [7, "granular_markings", "granular_markings", ["[0"], ""],
@@ -157,9 +156,9 @@
     ["ipv4-addr", "Record", [], "The IPv4 Address Object represents one or more IPv4 addresses expressed using CIDR notation.", [
       [1, "type", "String", ["%^ipv4-addr$"], ""],
       [2, "id", "String", ["%^ipv4-addr--"], ""],
-      [3, "ipv4_addr", "String", ["%^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\\\/(3[0-2]|[1-2][0-9]|[0-9]))?$", "[1"], ""],
-      [4, "resolves_to_refs", "ArrayOf", ["*String", "{1", "[0"], ""],
-      [5, "belongs_to_refs", "ArrayOf", ["*String", "{1", "[0"], ""],
+      [3, "ipv4_addr", "String", ["%^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\\\/(3[0-2]|[1-2][0-9]|[0-9]))?$", "{1"], ""],
+      [4, "resolves_to_refs", "ArrayOf", ["*String", "{0"], ""],
+      [5, "belongs_to_refs", "String", [], ""],
       [6, "spec_version", "spec_version", ["[0"], ""],
       [7, "object_marking_refs", "object_marking_refs", ["[0"], ""],
       [8, "granular_markings", "granular_markings", ["[0"], ""],
@@ -169,7 +168,7 @@
     ["ipv6-addr", "Record", [], "", [
       [1, "type", "String", ["%^ipv6-addr$"], ""],
       [2, "id", "String", ["%^ipv6-addr--"], ""],
-      [3, "ipv6_addr", "String", ["%^s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))(%.+)?s*(\\\\/(12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9]))?$", "[1"], "The IPv6 Address Object represents one or more IPv6 addresses expressed using CIDR notation."],
+      [3, "ipv6_addr", "String", ["%^s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))(%.+)?s*(\\\\/(12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9]))?$", "{1"], "The IPv6 Address Object represents one or more IPv6 addresses expressed using CIDR notation."],
       [4, "resolves_to_refs", "ArrayOf", ["*String", "{0"], "Specifies a list of references to one or more Layer 2 Media Access Control (MAC) addresses that the IPv6 address resolves to."],
       [5, "belongs_to_refs", "ArrayOf", ["*String", "{0"], "Specifies a reference to one or more autonomous systems (AS) that the IPv6 address belongs to."],
       [6, "spec_version", "spec_version", ["[0"], ""],
@@ -253,7 +252,7 @@
       [1, "type", "String", ["%^software$"], ""],
       [2, "id", "String", [], "%^software--"],
       [3, "name", "String", ["{1"], "Specifies the name of the software."],
-      [4, "cpe", "String", ["%cpe:2\\\\.3:[aho\\\\*\\\\-](:(((\\\\?*|\\\\*?)([a-zA-Z0-9\\\\-\\\\._]|(\\\\\\\\[\\\\\\\\\\\\*\\\\?!\\\"#$$%&'\\\\(\\\\)\\\\+,/:;<=>@\\\\[\\\\]\\\\^`\\\\{\\\\|}~]))+(\\\\?*|\\\\*?))|[\\\\*\\\\-])){5}(:(([a-zA-Z]{2,3}(-([a-zA-Z]{2}|[0-9]{3}))?)|[\\\\*\\\\-]))(:(((\\\\?*|\\\\*?)([a-zA-Z0-9\\\\-\\\\._]|(\\\\\\\\[\\\\\\\\\\\\*\\\\?!\\\"#$$%&'\\\\(\\\\)\\\\+,/:;<=>@\\\\[\\\\]\\\\^`\\\\{\\\\|}~]))+(\\\\?*|\\\\*?))|[\\\\*\\\\-])){4}", "[0"], "Specifies the Common Platform Enumeration (CPE) entry for the software, if available. The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary."],
+      [4, "cpe", "String", ["%cpe:2\\\\.3:[aho\\\\*\\\\-](:(((\\\\?*|\\\\*?)([a-zA-Z0-9\\\\-\\\\._]|(\\\\\\\\[\\\\\\\\\\\\*\\\\?!\\\"#$$%&'\\\\(\\\\)\\\\+,/:;<=>@\\\\[\\\\]\\\\^`\\\\{\\\\|}~]))+(\\\\?*|\\\\*?))|[\\\\*\\\\-])){5}(:(([a-zA-Z]{2,3}(-([a-zA-Z]{2}|[0-9]{3}))?)|[\\\\*\\\\-]))(:(((\\\\?*|\\\\*?)([a-zA-Z0-9\\\\-\\\\._]|(\\\\\\\\[\\\\\\\\\\\\*\\\\?!\\\"#$$%&'\\\\(\\\\)\\\\+,/:;<=>@\\\\[\\\\]\\\\^`\\\\{\\\\|}~]))+(\\\\?*|\\\\*?))|[\\\\*\\\\-])){4}", "{0"], "Specifies the Common Platform Enumeration (CPE) entry for the software, if available. The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary."],
       [5, "swid", "String", ["{0"], "Specifies the Software Identification (SWID) Tags entry for the software, if available."],
       [6, "languages", "ArrayOf", ["*String", "{0"], "Specifies the languages supported by the software. The value of each list member MUST be an ISO 639-2 language code."],
       [7, "vendor", "String", ["{0"], "Specifies the name of the vendor of the software."],
@@ -335,12 +334,14 @@
       [20, "core_extensions", "extensions", ["[0"], ""]
     ]],
 
+
     ["mime-part-type", "Record", [], "Specifies a component of a multi-part email body.", [
       [1, "body", "String", ["[0"], "Specifies the contents of the MIME part if the content_type is not provided OR starts with text/"],
       [2, "body_raw_ref", "String", ["[0"], "Specifies the contents of non-textual MIME parts, that is those whose content_type does not start with text/, as a reference to an Artifact Object or File Object."],
       [3, "content_type", "String", ["[0"], "Specifies the value of the 'Content-Type' header field of the MIME part."],
       [4, "content_disposition", "String", ["[0"], "Specifies the value of the 'Content-Disposition' header field of the MIME part."]
     ]],
+
 
     ["email-additional-header-fields", "ArrayOf", ["*email_additional_header_field"], "Specifies any other header fields (except for date, received_lines, content_type, from_ref, sender_ref, to_refs, cc_refs, bcc_refs, and subject) found in the email message, as a dictionary."],
     ["email_additional_header_field", "MapOf", ["+email_additional_header_fieldname", "*email_additional_header_value"], "Specifies any other header fields (except for date, received_lines, content_type, from_ref, sender_ref, to_refs, cc_refs, bcc_refs, and subject) found in the email message, as a dictionary."],
@@ -374,7 +375,7 @@
       [14, "REG_INVALID_TYPE", ""]
     ]],
 
-    ["x509_v3_extensions_type", "Record", [], "", [
+    ["x509_certificate_extensions_type", "Record", [], "", [
       [1, "basic_constraints", "String", ["[0"], "Specifies a multi-valued extension which indicates whether a certificate is a CA certificate."],
       [2, "name_constraints", "String", ["[0"], "Specifies a namespace within which all subject names in subsequent certificates in a certification path MUST be located."],
       [3, "policy_constraints", "String", ["[0"], "Specifies any constraints on path validation for certificates issued to CAs."],
