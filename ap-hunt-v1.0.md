@@ -1053,7 +1053,7 @@ Darren | Anstman | Big Networks
 
 ## E.1 Example 1: Query Features
 
-{
+```{
   "action": "query",
   "target": {
     "features": [
@@ -1061,10 +1061,11 @@ Darren | Anstman | Big Networks
     ]
   }
 }
+```
 
 A Language Specification command, Query: Features is used to gather information from consumers about their OpenC2 capabilities. A Response may 
 
-{
+```{
   "results": {
     "pairs": [
       "query: features, /huntflows, /datasources",
@@ -1073,10 +1074,10 @@ A Language Specification command, Query: Features is used to gather information 
   },
   "status": "OK"
 }
-
+```
 ## E.2 Example 2: Query huntflows
 
-{
+```{
     "action": "query",
     "target": {
         "th": {
@@ -1089,13 +1090,14 @@ A Language Specification command, Query: Features is used to gather information 
         }
     }
 }
-
+```
 Query is extended in this profile to include additional targets. huntflows and Datasources are available as Targets to provide data to gather information about Threat Hunting processes. 
 This command makes use of the "tags" and "format_types" specifiers (with example values) to filter the list of threathunting processes are listed as available from the consumer.
 This example command also makes use of the optional command_id field, that is not required to be sent in every command, but is supported in the OpenC2 Language Specification.
 
 ## E.3 Example 3: Investigate Hunt
 
+```
 {
     "action": "investigate",
     "target": {
@@ -1123,6 +1125,7 @@ This example command also makes use of the optional command_id field, that is no
         }
     }
 }
+```
 -------
 
 # Appendix F. Notices
