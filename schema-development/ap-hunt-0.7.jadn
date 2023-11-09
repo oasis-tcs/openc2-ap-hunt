@@ -1,15 +1,15 @@
 {
   "info": {
-  "package": "https://github.com/oasis-tcs/openc2-ap-hunt",
+  "package": "http://docs.oasis-open.org/openc2/ns/ap-th/v1.0",
     "version": "0-wd01",
     "title": "Threat Hunting Profile",
     "description": "Data definitions for Threat Hunting (TH) functions",
     "namespaces": {
-      "ls": "http://oasis-open.org/openc2/oc2ls-types/v1.1",
-      "oca": "http://placeholder.org/oca-extensions-for-stix",
-      "sco": "http://placeholder.org/stix-sco-jadn"
+      "ls": "http://docs.oasis-open.org/openc2/ns/lang/v1.0",
+      "oca": "http://docs.oasis-open.org/openc2/ns/ext/oca",
+      "sco": "http://docs.oasis-open.org/openc2/ns/ext/sco"
     },
-    "exports": ["AP-Target", "AP-Args", "AP-Specifiers", "AP-Results"],
+    "exports": ["TH-Target", "TH-Args", "TH-Specifiers", "TH-Results"],
     "config": {
       "$MaxBinary": 5555,
       "$MaxString": 5555,
@@ -25,38 +25,37 @@
       [3, "query", "Initiate a request for information."],
       [30, "investigate", "Task the recipient to aggregate and report information as it pertains to a security event or incident."]
     ]],
-    ["Target", "Enumerated", [], "", [
-      [9, "features", ""],
-      [1036, "th", ""]
+    ["Target", "Choice", [], "", [
+      [9, "features", "ls:Features", [], ""],
+      [1036, "th", "TH-Target", [], ""]
     ]],
-    ["Args", "Enumerated", [], "", [
-      [1, "start_time", ""],
-      [2, "stop_time", ""],
-      [3, "duration", ""],
-      [4, "response_requested", ""],
-      [1036, "th", ""]
+    ["Args", "Map", [], "", [
+      [1, "start_time", "ls:Date-Time", [], ""],
+      [2, "stop_time", "ls:Date-Time", [], ""],
+      [3, "duration", "ls:Duration", [], ""],
+      [4, "response_requested", "ls:Response-Requested", [], ""],
+      [1036, "th", "TH-Args", [], ""]
     ]],
     ["Actuator", "Enumerated", [], "", [
       [1036, "th", ""]
     ]],
-    ["Results", "Enumerated", [], "", [
-      [1, "versions", ""],
-      [2, "profiles", ""],
-      [3, "pairs", ""],
-      [4, "rate_limit", ""],
-      [5, "args", ""],
-      [1036, "th", ""]
+    ["Results", "Map", [], "", [
+      [1, "versions", "ls:Version", ["[0"], "List of OpenC2 language versions supported by this Actuator"],
+      [2, "profiles", "ArrayOf", ["*ls:Nsid", "[0"], "List of profiles supported by this Actuator"],
+      [3, "pairs", "Pairs", ["[0", "]0"], "List of targets applicable to each supported Action"],
+      [4, "rate_limit", "Number", [], ""],
+      [1036, "th", "TH-Results", [], ""]
     ]],
     ["Pairs", "Enumerated", [], "", [
       [3, "query: features, /huntflows, /datasources", ""],
       [30, "investigate: /hunt", ""]
     ]],
-    ["AP-Target", "Choice", [], "TH targets defined in this profile.", [
+    ["TH-Target", "Choice", [], "TH targets defined in this profile.", [
       [1, "hunt", "String", [], "A procedure to find a set of entities in the monitored environment that associates with a cyberthreat."],
       [2, "huntflows", "Huntflow-Specifiers", [], "TH Huntflow specifiers."],
       [3, "datasources", "String", ["[0"], ""]
     ]],
-    ["AP-Args", "Map", ["{0"], "TH command arguments defined in this profile.", [
+    ["TH-Args", "Map", ["{0"], "TH command arguments defined in this profile.", [
       [1, "huntargs", "Huntargs", [], "Arguments for use in conjunction with hunt implementation."]
     ]],  
     ["Huntargs", "Record", ["{1"], "TH command arguments defined in this profile.", [
@@ -67,7 +66,7 @@
       [5, "stix", "sco:STIX-Cybersecurity-Observables", ["[0"], "STIX arguments supplied as huntargs."],
       [6, "stix_extensions", "oca:OCA-Extensions", ["[0"], "STIX arguments extended with OCA extensions supplied as huntargs. TODO add a custom stix for oca-asset and event"],
       [7, "timeranges", "Timeranges", ["[0"], "Timeranges used in the execution of a hunt."],
-      [8, "datasources", "Datasource-Array", ["[0"], "Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc."],
+      [8, "datasources", "Datasource-Array", ["[0"], "Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc."]
     ]],   
       
     ["OC2-Data", "ArrayOf", ["*Language-Spec-Types", "{1"], "OC2-Data is an array of one or more types defined in the OpenC2 language spec"],
@@ -95,7 +94,7 @@
       [20, "uri", "ls:URI", ["[0"], "A uniform resource identifier (URI)."]
     ]],
 
-    ["AP-Specifiers", "Map", [], "TH actuator specifiers (may be empty)."],
+    ["TH-Specifiers", "Map", [], "TH actuator specifiers (may be empty)."],
     ["Huntflow-Specifiers", "Map", ["{0"], "TH Huntflow specifiers.", [
       [1, "path", "String", ["[0"], "Return huntflows at and below this filesystem location (absolute path)."],
       [2, "tags", "Tags", ["[0"], "Return huntflows with these keywords."],
@@ -106,12 +105,14 @@
     ]],
     ["Specified-Arg-Types", "ArrayOf", ["*Arg-Type"], "Return huntflows that take these argument types."],
     ["Specified-Arg-Names", "ArrayOf", ["*Arg-Name"], "Return huntflows that take arguments with these names."],
-    ["AP-Results", "Map", ["{1"], "TH results defined in this profile.", [
-      [1, "huntflow_info", "ArrayOf", ["*Huntflow-Info", "[0"], "Structured data returned by Query: Huntflows."],
+    ["TH-Results", "Map", ["{1"], "TH results defined in this profile.", [
+      [1, "huntflow_info", "Huntflow-Array", ["[0"], "Structured data returned by Query: Huntflows."],
       [2, "datasources", "Datasource-Array", ["[0"], "Datasource names and info returned by Query Datasources."],
-      [3, "inv_returns", "Inv-Returns", ["[0"], "STIX SCO object returns"]
+      [3, "inv_returns", "Inv-Returns", ["[0"], "STIX SCO object returns."]
     ]],
 
+    ["Huntflow-Array", "ArrayOf", ["*Huntflow-Info"], "Structured data returned by Query: Huntflows."],
+  
     ["Inv-Returns", "ArrayOf", ["*Inv-Return", "{1"], "Array of returns from threat hunt investigations."],
   
     ["Inv-Return", "Record", [], "Data returned by a threat hunt, in various formatted types.", [
@@ -119,8 +120,8 @@
     [2, "stix_sco", "sco:STIX-Cybersecurity-Observables", ["[0"], "STIX SCO object returns"]
     ]],
 
-    ["Timeranges", "ArrayOf", ["*Timerange"], "a timerange used in the execution of a hunt."],
-    ["Timerange", "Choice", [], "Identification of process to be targeted by Threat Hunting activity.", [
+    ["Timeranges", "ArrayOf", ["*Timerange"], "timeranges used in the execution of a hunt."],
+    ["Timerange", "Choice", [], "a timerange used in the execution of a hunt.", [
       [1, "timerange_absolute", "Timerange-Abs", ["[0"], "Absolute timerange, defined by a start and end time in ISO 8601 format."],
       [2, "timerange_relative", "Timerange-Rel", ["[0"], "Relative timerange, example '3, Days' for last 3 days."]
     ]],
