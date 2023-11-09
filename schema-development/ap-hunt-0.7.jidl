@@ -2,7 +2,11 @@
      version:  "0-wd01"
        title:  "Threat Hunting Profile"
  description:  "Data definitions for Threat Hunting (TH) functions"
-  namespaces:  {"ls": "http://oasis-open.org/openc2/oc2ls-types/v1.1"}
+  namespaces: {
+                "ls": "http://oasis-open.org/openc2/oc2ls-types/v1.1",
+                "oca": "http://placeholder.org/oca-extensions-for-stix",
+                "sco": "http://placeholder.org/stix-sco-jadn"
+              },
      exports:  ["AP-Target", "AP-Args", "AP-Specifiers", "AP-Results"]
       config:  {"$MaxBinary": 5555, "$MaxString": 5555, "$MaxElements": 555, "$Sys": "$", "$TypeName": "^[A-Za-z][-:_A-Za-z0-9]{0,63}$", "$FieldName": "^[A-Za-z][-:_A-Za-z0-9]{0,63}$", "$NSID": "^[A-Za-z][A-Za-z0-9]{0,7}$"}
 

@@ -1,4 +1,4 @@
-     package:  "https://praxiseng.com/threat-hunter-9001"
+     package:  "http://docs.oasis-open.org/openc2/ns/ap-th/v1.0/resolved"
      version:  "0-wd01"
        title:  "Threat Hunting Profile"
  description:  "Data definitions for Threat Hunting (TH) functions"

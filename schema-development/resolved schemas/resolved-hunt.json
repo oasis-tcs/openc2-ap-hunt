@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://praxiseng.com/threat-hunter-9001",
+  "$id": "http://docs.oasis-open.org/openc2/ns/ap-th/v1.0/resolved",
   "title": "Threat Hunting Profile",
   "version": "0-wd01",
   "description": "Data definitions for Threat Hunting (TH) functions",

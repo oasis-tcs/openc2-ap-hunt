@@ -1,8 +1,8 @@
        title: "Threat Hunting Profile"
-     package: "https://praxiseng.com/threat-hunter-9001"
+     package: "http://docs.oasis-open.org/openc2/ns/ap-th/v1.0/resolved"
      version: "0-wd01"
  description: "Data definitions for Threat Hunting (TH) functions"
-  namespaces: {"ls": "http://oasis-open.org/openc2/oc2ls-types/v1.1", "th": "https://github.com/oasis-tcs/openc2-ap-hunt"}
+  namespaces: {"ls": "http://docs.oasis-open.org/openc2/ns/lang/v1.0", "th": "http://docs.oasis-open.org/openc2/ns/ap-th/v1.0"}
      exports: ["OpenC2-Command", "OpenC2-Response"]
 
 OpenC2-Command = Record                         // The Command defines an Action to be performed on a Target
