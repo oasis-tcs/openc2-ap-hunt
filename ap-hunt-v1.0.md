@@ -364,6 +364,11 @@ and defined huntflows that can be invoked, and applies the OpenC2
 introspection model to enable an OpenC2 Producer to determine the
 data sources and huntflows available from a particular Consumer. 
 
+There are multiple common approaches to cyber threat hunting. The capabilities
+defined by this AP are consistent with the 2019 MITRE Technical Report,
+_TTP-Based Hunting_ [[TTP-Hunting](#ttp-hunting)] but should also be applicable
+to the C2 of other hunting implementations and approaches.
+
 > Research links for threat hunting background:
 > 
 > * https://www.ibm.com/topics/threat-hunting
