@@ -165,7 +165,7 @@ For complete copyright information please see the full Notices section in an App
     - [2.1.4 Command Arguments](#214-command-arguments)
         - [**Table 2.1.4-1. Command Arguments Unique to Theat Hunting**](#table-214-1-command-arguments-unique-to-theat-hunting)
     - [2.1.5 Actuator Specifiers](#215-actuator-specifiers)
-        - [Table 2.1.5-1 AP huntflow Actuator Type](#table-215-1-ap-huntflow-actuator-type)
+        - [Table 2.1.5-1 AP Hunt Actuator Type](#table-215-1-ap-hunt-actuator-type)
         - [Table 2.1.5-2 AP huntflow Specifiers Type](#table-215-2-ap-huntflow-specifiers-type)
   - [2.2 OpenC2 Response Components](#22-openc2-response-components)
         - [Table 2.2-1 Threat Hunting Reponse Components](#table-22-1-threat-hunting-reponse-components)
@@ -687,7 +687,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 
 ### 2.1.5 Actuator Specifiers
 
-##### Table 2.1.5-1 AP huntflow Actuator Type
+##### Table 2.1.5-1 AP Hunt Actuator Type
 
 **_Type: Actuator (Enumerated)_**
 
