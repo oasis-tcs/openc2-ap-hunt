@@ -407,7 +407,8 @@ The purpose of this document is to:
 
 This TH profile:
 
-* Does not define or implement Actions beyond those defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10)
+* Does not define or implement Actions beyond those defined in Version 1.0 of
+  the [[OpenC2-Lang-v1.0]](#openc2-lang-v10)
 * Is consistent with Version 1.0 of the OpenC2 Language Specification
 
 -------
