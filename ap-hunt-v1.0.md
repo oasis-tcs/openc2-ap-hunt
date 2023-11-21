@@ -227,8 +227,8 @@ Producer (managing application) and transferred to a Consumer
 protocol, and the Consumer acts on the request and responds with
 status and any other requested information. An overview of the concepts
 that underlie OpenC2 and the structure of the suite of
-specifications can be found in the OpenC2 Architecture
-Specification [[OpenC2-Arch-v1.0](#openc2-arch-v10)].
+specifications can be found in the OpenC2 *Architecture
+Specification* [[OpenC2-Arch-v1.0](#openc2-arch-v10)].
 
 This specification defines an Actuator profile for **Threat
 Hunting (TH)**. In particular, the specification comprises a set
@@ -442,10 +442,11 @@ Actuators and associated Arguments and Specifiers. Appropriate
 aggregation of the components will define a Command-body that is
 meaningful in the context of threat hunting.
 
-This specification identifies the applicable components of an
-OpenC2 Command. The components of an OpenC2 Command include:
+The OpenC2 *Language Specification* [[OpenC2-Lang-v1.1](#openc2-lang-v11)]
+identifies the applicable components of an OpenC2 Command. The components of an
+OpenC2 Command include:
 
-* Action:  A subset of the Actions defined in the OpenC2 Language
+* **Action**:  A subset of the Actions defined in the OpenC2 Language
   Specification that are meaningful in the context of threat
   hunting.
     * This profile SHALL NOT define Actions that are external to
@@ -455,12 +456,12 @@ OpenC2 Command. The components of an OpenC2 Command include:
     * This profile SHALL NOT define Actions in a manner that is
       inconsistent with version 1.0 of the OpenC2 Language
       Specification
-* Target:  A subset of the Targets and Target-Specifiers defined
+* **Target**:  A subset of the Targets and Target-Specifiers defined
   in Version 1.0 of the OpenC2 Language Specification that are
   meaningful in the context of threat hunting and several Targets
   (and associated Specifiers) that are defined in this
   specification
-* Arguments:  A subset of the Arguments defined in the Language
+* **Arguments**:  A subset of the Arguments defined in the Language
   Specification and a set of Arguments defined in this
   specification
 
@@ -468,7 +469,7 @@ OpenC2 Command. The components of an OpenC2 Command include:
 > #404](https://github.com/oasis-tcs/openc2-oc2ls/pull/404), when
 > the v2 LS progresses "Actuator" should become "Profile"
 
-* Actuator:  A set of specifiers defined in this specification
+* **Actuator**:  A set of specifiers defined in this specification
   that are meaningful in the context of threat hunting
 
 ### 2.1.1 Actions
@@ -488,6 +489,11 @@ required or are optional are presented in [Section
 |  3 | **query**       | Initiate a request for information.                                                                    |
 | 30 | **investigate** | Task the recipient to aggregate and report information as it pertains to a security event or incident. |
 
+Usage:
+ * The **query** action is used to determine the available capabilities of the
+hunting Consumer, consistent with the introspection model described in the
+OpenC2 *Architecture Specification* [[OpenC2-Arch-v1.0](#openc2-arch-v10)].
+ * The **investigate** action is used to initiate a specified hunting activity.
 
 
 ### 2.1.2 Targets
@@ -512,9 +518,6 @@ Specification that are applicable to threat hunting.
 | 1036 | **th**       | TH-Target   | 1 | Hunts, Huntflows, Data sources.            |
 
 
-
-
-
 #### 2.1.2.2 Threat Hunting Targets
 The list of common Targets is extended to include the additional
 Targets defined in this section and referenced with the `th`
@@ -522,7 +525,7 @@ namespace.
 
 ##### **Table 2.1.2-2. Targets Unique to Threat Hunting**
 
-**_Type: AP-Target (Choice)_**
+**_Type: TH-Target (Choice)_**
 
 > **NOTE:** Need better description for huntflows (or a
 > definition in 1.2.1.2) and a description for data sources (or a
@@ -538,18 +541,12 @@ namespace.
 
 ### 2.1.3 Type Definitions
 
-Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This section defines data types associated with TH activities.
+Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This
+section defines data types associated with TH activities.
 
-##### Table 2.1.3-1 Hunt Target Types
-
-**_Type: TH-Target (Choice)_**
-
-| ID | Name            | Type                | # | Description                                                                                            |
-|---:|:----------------|:--------------------|--:|:-------------------------------------------------------------------------------------------------------|
-|  1 | **hunt**        | String              | 1 | A procedure to find a set of entities in the monitored environment that associates with a cyberthreat. |
-|  2 | **huntflows**   | Huntflow-Specifiers | 1 | TH Huntflow specifiers.                                                                                |
-|  3 | **datasources** | String              | 1 |                                                                                                     
-
+Hunt arguments are used to specify the parameters of a particular hunt. This AP
+supports a flexible set of arguments to enable an OpenC2 Producer to access the
+full capabilities of an OpenC2 Hunt Consumer.
 
 ##### Table 2.1.3-2 Hunt Arg Types
 
@@ -560,12 +557,7 @@ Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This sec
 |  1 | **huntargs** | Huntargs | 1 | Arguments for use in conjunction with hunt implementation. |
 
 
-
-
-
-
 ##### Table 2.1.3-3 Hunt Huntargs Type
-
 
 **_Type: Huntargs (Record{1..*})_**
 
@@ -581,10 +573,14 @@ Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This sec
 |  8 | **datasources**     | Datasource-Array                   | 1 | Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc.                |
 
 
+##### Table 2.1.3-3 OC2-Data Type
+
 
 | Type Name    | Type Definition                    | Description                                                                   |
 |:-------------|:-----------------------------------|:------------------------------------------------------------------------------|
 | **OC2-Data** | ArrayOf(Language-Spec-Types){1..*} | OC2-Data is an array of one or more types defined in the OpenC2 language spec |
+
+##### Table 2.1.3-3 Language Specification Types
 
 **_Type: Language-Spec-Types (Record)_**
 
@@ -611,11 +607,15 @@ Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This sec
 | 19 | **process**           | ls:Process         | 1 | Common properties of an instance of a computer program as executed on an operating system.               |
 | 20 | **uri**               | ls:URI             | 1 | A uniform resource identifier (URI).                                                           
 
+##### Table 2.1.3-3 Specified Arguments Types Type
+
 
 | Type Name               | Type Definition   | Description                                      |
 |:------------------------|:------------------|:-------------------------------------------------|
 | **Specified-Arg-Types** | ArrayOf(Arg-Type) | Return huntflows that take these argument types. |
 
+
+##### Table 2.1.3-3 Specified Arguments Names Type
 
 | Type Name               | Type Definition   | Description                                            |
 |:------------------------|:------------------|:-------------------------------------------------------|
@@ -626,6 +626,8 @@ Time ranges are used to specify the time period over which the
 hunt invoked with an `investigate /hunt` command should examine
 data.
 
+##### Table 2.1.3-3 Timeranges Type
+
 | Type Name      | Type Definition    | Description                                  |
 |:---------------|:-------------------|:---------------------------------------------|
 | **Timeranges** | ArrayOf(Timerange) | a timerange used in the execution of a hunt. |
@@ -634,12 +636,18 @@ Time ranges may be be specified in absolute terms, with a
 specific start and end time, or for a relative duration leading
 up to the present time.
 
+##### Table 2.1.3-3 Timerange Type
+
 **_Type: Timerange (Choice)_**
 
 | ID | Name                   | Type          | # | Description                                                             |
 |---:|:-----------------------|:--------------|--:|:------------------------------------------------------------------------|
 |  1 | **timerange_absolute** | Timerange-Abs | 1 | Absolute timerange, defined by a start and end time in ISO 8601 format. |
 |  2 | **timerange_relative** | Timerange-Rel | 1 | Relative timerange, example '3, Days' for last 3 days.                  |
+
+An absolute timerange is specified using exact start and stop times.
+
+##### Table 2.1.3-3 Absolute Timerange Type
 
 **_Type: Timerange-Abs (Record{2..*})_**
 
@@ -654,8 +662,11 @@ up to the present time.
 | **timestamp** | String (%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$%) |             |
 
 
-Relative time ranges can be specified in units ranging from
-seconds to days.
+Relative timeranges can be specified in units ranging from seconds to days. A
+relative timerange is always relative to the current time, so should be
+interpreted as specifying "the last _t_ Time-units". 
+
+##### Table 2.1.3-3 Relative Timerange Type
 
 **_Type: Time-Unit (Enumerated)_**
 
