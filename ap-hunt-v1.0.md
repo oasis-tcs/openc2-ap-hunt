@@ -1011,7 +1011,7 @@ TH Producers SHOULD:
     responses.
  
  
- ## 3.2.3 TH Consumer Conformance Requirements
+### 3.2.3 TH Consumer Conformance Requirements
 
 TH Consumers MUST:
 
