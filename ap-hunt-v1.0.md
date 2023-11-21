@@ -630,10 +630,10 @@ up to the present time.
 
 **_Type: Timerange-Abs (Record{2..*})_**
 
-| ID | Name                | Type   | # | Description                        |
-|---:|:--------------------|:-------|--:|:-----------------------------------|
-|  1 | **hunt_start_time** | sco:timerange | 1 | Start time, as a STIX time string. |
-|  2 | **hunt_stop_time**  | sco:timerange | 1 | Stop time, as a STIX time string.  |
+| ID | Name                | Type      | # | Description                        |
+|---:|:--------------------|:----------|--:|:-----------------------------------|
+|  1 | **hunt_start_time** | timestamp | 1 | Start time, as a STIX time string. |
+|  2 | **hunt_stop_time**  | timestamp | 1 | Stop time, as a STIX time string.  |
 
 
 Relative time ranges can be specified in units ranging from
