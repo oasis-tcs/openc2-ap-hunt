@@ -608,6 +608,7 @@ Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This sec
 |:------------------------|:------------------|:-------------------------------------------------------|
 | **Specified-Arg-Names** | ArrayOf(Arg-Name) | Return huntflows that take arguments with these names. |
 
+
 Time ranges are used to specify the time period over which the
 hunt invoked with an `investigate /hunt` command should examine
 data.
