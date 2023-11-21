@@ -698,7 +698,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 
 ##### Table 2.1.5-2 AP huntflow Specifiers Type
 
-**_Type: huntflow-Specifiers (Map)_**
+**_Type: Huntflow-Specifiers (Map)_**
 
 | ID | Name              | Type                | # | Description                                                             |
 |---:|:------------------|:--------------------|--:|:------------------------------------------------------------------------|
