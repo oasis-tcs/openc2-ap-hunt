@@ -225,7 +225,10 @@ uses a request-response paradigm where a Command is encoded by a
 Producer (managing application) and transferred to a Consumer
 (managed device or virtualized function) using a secure transfer
 protocol, and the Consumer acts on the request and responds with
-status and any other requested information.
+status and any other requested information. An overview of the concepts
+that underlie OpenC2 and the structure of the suite of
+specifications can be found in the OpenC2 Architecture
+Specification [[OpenC2-Arch-v1.0](#openc2-arch-v10)].
 
 This specification defines an Actuator profile for **Threat
 Hunting (TH)**. In particular, the specification comprises a set
@@ -310,7 +313,9 @@ _This section is normative._
 
 #### 1.2.1.2  Threat Hunting Terms
 
-* **Threat Hunting**: Cyber threat hunting is a proactive security search through networks, endpoints, and datasets to hunt malicious, suspicious, or risky activities that have evaded detection by existing tools.<br>
+* **Threat Hunting**: Cyber threat hunting is a proactive security search
+  through networks, endpoints, and datasets to hunt malicious, suspicious, or
+  risky activities that have evaded detection by existing tools.<br>
 Source: https://www.trellix.com/en-us/security-awareness/operations/what-is-cyber-threat-hunting.html
 
 * **Huntbook**: ...
@@ -1093,6 +1098,9 @@ Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, 
 
 ###### [RFC3552]
 Rescorla, E. and B. Korver, "Guidelines for Writing RFC Text on Security Considerations", BCP 72, RFC 3552, DOI 10.17487/RFC3552, July 2003, https://www.rfc-editor.org/info/rfc3552.
+
+###### [TTP-Hunting]
+Daszczyszak, R., Ellis, D., Luke, S., and Whitley, S, "TTP-Based Hunting", The MITRE Corporation, March 2019, https://www.mitre.org/sites/default/files/2021-11/prs-19-3892-ttp-based-hunting.pdf 
 
 -------
 
