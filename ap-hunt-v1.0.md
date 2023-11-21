@@ -714,13 +714,13 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 
 ##### Table 2.2-1 Threat Hunting Reponse Components
 
-**_Type: AP-Results (Map{1..*})_**
+**_Type: TH-Results (Map{1..*})_**
 
-| ID | Name              | Type                     | # | Description                                              |
-|---:|:------------------|:-------------------------|--:|:---------------------------------------------------------|
-|  1 | **huntflow_info** | Ap-results$huntflow-info | 1 | Structured data returned by Query: huntflows.            |
-|  2 | **datasources**   | Datasource-Array         | 1 | Datasource names and info returned by Query Datasources. |
-|  3 | **stix_returns**  | sco:STIX-Cybersecurity-Observables | 1 | STIX SCO object returns                        |
+| ID | Name              | Type             | # | Description                                              |
+|---:|:------------------|:-----------------|--:|:---------------------------------------------------------|
+|  1 | **huntflow_info** | Huntflow-Array   | 1 | Structured data returned by Query: Huntflows.            |
+|  2 | **datasources**   | Datasource-Array | 1 | Datasource names and info returned by Query Datasources. |
+|  3 | **inv_returns**   | Inv-Returns      | 1 | STIX SCO object returns.                                 |
 
 ##### Table 2.2-2 Threat Hunting Reponse Type: Huntflow Info
 
