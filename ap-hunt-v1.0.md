@@ -171,6 +171,8 @@ For complete copyright information please see the full Notices section in an App
         - [Table 2.2-1 Threat Hunting Reponse Components](#table-22-1-threat-hunting-reponse-components)
         - [Table 2.2-2 Threat Hunting Reponse Type: Huntflow Info](#table-22-2-threat-hunting-reponse-type-huntflow-info)
         - [Table 2.2-3 Threat Hunting Reponse Type: Datasource Array](#table-22-3-threat-hunting-reponse-type-datasource-array)
+        - [Table 2.2-4 Threat Hunting Reponse Type: Inv-Returns](#table-22-4-threat-hunting-reponse-type-inv-returns)
+        - [Table 2.2-5 Threat Hunting Reponse Type: Inv-Return](#table-22-5-threat-hunting-reponse-type-inv-return)
     - [2.2.1 Response Status Codes](#221-response-status-codes)
   - [2.3 OpenC2 Commands](#23-openc2-commands)
         - [**Table 2.3-1 Command Matrix**](#table-23-1-command-matrix)
@@ -636,6 +638,11 @@ up to the present time.
 |  2 | **hunt_stop_time**  | timestamp | 1 | Stop time, as a STIX time string.  |
 
 
+| Type Name     | Type Definition                                                     | Description |
+|:--------------|:--------------------------------------------------------------------|:------------|
+| **timestamp** | String (%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$%) |             |
+
+
 Relative time ranges can be specified in units ranging from
 seconds to days.
 
@@ -654,6 +661,13 @@ seconds to days.
 |---:|:--------------|:--------------|--:|:-----------------------------------------------------------|
 |  1 | **number**    | Integer{0..*} | 1 | Number of specified Time Units used in Relative Timerange. |
 |  2 | **time_unit** | Time-Unit     | 1 | Time Unit Keywords.                                        |
+
+
+
+| Type Name           | Type Definition           | Description                                           |
+|:--------------------|:--------------------------|:------------------------------------------------------|
+| **Typed-Arguments** | MapOf(Arg-Name, Arg-Type) | Argument names and types tied to a specific Huntflow. |
+
 
 
 | Type Name    | Type Definition | Description                                                                                                                                                                         |
@@ -710,7 +724,52 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 |  6 | **return_format** | Huntflow-Sections   | 1 | For each huntflow returned, include these data items.                   |
 
 
+| Type Name | Type Definition | Description                                 |
+|:----------|:----------------|:--------------------------------------------|
+| **Tags**  | ArrayOf(String) | Tags applied for search or filter purposes. |
+
+
+**_Type: Return-Type (Record{2..*})_**
+
+| ID | Name         | Type     | # | Description                                      |
+|---:|:-------------|:---------|--:|:-------------------------------------------------|
+|  1 | **var_name** | Arg-Name | 1 | Variable name to be returned by use of Huntflow. |
+|  2 | **var_type** | Arg-Type | 1 | Type of data to be returned by use of Huntflow.  |
+
+
+| Type Name             | Type Definition           | Description                                           |
+|:----------------------|:--------------------------|:------------------------------------------------------|
+| **Huntflow-Sections** | ArrayOf(Huntflow-Section) | For each huntflow returned, include these data items. |
+
+**_Type: Huntflow-Section (Enumerated)_**
+
+| ID | Name                 | Description                                                                                           |
+|---:|:---------------------|:------------------------------------------------------------------------------------------------------|
+|  1 | **path**             | Specifies the return should include the path to each Huntflow specified by the query conditions.      |
+|  2 | **uniqueId**         | Specifies the return should include the ID of each Huntflow specified by the query conditions.        |
+|  3 | **version**          | Specifies the return should include the ID of each Huntflow specified by the query conditions.        |
+|  4 | **args_required**    | Specifies the returned data should include the required arguments for the available Huntflows.        |
+|  5 | **expected_returns** | Specifies the returned data should include the expected returns for the available Huntflows.          |
+|  6 | **script**           | Specifies the returned data should include the full text of the Huntflow for each available Huntflow. |
+
+
+
+
+
 ## 2.2 OpenC2 Response Components
+
+
+**_Type: Results (Map{1..*})_**
+
+|   ID | Name           | Type             | # | Description                                                 |
+|-----:|:---------------|:-----------------|--:|:------------------------------------------------------------|
+|    1 | **versions**   | ls:Version       | 1 | List of OpenC2 language versions supported by this Actuator |
+|    2 | **profiles**   | ArrayOf(ls:Nsid) | 1 | List of profiles supported by this Actuator                 |
+|    3 | **pairs**      | Pairs            | 1 | List of targets applicable to each supported Action         |
+|    4 | **rate_limit** | Number{0..*}     | 1 |                                                             |
+| 1036 | **th**         | TH-Results       | 1 |                                                             |
+
+
 
 ##### Table 2.2-1 Threat Hunting Reponse Components
 
@@ -729,12 +788,53 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 |:-------------------|:-----------------------|:----------------------------------------------|
 | **Huntflow-Array** | ArrayOf(Huntflow-Info) | Structured data returned by Query: Huntflows. |
 
-##### Table 2.2-3 Threat Hunting Reponse Type: Datasource Array
 
+
+**_Type: Huntflow-Info (Record{1..*})_**
+
+| ID | Name                 | Type            | # | Description                                           |
+|---:|:---------------------|:----------------|--:|:------------------------------------------------------|
+|  1 | **path**             | String          | 1 | Path used to identify a Huntflow in place of a name.  |
+|  2 | **uniqueId**         | Integer{0..*}   | 1 | Unique ID associated with a specified Huntflow.       |
+|  3 | **version**          | String          | 1 | Unique ID associated with a specified Huntflow.       |
+|  4 | **args_required**    | Typed-Arguments | 1 | List of arguments used in the specified Huntflow.     |
+|  5 | **expected_returns** | Typed-Arguments | 1 | Data returned by the specified Huntflows.             |
+|  6 | **script**           | String          | 1 | Text of Hunt logic implemented by specified Huntflow. |
+
+
+
+
+##### Table 2.2-3 Threat Hunting Reponse Type: Datasource Array
 
 | Type Name            | Type Definition     | Description                                                  |
 |:---------------------|:--------------------|:-------------------------------------------------------------|
 | **Datasource-Array** | ArrayOf(Datasource) | An Array of Datasources, with multiple uses in Threathunting |
+
+
+**_Type: Datasource (Record{1..*})_**
+
+| ID | Name        | Type   | # | Description                                                 |
+|---:|:------------|:-------|--:|:------------------------------------------------------------|
+|  1 | **ds_name** | String | 1 | Name of a Datasource used by a Huntflow in Kestrel runtime. |
+|  2 | **ds_tags** | Tags   | 1 | Tags applied to a Datasource for search or filter purposes. |
+
+
+##### Table 2.2-4 Threat Hunting Reponse Type: Inv-Returns
+
+| Type Name       | Type Definition           | Description                                       |
+|:----------------|:--------------------------|:--------------------------------------------------|
+| **Inv-Returns** | ArrayOf(Inv-Return){1..*} | Array of returns from threat hunt investigations. |
+
+
+##### Table 2.2-5 Threat Hunting Reponse Type: Inv-Return
+
+**_Type: Inv-Return (Record)_**
+
+| ID | Name               | Type                               | # | Description                         |
+|---:|:-------------------|:-----------------------------------|--:|:------------------------------------|
+|  1 | **string_returns** | ArrayOf(String)                    | 1 | String return from an investigation |
+|  2 | **stix_sco**       | sco:STIX-Cybersecurity-Observables | 1 | STIX SCO object returns             |
+
 
 ### 2.2.1 Response Status Codes
 
