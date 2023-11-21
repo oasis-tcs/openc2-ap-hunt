@@ -1,12 +1,12 @@
 ## Schema
 |                . | .                                                                                                                                                                                                              |
 |-----------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|     **package:** | https://github.com/oasis-tcs/openc2-ap-hunt                                                                                                                                                                    |
+|     **package:** | http://docs.oasis-open.org/openc2/ns/ap-th/v1.0                                                                                                                                                                |
 |     **version:** | 0-wd01                                                                                                                                                                                                         |
 |       **title:** | Threat Hunting Profile                                                                                                                                                                                         |
 | **description:** | Data definitions for Threat Hunting (TH) functions                                                                                                                                                             |
-|  **namespaces:** | **ls**: http://oasis-open.org/openc2/oc2ls-types/v1.1                                                                                                                                                          |
-|     **exports:** | AP-Target, AP-Args, AP-Specifiers, AP-Results                                                                                                                                                                  |
+|  **namespaces:** | **ls**: http://docs.oasis-open.org/openc2/ns/lang/v1.0 **oca**: http://docs.oasis-open.org/openc2/ns/ext/oca **sco**: http://docs.oasis-open.org/openc2/ns/ext/sco                                             |
+|     **exports:** | TH-Target, TH-Args, TH-Specifiers, TH-Results                                                                                                                                                                  |
 |      **config:** | **$MaxBinary**: 5555 **$MaxString**: 5555 **$MaxElements**: 555 **$Sys**: $ **$TypeName**: ^[A-Za-z][-:_A-Za-z0-9]{0,63}$ **$FieldName**: ^[A-Za-z][-:_A-Za-z0-9]{0,63}$ **$NSID**: ^[A-Za-z][A-Za-z0-9]{0,7}$ |
 
 **_Type: Action (Enumerated)_**
@@ -16,22 +16,22 @@
 |  3 | **query**       | Initiate a request for information.                                                                    |
 | 30 | **investigate** | Task the recipient to aggregate and report information as it pertains to a security event or incident. |
 
-**_Type: Target (Enumerated)_**
+**_Type: Target (Choice)_**
 
-|   ID | Name         | Description |
-|-----:|:-------------|:------------|
-|    9 | **features** |             |
-| 1036 | **th**       |             |
+|   ID | Name         | Type        | # | Description |
+|-----:|:-------------|:------------|--:|:------------|
+|    9 | **features** | ls:Features | 1 |             |
+| 1036 | **th**       | TH-Target   | 1 |             |
 
-**_Type: Args (Enumerated)_**
+**_Type: Args (Map{1..*})_**
 
-|   ID | Name                   | Description |
-|-----:|:-----------------------|:------------|
-|    1 | **start_time**         |             |
-|    2 | **stop_time**          |             |
-|    3 | **duration**           |             |
-|    4 | **response_requested** |             |
-| 1036 | **th**                 |             |
+|   ID | Name                   | Type                  | # | Description |
+|-----:|:-----------------------|:----------------------|--:|:------------|
+|    1 | **start_time**         | ls:Date-Time          | 1 |             |
+|    2 | **stop_time**          | ls:Date-Time          | 1 |             |
+|    3 | **duration**           | ls:Duration           | 1 |             |
+|    4 | **response_requested** | ls:Response-Requested | 1 |             |
+| 1036 | **th**                 | TH-Args               | 1 |             |
 
 **_Type: Actuator (Enumerated)_**
 
@@ -39,16 +39,15 @@
 |-----:|:-------|:------------|
 | 1036 | **th** |             |
 
-**_Type: Results (Enumerated)_**
+**_Type: Results (Map{1..*})_**
 
-|   ID | Name           | Description |
-|-----:|:---------------|:------------|
-|    1 | **versions**   |             |
-|    2 | **profiles**   |             |
-|    3 | **pairs**      |             |
-|    4 | **rate_limit** |             |
-|    5 | **args**       |             |
-| 1036 | **th**         |             |
+|   ID | Name           | Type             | # | Description                                                 |
+|-----:|:---------------|:-----------------|--:|:------------------------------------------------------------|
+|    1 | **versions**   | ls:Version       | 1 | List of OpenC2 language versions supported by this Actuator |
+|    2 | **profiles**   | ArrayOf(ls:Nsid) | 1 | List of profiles supported by this Actuator                 |
+|    3 | **pairs**      | Pairs            | 1 | List of targets applicable to each supported Action         |
+|    4 | **rate_limit** | Number{0..*}     | 1 |                                                             |
+| 1036 | **th**         | TH-Results       | 1 |                                                             |
 
 **_Type: Pairs (Enumerated)_**
 
@@ -57,7 +56,7 @@
 |  3 | **query: features, /huntflows, /datasources** |             |
 | 30 | **investigate: /hunt**                        |             |
 
-**_Type: AP-Target (Choice)_**
+**_Type: TH-Target (Choice)_**
 
 | ID | Name            | Type                | # | Description                                                                                            |
 |---:|:----------------|:--------------------|--:|:-------------------------------------------------------------------------------------------------------|
@@ -65,24 +64,24 @@
 |  2 | **huntflows**   | Huntflow-Specifiers | 1 | TH Huntflow specifiers.                                                                                |
 |  3 | **datasources** | String              | 1 |                                                                                                        |
 
-**_Type: AP-Args (Map)_**
+**_Type: TH-Args (Map)_**
 
-| ID | Name         | Type     | # | Description                                                    |
-|---:|:-------------|:---------|--:|:---------------------------------------------------------------|
-|  1 | **huntargs** | Huntargs | 1 | Arguments for use in conjunction with huntbook implementation. |
+| ID | Name         | Type     | # | Description                                                |
+|---:|:-------------|:---------|--:|:-----------------------------------------------------------|
+|  1 | **huntargs** | Huntargs | 1 | Arguments for use in conjunction with hunt implementation. |
 
 **_Type: Huntargs (Record{1..*})_**
 
-| ID | Name                | Type                           | # | Description                                                                                       |
-|---:|:--------------------|:-------------------------------|--:|:--------------------------------------------------------------------------------------------------|
-|  1 | **string_args**     | Huntargs$String-args           | 1 | string arguments supplied as huntargs.                                                            |
-|  2 | **integer_args**    | Huntargs$Integer-args          | 1 | integer arguments supplied as huntargs.                                                           |
-|  3 | **typed_args**      | Typed-Arguments                | 1 | Paired strings of named arguments.                                                                |
-|  4 | **native_oc2**      | OC2-Data                       | 1 | OC2 Language types supplied as huntargs.                                                          |
-|  5 | **stix**            | sco:STIX-Cybersecurity-Observables | 1 | STIX arguments supplied as huntargs.                                                              |
-|  6 | **stix_extensions** | oca:OCA-STIX-Extensions        | 1 | OCA Extended STIX arguments supplied as huntargs. add a custom stix for oca-asset and event       |
-|  7 | **timeranges**      | Timeranges                     | 1 | Timeranges used in the execution of a hunt.                                                       |
-|  8 | **datasources**     | Datasource-Array               | 1 | Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc. |
+| ID | Name                | Type                               | # | Description                                                                                                      |
+|---:|:--------------------|:-----------------------------------|--:|:-----------------------------------------------------------------------------------------------------------------|
+|  1 | **string_args**     | ArrayOf(String)                    | 1 | string arguments supplied as huntargs.                                                                           |
+|  2 | **integer_args**    | ArrayOf(Integer)                   | 1 | integer arguments supplied as huntargs.                                                                          |
+|  3 | **typed_args**      | Typed-Arguments                    | 1 | Paired strings of named arguments.                                                                               |
+|  4 | **native_oc2**      | OC2-Data                           | 1 | OC2 Language types supplied as huntargs.                                                                         |
+|  5 | **stix**            | sco:STIX-Cybersecurity-Observables | 1 | STIX arguments supplied as huntargs.                                                                             |
+|  6 | **stix_extensions** | oca:OCA-Extensions                 | 1 | STIX arguments extended with OCA extensions supplied as huntargs. TODO add a custom stix for oca-asset and event |
+|  7 | **timeranges**      | Timeranges                         | 1 | Timeranges used in the execution of a hunt.                                                                      |
+|  8 | **datasources**     | Datasource-Array                   | 1 | Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc.                |
 
 
 | Type Name    | Type Definition                    | Description                                                                   |
@@ -91,8 +90,8 @@
 
 **_Type: Language-Spec-Types (Record)_**
 
-| ID | Name                  | Type            | # | Description                                                                                              |
-|---:|:----------------------|:----------------|--:|:---------------------------------------------------------------------------------------------------------|
+| ID | Name                  | Type               | # | Description                                                                                              |
+|---:|:----------------------|:-------------------|--:|:---------------------------------------------------------------------------------------------------------|
 |  1 | **artifact**          | ls:Artifact        | 1 | An array of bytes representing a file-like object or a link to that object.                              |
 |  2 | **device**            | ls:Device          | 1 | The properties of a hardware device.                                                                     |
 |  3 | **domain_name**       | ls:Domain-Name     | 1 | A network domain name.                                                                                   |
@@ -113,9 +112,8 @@
 | 18 | **port**              | ls:Port            | 1 | Transport Protocol Port Number, [RFC6335]                                                                |
 | 19 | **process**           | ls:Process         | 1 | Common properties of an instance of a computer program as executed on an operating system.               |
 | 20 | **uri**               | ls:URI             | 1 | A uniform resource identifier (URI).                                                                     |
-                                             |
 
-**_Type: AP-Specifiers (Map{1..*})_**
+**_Type: TH-Specifiers (Map{1..*})_**
 
 | ID | Name | Type | # | Description |
 |---:|:-----|:-----|--:|:------------|
@@ -134,20 +132,25 @@
 
 | Type Name               | Type Definition   | Description                                      |
 |:------------------------|:------------------|:-------------------------------------------------|
-| **Specified-Arg-Types** | ArrayOf(Arg-Type) | Return huntbooks that take these argument types. |
+| **Specified-Arg-Types** | ArrayOf(Arg-Type) | Return huntflows that take these argument types. |
 
 
 | Type Name               | Type Definition   | Description                                            |
 |:------------------------|:------------------|:-------------------------------------------------------|
-| **Specified-Arg-Names** | ArrayOf(Arg-Name) | Return huntbooks that take arguments with these names. |
+| **Specified-Arg-Names** | ArrayOf(Arg-Name) | Return huntflows that take arguments with these names. |
 
-**_Type: AP-Results (Map{1..*})_**
+**_Type: TH-Results (Map{1..*})_**
 
-| ID | Name              | Type                     | # | Description                                              |
-|---:|:------------------|:-------------------------|--:|:---------------------------------------------------------|
-|  1 | **huntflow_info** | Ap-results$Huntflow-info | 1 | Structured data returned by Query: Huntflows.            |
-|  2 | **datasources**   | Datasource-Array         | 1 | Datasource names and info returned by Query Datasources. |
-|  3 | **inv_returns**   | Inv-Returns              | 1 | STIX SCO object returns                                  |
+| ID | Name              | Type             | # | Description                                              |
+|---:|:------------------|:-----------------|--:|:---------------------------------------------------------|
+|  1 | **huntflow_info** | Huntflow-Array   | 1 | Structured data returned by Query: Huntflows.            |
+|  2 | **datasources**   | Datasource-Array | 1 | Datasource names and info returned by Query Datasources. |
+|  3 | **inv_returns**   | Inv-Returns      | 1 | STIX SCO object returns.                                 |
+
+
+| Type Name          | Type Definition        | Description                                   |
+|:-------------------|:-----------------------|:----------------------------------------------|
+| **Huntflow-Array** | ArrayOf(Huntflow-Info) | Structured data returned by Query: Huntflows. |
 
 
 | Type Name       | Type Definition           | Description                                       |
@@ -156,16 +159,15 @@
 
 **_Type: Inv-Return (Record)_**
 
-| ID | Name               | Type                           | # | Description                         |
-|---:|:-------------------|:-------------------------------|--:|:------------------------------------|
-|  1 | **string_returns** | Inv-return$String-returns      | 1 | String return from an investigation |
-|  2 | **stix_sco**       | STIX-Cybersecurity-Observables | 1 | STIX SCO object returns             |
+| ID | Name               | Type                               | # | Description                         |
+|---:|:-------------------|:-----------------------------------|--:|:------------------------------------|
+|  1 | **string_returns** | ArrayOf(String)                    | 1 | String return from an investigation |
+|  2 | **stix_sco**       | sco:STIX-Cybersecurity-Observables | 1 | STIX SCO object returns             |
 
 
-
-| Type Name      | Type Definition    | Description                                  |
-|:---------------|:-------------------|:---------------------------------------------|
-| **Timeranges** | ArrayOf(Timerange) | a timerange used in the execution of a hunt. |
+| Type Name      | Type Definition    | Description                                 |
+|:---------------|:-------------------|:--------------------------------------------|
+| **Timeranges** | ArrayOf(Timerange) | timeranges used in the execution of a hunt. |
 
 **_Type: Timerange (Choice)_**
 
@@ -185,10 +187,10 @@
 
 **_Type: Timerange-Abs (Record{2..*})_**
 
-| ID | Name                | Type   | # | Description                        |
-|---:|:--------------------|:-------|--:|:-----------------------------------|
-|  1 | **hunt_start_time** | sco:timerange | 1 | Start time, as a STIX time string. |
-|  2 | **hunt_stop_time**  | sco:timerange | 1 | Stop time, as a STIX time string.  |
+| ID | Name                | Type      | # | Description                        |
+|---:|:--------------------|:----------|--:|:-----------------------------------|
+|  1 | **hunt_start_time** | timestamp | 1 | Start time, as a STIX time string. |
+|  2 | **hunt_stop_time**  | timestamp | 1 | Stop time, as a STIX time string.  |
 
 **_Type: Timerange-Rel (Record{2..*})_**
 
@@ -201,14 +203,14 @@
 
 | ID | Name         | Type     | # | Description                                      |
 |---:|:-------------|:---------|--:|:-------------------------------------------------|
-|  1 | **var_name** | Arg-Name | 1 | Variable name to be returned by use of Huntbook. |
-|  2 | **var_type** | Arg-Type | 1 | Type of data to be returned by use of Huntbook.  |
+|  1 | **var_name** | Arg-Name | 1 | Variable name to be returned by use of Huntflow. |
+|  2 | **var_type** | Arg-Type | 1 | Type of data to be returned by use of Huntflow.  |
 
 **_Type: Datasource (Record{1..*})_**
 
 | ID | Name        | Type   | # | Description                                                 |
 |---:|:------------|:-------|--:|:------------------------------------------------------------|
-|  1 | **ds_name** | String | 1 | Name of a Datasource used by a Huntbook in Kestrel runtime. |
+|  1 | **ds_name** | String | 1 | Name of a Datasource used by a Huntflow in Kestrel runtime. |
 |  2 | **ds_tags** | Tags   | 1 | Tags applied to a Datasource for search or filter purposes. |
 
 
@@ -248,6 +250,7 @@
 |:----------|:----------------|:--------------------------------------------|
 | **Tags**  | ArrayOf(String) | Tags applied for search or filter purposes. |
 
+
 | Type Name           | Type Definition           | Description                                           |
 |:--------------------|:--------------------------|:------------------------------------------------------|
 | **Typed-Arguments** | MapOf(Arg-Name, Arg-Type) | Argument names and types tied to a specific Huntflow. |
@@ -263,7 +266,6 @@
 | **Arg-Name** | String          | Argument names used by a Huntflow. Follow C variable naming conventions. Examples include name, src_port, and x_unique_id. |
 
 
-
-| Type Name                    | Type Definition        | Description                                   |
-|:-----------------------------|:-----------------------|:----------------------------------------------|
-| **Huntflow-Info-Array**      | ArrayOf(Huntflow-Info) | Structured data returned by Query: Huntflows. |
+| Type Name     | Type Definition                                                     | Description |
+|:--------------|:--------------------------------------------------------------------|:------------|
+| **timestamp** | String (%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$%) |             |
