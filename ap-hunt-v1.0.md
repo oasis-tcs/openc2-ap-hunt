@@ -725,10 +725,9 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 ##### Table 2.2-2 Threat Hunting Reponse Type: Huntflow Info
 
 
-
-| Type Name                    | Type Definition        | Description                                   |
-|:-----------------------------|:-----------------------|:----------------------------------------------|
-| **Huntflow-Info-Array**      | ArrayOf(Huntflow-Info) | Structured data returned by Query: Huntflows. |
+| Type Name          | Type Definition        | Description                                   |
+|:-------------------|:-----------------------|:----------------------------------------------|
+| **Huntflow-Array** | ArrayOf(Huntflow-Info) | Structured data returned by Query: Huntflows. |
 
 ##### Table 2.2-3 Threat Hunting Reponse Type: Datasource Array
 
