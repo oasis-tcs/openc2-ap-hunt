@@ -125,6 +125,20 @@ For complete copyright information please see the full Notices section in an App
 -------
 
 # Table of Contents
+- [OpenC2 Actuator Profile for Threat Hunting Version 1.0](#openc2-actuator-profile-for-threat-hunting-version-10)
+  - [WD01 of Committee Specification Draft 01](#wd01-of-committee-specification-draft-01)
+  - [24 September 2023](#24-september-2023)
+      - [Technical Committee:](#technical-committee)
+      - [Chairs:](#chairs)
+      - [Editor:](#editor)
+      - [Additional artifacts:](#additional-artifacts)
+      - [Related work:](#related-work)
+      - [Abstract:](#abstract)
+      - [Status:](#status)
+      - [Key words:](#key-words)
+      - [Citation format:](#citation-format)
+      - [Notices](#notices)
+- [Table of Contents](#table-of-contents)
 - [1 Introduction](#1-introduction)
   - [1.1 Changes from earlier versions](#11-changes-from-earlier-versions)
   - [1.2 Glossary](#12-glossary)
@@ -175,15 +189,21 @@ For complete copyright information please see the full Notices section in an App
 - [Annex A. Schemas](#annex-a-schemas)
 - [Appendix A. References](#appendix-a-references)
   - [A.1 Normative References](#a1-normative-references)
+          - [\[OpenC2-Arch-v1.0\]](#openc2-arch-v10)
+          - [\[OpenC2-Lang-v1.1\]](#openc2-lang-v11)
+          - [\[RFC2119\]](#rfc2119)
+          - [\[RFC8174\]](#rfc8174)
   - [A.2 Informative References](#a2-informative-references)
+          - [\[RFC3552\]](#rfc3552)
 - [Appendix B. Safety, Security and Privacy Considerations](#appendix-b-safety-security-and-privacy-considerations)
 - [Appendix C. Acknowledgments](#appendix-c-acknowledgments)
+  - [C.1 Special Thanks](#c1-special-thanks)
+  - [C.2 Participants](#c2-participants)
 - [Appendix D. Revision History](#appendix-d-revision-history)
 - [Appendix E. Threat Hunting Command / Response Examples](#appendix-e-threat-hunting-command--response-examples)
   - [E.1 Example 1: Query Features](#e1-example-1-query-features)
   - [E.2 Example 2: Query huntflows](#e2-example-2-query-huntflows)
   - [E.3 Example 3: Investigate Hunt](#e3-example-3-investigate-hunt)
-  - [}](#)
 - [Appendix F. Notices](#appendix-f-notices)
 
 
@@ -455,6 +475,8 @@ required or are optional are presented in [Section
 |  3 | **query**       | Initiate a request for information.                                                                    |
 | 30 | **investigate** | Task the recipient to aggregate and report information as it pertains to a security event or incident. |
 
+
+
 ### 2.1.2 Targets
 
 This threat hunting AP employs Targets defined by the OpenC2
@@ -468,12 +490,16 @@ Specification that are applicable to threat hunting.
 
 ##### **Table 2.1.2-1. Targets Applicable to Threat Hunting**
 
+
 **_Type: Target (Choice)_**
 
-| ID | Name | Type | Description |
-| :--- | :--- | :--- | :--- |
-| 9 | **features** | Features | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities |
-| 1036 | **th** | Theat Hunting | Hunts, Huntflows, Data sources |
+|   ID | Name         | Type        | # | Description |
+|-----:|:-------------|:------------|--:|:------------|
+|    9 | **features** | ls:Features | 1 | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities.            |
+| 1036 | **th**       | TH-Target   | 1 | Hunts, Huntflows, Data sources.            |
+
+
+
 
 
 #### 2.1.2.2 Threat Hunting Targets
