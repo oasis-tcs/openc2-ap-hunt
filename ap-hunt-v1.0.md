@@ -657,13 +657,13 @@ seconds to days.
 
 
 | Type Name    | Type Definition | Description                                                                                                                                                                         |
-|:-------------|:----------------|:------------|
-| **Arg-Type** | String          | Argument types used by a huntflow. Follow STIX naming conventions, with lowercase characters and hyphens replacing spaces. Common types include process, file, and network-traffic. |
+|:-------------|:----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Arg-Type** | String          | Argument types used by a Huntflow. Follow STIX naming conventions, with lowercase characters and hyphens replacing spaces. Common types include process, file, and network-traffic. |
 
 
 | Type Name    | Type Definition | Description                                                                                                                |
 |:-------------|:----------------|:---------------------------------------------------------------------------------------------------------------------------|
-| **Arg-Name** | String          | Argument names used by a huntflow. Follow C variable naming conventions. Examples include name, src_port, and x_unique_id. |
+| **Arg-Name** | String          | Argument names used by a Huntflow. Follow C variable naming conventions. Examples include name, src_port, and x_unique_id. |
 
 ### 2.1.4 Command Arguments
 
