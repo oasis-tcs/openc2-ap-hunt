@@ -161,7 +161,7 @@ For complete copyright information please see the full Notices section in an App
     - [2.1.3 Type Definitions](#213-type-definitions)
         - [Table 2.1.3-1 Hunt Target Types](#table-213-1-hunt-target-types)
         - [Table 2.1.3-2 Hunt Arg Types](#table-213-2-hunt-arg-types)
-        - [Table 2.1.3-3 AP Huntargs Type](#table-213-3-ap-huntargs-type)
+        - [Table 2.1.3-3 Hunt Huntargs Type](#table-213-3-hunt-huntargs-type)
     - [2.1.4 Command Arguments](#214-command-arguments)
         - [**Table 2.1.4-1. Command Arguments Unique to Theat Hunting**](#table-214-1-command-arguments-unique-to-theat-hunting)
     - [2.1.5 Actuator Specifiers](#215-actuator-specifiers)
@@ -551,22 +551,22 @@ Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This sec
 
 
 
-##### Table 2.1.3-3 AP Huntargs Type
+##### Table 2.1.3-3 Hunt Huntargs Type
 
-> **NOTE**: updated to v0.7 schema content
 
 **_Type: Huntargs (Record{1..*})_**
 
-| ID | Name                | Type                           | # | Description                                                                                       |
-|---:|:--------------------|:-------------------------------|--:|:--------------------------------------------------------------------------------------------------|
-|  1 | **string_args**     | Huntargs$String-args           | 1 | string arguments supplied as huntargs.                                                            |
-|  2 | **integer_args**    | Huntargs$Integer-args          | 1 | integer arguments supplied as huntargs.                                                           |
-|  3 | **typed_args**      | Typed-Arguments                | 1 | Paired strings of named arguments.                                                                |
-|  4 | **native_oc2**      | OC2-Data                       | 1 | OC2 Language types supplied as huntargs.                                                          |
-|  5 | **stix**            | sco:STIX-Cybersecurity-Observables | 1 | STIX arguments supplied as untarghs.                                                          |
-|  6 | **stix_extensions** | oca:OCA-STIX-Extensions        | 1 | OCA Extended STIX arguments supplied as huntargs. add a custom stix for oca-asset and event       |
-|  7 | **timeranges**      | Timeranges                     | 1 | Timeranges used in the execution of a hunt.                                                       |
-|  8 | **datasources**     | Datasource-Array               | 1 | Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc. |
+| ID | Name                | Type                               | # | Description                                                                                                      |
+|---:|:--------------------|:-----------------------------------|--:|:-----------------------------------------------------------------------------------------------------------------|
+|  1 | **string_args**     | ArrayOf(String)                    | 1 | string arguments supplied as huntargs.                                                                           |
+|  2 | **integer_args**    | ArrayOf(Integer)                   | 1 | integer arguments supplied as huntargs.                                                                          |
+|  3 | **typed_args**      | Typed-Arguments                    | 1 | Paired strings of named arguments.                                                                               |
+|  4 | **native_oc2**      | OC2-Data                           | 1 | OC2 Language types supplied as huntargs.                                                                         |
+|  5 | **stix**            | sco:STIX-Cybersecurity-Observables | 1 | STIX arguments supplied as huntargs.                                                                             |
+|  6 | **stix_extensions** | oca:OCA-Extensions                 | 1 | STIX arguments extended with OCA extensions supplied as huntargs. TODO add a custom stix for oca-asset and event |
+|  7 | **timeranges**      | Timeranges                         | 1 | Timeranges used in the execution of a hunt.                                                                      |
+|  8 | **datasources**     | Datasource-Array                   | 1 | Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc.                |
+
 
 
 | Type Name    | Type Definition                    | Description                                                                   |
@@ -575,8 +575,8 @@ Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This sec
 
 **_Type: Language-Spec-Types (Record)_**
 
-| ID | Name                  | Type            | # | Description                                                                                              |
-|---:|:----------------------|:----------------|--:|:---------------------------------------------------------------------------------------------------------|
+| ID | Name                  | Type               | # | Description                                                                                              |
+|---:|:----------------------|:-------------------|--:|:---------------------------------------------------------------------------------------------------------|
 |  1 | **artifact**          | ls:Artifact        | 1 | An array of bytes representing a file-like object or a link to that object.                              |
 |  2 | **device**            | ls:Device          | 1 | The properties of a hardware device.                                                                     |
 |  3 | **domain_name**       | ls:Domain-Name     | 1 | A network domain name.                                                                                   |
@@ -596,7 +596,7 @@ Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This sec
 | 17 | **mac_address**       | ls:MAC-Addr        | 1 | A Media Access Control (MAC) address - EUI-48 or EUI-64 as defined in [EUI].                             |
 | 18 | **port**              | ls:Port            | 1 | Transport Protocol Port Number, [RFC6335]                                                                |
 | 19 | **process**           | ls:Process         | 1 | Common properties of an instance of a computer program as executed on an operating system.               |
-| 20 | **uri**               | ls:URI             | 1 | A uniform resource identifier (URI).                                                                     |
+| 20 | **uri**               | ls:URI             | 1 | A uniform resource identifier (URI).                                                           
 
 
 | Type Name               | Type Definition   | Description                                      |
