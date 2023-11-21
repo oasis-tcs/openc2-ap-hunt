@@ -159,7 +159,7 @@ For complete copyright information please see the full Notices section in an App
       - [2.1.2.2 Threat Hunting Targets](#2122-threat-hunting-targets)
         - [**Table 2.1.2-2. Targets Unique to Threat Hunting**](#table-212-2-targets-unique-to-threat-hunting)
     - [2.1.3 Type Definitions](#213-type-definitions)
-        - [Table 2.1.3-1 AP Target Types](#table-213-1-ap-target-types)
+        - [Table 2.1.3-1 Hunt Target Types](#table-213-1-hunt-target-types)
         - [Table 2.1.3-2 AP Arg Types](#table-213-2-ap-arg-types)
         - [Table 2.1.3-3 AP Huntargs Type](#table-213-3-ap-huntargs-type)
     - [2.1.4 Command Arguments](#214-command-arguments)
@@ -527,17 +527,15 @@ namespace.
 
 Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This section defines data types associated with TH activities.
 
-##### Table 2.1.3-1 AP Target Types
+##### Table 2.1.3-1 Hunt Target Types
 
-**_Type: AP-Target (Choice)_**
-
-> **NOTE**: updated to v0.7 schema content
+**_Type: TH-Target (Choice)_**
 
 | ID | Name            | Type                | # | Description                                                                                            |
 |---:|:----------------|:--------------------|--:|:-------------------------------------------------------------------------------------------------------|
 |  1 | **hunt**        | String              | 1 | A procedure to find a set of entities in the monitored environment that associates with a cyberthreat. |
 |  2 | **huntflows**   | Huntflow-Specifiers | 1 | TH Huntflow specifiers.                                                                                |
-|  3 | **datasources** | String              | 1 |                                                                                                        |
+|  3 | **datasources** | String              | 1 |                                                                                                     
 
 
 ##### Table 2.1.3-2 AP Arg Types
