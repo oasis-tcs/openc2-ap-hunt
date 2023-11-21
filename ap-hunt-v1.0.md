@@ -490,7 +490,7 @@ required or are optional are presented in [Section 2.3](#23-openc2-commands).
 Table 2.1.2-1 lists the Targets defined in the OpenC2 Language
 Specification that are applicable to threat hunting.
 
-##### **Table 2.1.2-1. Targets Applicable to Threat Hunting**
+##### **Table 2.1.2-1. Targets Applicable to Threat Hunting** 
 
 
 **_Type: Target (Choice)_**
