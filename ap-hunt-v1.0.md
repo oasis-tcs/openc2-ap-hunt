@@ -675,15 +675,15 @@ referenced with the `th` namespace.
 
 Standard OpenC2 Language arguments are available for using in threat hunting commands.
 
-**_Type: Args (Enumerated)_**
+**_Type: Args (Map{1..*})_**
 
-|   ID | Name                   | Description |
-|-----:|:-----------------------|:------------|
-|    1 | **start_time**         |             |
-|    2 | **stop_time**          |             |
-|    3 | **duration**           |             |
-|    4 | **response_requested** |             |
-| 1036 | **th**                 |             |
+|   ID | Name                   | Type                  | # | Description |
+|-----:|:-----------------------|:----------------------|--:|:------------|
+|    1 | **start_time**         | ls:Date-Time          | 1 |             |
+|    2 | **stop_time**          | ls:Date-Time          | 1 |             |
+|    3 | **duration**           | ls:Duration           | 1 |             |
+|    4 | **response_requested** | ls:Response-Requested | 1 |             |
+| 1036 | **th**                 | TH-Args               | 1 |             |
 
 ### 2.1.5 Actuator Specifiers
 
