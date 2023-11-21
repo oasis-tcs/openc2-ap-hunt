@@ -160,7 +160,7 @@ For complete copyright information please see the full Notices section in an App
         - [**Table 2.1.2-2. Targets Unique to Threat Hunting**](#table-212-2-targets-unique-to-threat-hunting)
     - [2.1.3 Type Definitions](#213-type-definitions)
         - [Table 2.1.3-1 Hunt Target Types](#table-213-1-hunt-target-types)
-        - [Table 2.1.3-2 AP Arg Types](#table-213-2-ap-arg-types)
+        - [Table 2.1.3-2 Hunt Arg Types](#table-213-2-hunt-arg-types)
         - [Table 2.1.3-3 AP Huntargs Type](#table-213-3-ap-huntargs-type)
     - [2.1.4 Command Arguments](#214-command-arguments)
         - [**Table 2.1.4-1. Command Arguments Unique to Theat Hunting**](#table-214-1-command-arguments-unique-to-theat-hunting)
@@ -538,13 +538,18 @@ Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This sec
 |  3 | **datasources** | String              | 1 |                                                                                                     
 
 
-##### Table 2.1.3-2 AP Arg Types
+##### Table 2.1.3-2 Hunt Arg Types
 
-**_Type: AP-Args (Map)_**
+**_Type: TH-Args (Map)_**
 
-| ID | Name         | Type     | # | Description                                                    |
-|---:|:-------------|:---------|--:|:---------------------------------------------------------------|
-|  1 | **huntargs** | Huntargs | 1 | Arguments for use in conjunction with huntflow implementation. |
+| ID | Name         | Type     | # | Description                                                |
+|---:|:-------------|:---------|--:|:-----------------------------------------------------------|
+|  1 | **huntargs** | Huntargs | 1 | Arguments for use in conjunction with hunt implementation. |
+
+
+
+
+
 
 ##### Table 2.1.3-3 AP Huntargs Type
 
