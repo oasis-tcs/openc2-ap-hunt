@@ -1187,7 +1187,7 @@ Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, 
 Rescorla, E. and B. Korver, "Guidelines for Writing RFC Text on Security Considerations", BCP 72, RFC 3552, DOI 10.17487/RFC3552, July 2003, https://www.rfc-editor.org/info/rfc3552.
 
 ###### [TTP-Hunting]
-Daszczyszak, R., Ellis, D., Luke, S., and Whitley, S, "TTP-Based Hunting", The MITRE Corporation, March 2019, https://www.mitre.org/sites/default/files/2021-11/prs-19-3892-ttp-based-hunting.pdf 
+Daszczyszak, R., Ellis, D., Luke, S., and Whitley, S., "TTP-Based Hunting", The MITRE Corporation, March 2019, https://www.mitre.org/sites/default/files/2021-11/prs-19-3892-ttp-based-hunting.pdf 
 
 -------
 
