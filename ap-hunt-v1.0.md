@@ -364,22 +364,21 @@ _This section is non-normative_
 
 ## 1.5 Overview
 
-Cyber threat hunting is a proactive security search through
-networks, endpoints, and datasets to hunt malicious, suspicious,
-or risky activities that have evaded detection by existing tools.
-Various aspects of threat hunting can be manual,
-machine-assisted, or automated. This AP defines the use of OpenC2
-to invoke machine-assisted or automated threat hunting activities
-and return associated results.  It assumes the availability to
-the OpenC2 Consumer of relevant data sources that can be accessed
-and defined huntflows that can be invoked, and applies the OpenC2
-introspection model to enable an OpenC2 Producer to determine the
-data sources and huntflows available from a particular Hunt Consumer. 
+Cyber threat hunting is a proactive security search through networks, endpoints,
+and datasets to hunt malicious, suspicious, or risky activities that have evaded
+detection by existing tools. Various aspects of threat hunting can be manual,
+machine-assisted, or automated. This AP defines the use of OpenC2 to invoke
+machine-assisted or automated threat hunting activities and return associated
+results.  It assumes the availability to the OpenC2 Consumer with one or more
+defined huntflows that can be invoked and one or more  relevant data sources
+that can be queried, and applies the OpenC2 introspection model to enable an
+OpenC2 Producer to determine the data sources and huntflows available from a
+particular Hunt Consumer to enable it to invoke huntflows with relevant parameters. 
 
 There are multiple common approaches to cyber threat hunting. The capabilities
 defined by this AP are consistent with the 2019 MITRE Technical Report,
 _TTP-Based Hunting_ [[TTP-Hunting](#ttp-hunting)] but should also be applicable
-to the C2 of other hunting implementations and approaches.
+to the use of other hunting implementations and approaches.
 
 > Research links for threat hunting background:
 > 
