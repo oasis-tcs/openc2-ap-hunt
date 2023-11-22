@@ -151,7 +151,7 @@
     ["Huntflow-Section", "Enumerated", [], "Data format to be returned by Query Huntflows. If none specified, return all.", [
       [1, "path", "Specifies the return should include the path to each Huntflow specified by the query conditions."],
       [2, "uniqueId", "Specifies the return should include the ID of each Huntflow specified by the query conditions."], 
-      [3, "version", "Specifies the return should include the ID of each Huntflow specified by the query conditions."], 
+      [3, "version", "Specifies the return should include the version of each Huntflow specified by the query conditions."], 
       [4, "args_required", "Specifies the returned data should include the required arguments for the available Huntflows."],
       [5, "expected_returns", "Specifies the returned data should include the expected returns for the available Huntflows."],
       [6, "script", "Specifies the returned data should include the full text of the Huntflow for each available Huntflow."]

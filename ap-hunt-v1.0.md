@@ -732,7 +732,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 | 1036 | **th** |             |
 
 
-##### Table 2.1.5-2 AP huntflow Specifiers Type
+##### Table 2.1.5-2 TH Huntflow Specifiers Type
 
 **_Type: Huntflow-Specifiers (Map)_**
 
@@ -745,6 +745,10 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 |  5 | **format_types**  | Return-Type         | 1 | Return huntflows that produce these output types.                       |
 |  6 | **return_format** | Huntflow-Sections   | 1 | For each huntflow returned, include these data items.                   |
 
+##### Table 2.1.5-2 Tags Type
+
+Tags provide a mechanism to associated multiple, discrete labels to a huntflow
+for the purposes of organization and lookup.
 
 | Type Name | Type Definition | Description                                 |
 |:----------|:----------------|:--------------------------------------------|
@@ -758,10 +762,17 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 |  1 | **var_name** | Arg-Name | 1 | Variable name to be returned by use of Huntflow. |
 |  2 | **var_type** | Arg-Type | 1 | Type of data to be returned by use of Huntflow.  |
 
+##### Table 2.1.5-2 Huntflow Sections Type
+
+The Huntflow-Sections / Huntflow-Section types are used to specify the types of
+desired return information when querying a Hunt Consumer about available
+huntflows.
 
 | Type Name             | Type Definition           | Description                                           |
 |:----------------------|:--------------------------|:------------------------------------------------------|
 | **Huntflow-Sections** | ArrayOf(Huntflow-Section) | For each huntflow returned, include these data items. |
+
+##### Table 2.1.5-2 Huntflow Section Type
 
 **_Type: Huntflow-Section (Enumerated)_**
 
@@ -773,8 +784,6 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 |  4 | **args_required**    | Specifies the returned data should include the required arguments for the available Huntflows.        |
 |  5 | **expected_returns** | Specifies the returned data should include the expected returns for the available Huntflows.          |
 |  6 | **script**           | Specifies the returned data should include the full text of the Huntflow for each available Huntflow. |
-
-
 
 
 
