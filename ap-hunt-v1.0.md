@@ -635,12 +635,33 @@ argument names.
 |:------------------------|:------------------|:-------------------------------------------------------|
 | **Specified-Arg-Names** | ArrayOf(Arg-Name) | Return huntflows that take arguments with these names. |
 
+##### **Table 2.1.3-7 Typed-Arguments Type**
 
-Time ranges are used to specify the time period over which the
-hunt invoked with an `investigate /hunt` command should examine
-data.
+| Type Name           | Type Definition           | Description                                           |
+|:--------------------|:--------------------------|:------------------------------------------------------|
+| **Typed-Arguments** | MapOf(Arg-Name, Arg-Type) | Argument names and types tied to a specific Huntflow. |
 
-##### **Table 2.1.3-7 Timeranges Type**
+
+
+##### **Table 2.1.3-8 Arg-Type Type**
+
+| Type Name    | Type Definition | Description                                                                                                                                                                         |
+|:-------------|:----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Arg-Type** | String          | Argument types used by a Huntflow. Follow STIX naming conventions, with lowercase characters and hyphens replacing spaces. Common types include process, file, and network-traffic. |
+
+
+##### **Table 2.1.3-9 Arg-Name Type**
+
+| Type Name    | Type Definition | Description                                                                                                                |
+|:-------------|:----------------|:---------------------------------------------------------------------------------------------------------------------------|
+| **Arg-Name** | String          | Argument names used by a Huntflow. Follow C variable naming conventions. Examples include name, src_port, and x_unique_id. |
+
+
+When executing a hunt an important parameter is the time period to be examined.
+Time ranges are used to specify the time period over which the hunt invoked with
+an `investigate /hunt` command should examine data.
+
+##### **Table 2.1.3-10 Timeranges Type**
 
 | Type Name      | Type Definition    | Description                                  |
 |:---------------|:-------------------|:---------------------------------------------|
@@ -650,7 +671,7 @@ Time ranges may be be specified in absolute terms, with a
 specific start and end time, or for a relative duration leading
 up to the present time.
 
-##### **Table 2.1.3-8 Timerange Type**
+##### **Table 2.1.3-11 Timerange Type**
 
 **_Type: Timerange (Choice)_**
 
@@ -661,7 +682,7 @@ up to the present time.
 
 An absolute timerange is specified using exact start and stop times.
 
-##### **Table 2.1.3-9 Absolute Timerange Type**
+##### **Table 2.1.3-12 Absolute Timerange Type**
 
 **_Type: Timerange-Abs (Record{2..*})_**
 
@@ -671,7 +692,7 @@ An absolute timerange is specified using exact start and stop times.
 |  2 | **hunt_stop_time**  | timestamp | 1 | Stop time, as a STIX time string.  |
 
 
-##### **Table 2.1.3-10 timestamp Type**
+##### **Table 2.1.3-13 timestamp Type**
 
 | Type Name     | Type Definition                                                     | Description |
 |:--------------|:--------------------------------------------------------------------|:------------|
@@ -682,7 +703,7 @@ Relative timeranges can be specified in units ranging from seconds to days. A
 relative timerange is always relative to the current time, so should be
 interpreted as specifying "the last _t_ Time-units". 
 
-##### **Table 2.1.3-11 Time-Unit Type**
+##### **Table 2.1.3-14 Time-Unit Type**
 
 **_Type: Time-Unit (Enumerated)_**
 
@@ -693,7 +714,7 @@ interpreted as specifying "the last _t_ Time-units".
 |  3 | **Minutes** |             |
 |  4 | **Seconds** |             |
 
-##### **Table 2.1.3-12 Timerange-Rel Type**
+##### **Table 2.1.3-15 Timerange-Rel Type**
 
 **_Type: Timerange-Rel (Record{2..*})_**
 
@@ -703,26 +724,6 @@ interpreted as specifying "the last _t_ Time-units".
 |  2 | **time_unit** | Time-Unit     | 1 | Time Unit Keywords.                                        |
 
 
-##### **Table 2.1.3-13 Typed-Arguments Type**
-
-| Type Name           | Type Definition           | Description                                           |
-|:--------------------|:--------------------------|:------------------------------------------------------|
-| **Typed-Arguments** | MapOf(Arg-Name, Arg-Type) | Argument names and types tied to a specific Huntflow. |
-
-
-
-##### **Table 2.1.3-14 Arg-Type Type**
-
-| Type Name    | Type Definition | Description                                                                                                                                                                         |
-|:-------------|:----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Arg-Type** | String          | Argument types used by a Huntflow. Follow STIX naming conventions, with lowercase characters and hyphens replacing spaces. Common types include process, file, and network-traffic. |
-
-
-##### **Table 2.1.3-15 Arg-Name Type**
-
-| Type Name    | Type Definition | Description                                                                                                                |
-|:-------------|:----------------|:---------------------------------------------------------------------------------------------------------------------------|
-| **Arg-Name** | String          | Argument names used by a Huntflow. Follow C variable naming conventions. Examples include name, src_port, and x_unique_id. |
 
 ### 2.1.4 Command Arguments
 
