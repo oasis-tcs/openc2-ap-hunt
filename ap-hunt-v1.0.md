@@ -607,8 +607,14 @@ full capabilities of an OpenC2 Hunt Consumer.
 | 19 | **process**           | ls:Process         | 1 | Common properties of an instance of a computer program as executed on an operating system.               |
 | 20 | **uri**               | ls:URI             | 1 | A uniform resource identifier (URI).                                                           
 
-##### Table 2.1.3-3 Specified Arguments Types Type
 
+Given the range of activities that could be sought when hunting, the
+introspection model is of particular value in determining what capabilities a
+Hunt Consumer make available to a Producer. One approach to introspection is
+identifying huntflows that can be invoked with  specific argument types or
+argument names.
+
+##### Table 2.1.3-3 Specified Arguments Types Type
 
 | Type Name               | Type Definition   | Description                                      |
 |:------------------------|:------------------|:-------------------------------------------------|
