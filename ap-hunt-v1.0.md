@@ -318,9 +318,19 @@ _This section is normative._
   risky activities that have evaded detection by existing tools.<br>
 Source: https://www.trellix.com/en-us/security-awareness/operations/what-is-cyber-threat-hunting.html
 
-* **Huntbook**: ...
-* **Huntflow**: ...
-* **Datasource**: ...
+* **Huntbook**: A hunt flow combined with its execution results in a notebook format.<br>
+Source: https://kestrel.readthedocs.io/en/stable/language/tac.html#huntbook
+
+* **Huntflow**: The control flow of a hunt. A hunt flow comprises a series of
+  hunt steps, computing multiple sets of entities, and deriving new sets of
+  entities based on previous ones. Finally, a hunt flow reveals all sets of
+  entities that are associated with a threat.<br>
+Source: https://kestrel.readthedocs.io/en/stable/language/tac.html#hunt-flow
+
+* **Datasource**: Data sources, e.g., an EDR, a SIEM, a firewall, provide raw or
+  processed data for hunting. <br>
+Source: https://kestrel.readthedocs.io/en/stable/installation/datasource.html
+
 * **Hunt Arguments**: ...
 
 
@@ -333,12 +343,14 @@ _This section is non-normative_
 | Term | Expansion |
 |:---|:---|
 | AP | Actuator Profile |
+| EDR | Endpoint Detection & Response |
 | IPR | Intellectual Property Rights |
 | JADN | JSON Abstract Data Notation |
 | JSON | JavaScript Object Notation |
 | OASIS | Organization for the Advancement of Structured Information Standards |
 | RFC | Request for Comment |
 | SCO | STIX Cyber-observable Objects |
+| SIEM | Security Information & Event Management |
 | STIX | Structured Threat Information eXpression |
 | TC | Technical Committee |
 | TH | Threat Hunting |
@@ -832,7 +844,6 @@ identifying and characterizing an individual huntflow.
 | Type Name          | Type Definition        | Description                                   |
 |:-------------------|:-----------------------|:----------------------------------------------|
 | **Huntflow-Array** | ArrayOf(Huntflow-Info) | Structured data returned by Query: Huntflows. |
-
 
 
 ##### Table 2.2-2 Threat Hunting Reponse Type: Huntflow-Info Info
