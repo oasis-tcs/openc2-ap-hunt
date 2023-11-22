@@ -338,8 +338,6 @@ Source: https://kestrel.readthedocs.io/en/stable/installation/datasource.html
 
 ### 1.2.2 Acronyms and abbreviations
 
-> **NOTE:** copied from SBOM AP draft; review & update as appropriate. Remove this note when done.
-
 _This section is non-normative_
 
 | Term | Expansion |
