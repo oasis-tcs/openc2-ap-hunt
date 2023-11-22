@@ -125,20 +125,6 @@ For complete copyright information please see the full Notices section in an App
 -------
 
 # Table of Contents
-- [OpenC2 Actuator Profile for Threat Hunting Version 1.0](#openc2-actuator-profile-for-threat-hunting-version-10)
-  - [WD01 of Committee Specification Draft 01](#wd01-of-committee-specification-draft-01)
-  - [24 September 2023](#24-september-2023)
-      - [Technical Committee:](#technical-committee)
-      - [Chairs:](#chairs)
-      - [Editor:](#editor)
-      - [Additional artifacts:](#additional-artifacts)
-      - [Related work:](#related-work)
-      - [Abstract:](#abstract)
-      - [Status:](#status)
-      - [Key words:](#key-words)
-      - [Citation format:](#citation-format)
-      - [Notices](#notices)
-- [Table of Contents](#table-of-contents)
 - [1 Introduction](#1-introduction)
   - [1.1 Changes from earlier versions](#11-changes-from-earlier-versions)
   - [1.2 Glossary](#12-glossary)
@@ -159,20 +145,38 @@ For complete copyright information please see the full Notices section in an App
       - [2.1.2.2 Threat Hunting Targets](#2122-threat-hunting-targets)
         - [**Table 2.1.2-2. Targets Unique to Threat Hunting**](#table-212-2-targets-unique-to-threat-hunting)
     - [2.1.3 Type Definitions](#213-type-definitions)
-        - [Table 2.1.3-1 Hunt Target Types](#table-213-1-hunt-target-types)
-        - [Table 2.1.3-2 Hunt Arg Types](#table-213-2-hunt-arg-types)
-        - [Table 2.1.3-3 Hunt Huntargs Type](#table-213-3-hunt-huntargs-type)
+        - [Table 2.1.3-1 Hunt Arg Types](#table-213-1-hunt-arg-types)
+        - [Table 2.1.3-2 Hunt Huntargs Type](#table-213-2-hunt-huntargs-type)
+        - [Table 2.1.3-3 OC2-Data Type](#table-213-3-oc2-data-type)
+        - [Table 2.1.3-4 Language Specification Types](#table-213-4-language-specification-types)
+        - [Table 2.1.3-5 Specified Arguments Types Type](#table-213-5-specified-arguments-types-type)
+        - [Table 2.1.3-6 Specified Arguments Names Type](#table-213-6-specified-arguments-names-type)
+        - [Table 2.1.3-7 Timeranges Type](#table-213-7-timeranges-type)
+        - [Table 2.1.3-8 Timerange Type](#table-213-8-timerange-type)
+        - [Table 2.1.3-9 Absolute Timerange Type](#table-213-9-absolute-timerange-type)
+        - [Table 2.1.3-10 Time-Unit Type](#table-213-10-time-unit-type)
+        - [Table 2.1.3-11 Timerange-Rel Type](#table-213-11-timerange-rel-type)
+        - [Table 2.1.3-12 Typed-Arguments Type](#table-213-12-typed-arguments-type)
+        - [Table 2.1.3-13 Arg-Type Type](#table-213-13-arg-type-type)
+        - [Table 2.1.3-14 Arg-Name Type](#table-213-14-arg-name-type)
     - [2.1.4 Command Arguments](#214-command-arguments)
         - [**Table 2.1.4-1. Command Arguments Unique to Theat Hunting**](#table-214-1-command-arguments-unique-to-theat-hunting)
     - [2.1.5 Actuator Specifiers](#215-actuator-specifiers)
         - [Table 2.1.5-1 AP Hunt Actuator Type](#table-215-1-ap-hunt-actuator-type)
-        - [Table 2.1.5-2 AP huntflow Specifiers Type](#table-215-2-ap-huntflow-specifiers-type)
+        - [Table 2.1.5-2 TH Huntflow Specifiers Type](#table-215-2-th-huntflow-specifiers-type)
+        - [Table 2.1.5-3 Tags Type](#table-215-3-tags-type)
+        - [Table 2.1.5-4 Return-Type Type](#table-215-4-return-type-type)
+        - [Table 2.1.5-5 Huntflow Sections Type](#table-215-5-huntflow-sections-type)
+        - [Table 2.1.5-6 Huntflow Section Type](#table-215-6-huntflow-section-type)
   - [2.2 OpenC2 Response Components](#22-openc2-response-components)
-        - [Table 2.2-1 Threat Hunting Reponse Components](#table-22-1-threat-hunting-reponse-components)
-        - [Table 2.2-2 Threat Hunting Reponse Type: Huntflow Info](#table-22-2-threat-hunting-reponse-type-huntflow-info)
-        - [Table 2.2-3 Threat Hunting Reponse Type: Datasource Array](#table-22-3-threat-hunting-reponse-type-datasource-array)
-        - [Table 2.2-4 Threat Hunting Reponse Type: Inv-Returns](#table-22-4-threat-hunting-reponse-type-inv-returns)
-        - [Table 2.2-5 Threat Hunting Reponse Type: Inv-Return](#table-22-5-threat-hunting-reponse-type-inv-return)
+        - [Table 2.2-1 Results Type](#table-22-1-results-type)
+        - [Table 2.2-2 Threat Hunting Reponse Components](#table-22-2-threat-hunting-reponse-components)
+        - [Table 2.2-3 Threat Hunting Reponse Type: Huntflow-Array](#table-22-3-threat-hunting-reponse-type-huntflow-array)
+        - [Table 2.2-4 Threat Hunting Reponse Type: Huntflow-Info Info](#table-22-4-threat-hunting-reponse-type-huntflow-info-info)
+        - [Table 2.2-5 Threat Hunting Reponse Type: Datasource Array](#table-22-5-threat-hunting-reponse-type-datasource-array)
+        - [Table 2.2-6 Threat Hunting Reponse Type: Datasource Type](#table-22-6-threat-hunting-reponse-type-datasource-type)
+        - [Table 2.2-7 Threat Hunting Reponse Type: Inv-Returns](#table-22-7-threat-hunting-reponse-type-inv-returns)
+        - [Table 2.2-8 Threat Hunting Reponse Type: Inv-Return](#table-22-8-threat-hunting-reponse-type-inv-return)
     - [2.2.1 Response Status Codes](#221-response-status-codes)
   - [2.3 OpenC2 Commands](#23-openc2-commands)
         - [**Table 2.3-1 Command Matrix**](#table-23-1-command-matrix)
@@ -187,7 +191,7 @@ For complete copyright information please see the full Notices section in an App
   - [3.2 Conformance Requirements](#32-conformance-requirements)
     - [3.2.1 General TH Conformance Requirements](#321-general-th-conformance-requirements)
     - [3.2.2 TH Producer Conformance Requirements](#322-th-producer-conformance-requirements)
-  - [3.2.3 TH Consumer Conformance Requirements](#323-th-consumer-conformance-requirements)
+    - [3.2.3 TH Consumer Conformance Requirements](#323-th-consumer-conformance-requirements)
 - [Annex A. Schemas](#annex-a-schemas)
 - [Appendix A. References](#appendix-a-references)
   - [A.1 Normative References](#a1-normative-references)
@@ -197,6 +201,7 @@ For complete copyright information please see the full Notices section in an App
           - [\[RFC8174\]](#rfc8174)
   - [A.2 Informative References](#a2-informative-references)
           - [\[RFC3552\]](#rfc3552)
+          - [\[TTP-Hunting\]](#ttp-hunting)
 - [Appendix B. Safety, Security and Privacy Considerations](#appendix-b-safety-security-and-privacy-considerations)
 - [Appendix C. Acknowledgments](#appendix-c-acknowledgments)
   - [C.1 Special Thanks](#c1-special-thanks)
@@ -547,7 +552,7 @@ namespace.
 |  3 | **datasources** | String              | 1 |                                                                                                        |
 
 
-### 2.1.3 Type Definitions
+### **2.1.3 Type Definitions**
 
 Common data types are defined in [[OpenC2-Lang-V1.1](#openc2-lang-v11)]. This
 section defines data types associated with TH activities.
@@ -558,7 +563,7 @@ full capabilities of an OpenC2 Hunt Consumer. Hunt arguments can take a variety
 of forms, including hunt-specific forms, standard OpenC2 data types and STIX
 objects.
 
-##### Table 2.1.3-1 Hunt Arg Types
+##### **Table 2.1.3-1 Hunt Arg Types**
 
 **_Type: TH-Args (Map)_**
 
@@ -567,7 +572,7 @@ objects.
 |  1 | **huntargs** | Huntargs | 1 | Arguments for use in conjunction with hunt implementation. |
 
 
-##### Table 2.1.3-2 Hunt Huntargs Type
+##### **Table 2.1.3-2 Hunt Huntargs Type**
 
 **_Type: Huntargs (Record{1..*})_**
 
@@ -583,14 +588,14 @@ objects.
 |  8 | **datasources**     | Datasource-Array                   | 1 | Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc.                |
 
 
-##### Table 2.1.3-3 OC2-Data Type
+##### **Table 2.1.3-3 OC2-Data Type**
 
 
 | Type Name    | Type Definition                    | Description                                                                   |
 |:-------------|:-----------------------------------|:------------------------------------------------------------------------------|
 | **OC2-Data** | ArrayOf(Language-Spec-Types){1..*} | OC2-Data is an array of one or more types defined in the OpenC2 language spec |
 
-##### Table 2.1.3-4 Language Specification Types
+##### **Table 2.1.3-4 Language Specification Types**
 
 **_Type: Language-Spec-Types (Record)_**
 
@@ -624,14 +629,14 @@ Hunt Consumer make available to a Producer. One approach to introspection is
 identifying huntflows that can be invoked with  specific argument types or
 argument names.
 
-##### Table 2.1.3-5 Specified Arguments Types Type
+##### **Table 2.1.3-5 Specified Arguments Types Type**
 
 | Type Name               | Type Definition   | Description                                      |
 |:------------------------|:------------------|:-------------------------------------------------|
 | **Specified-Arg-Types** | ArrayOf(Arg-Type) | Return huntflows that take these argument types. |
 
 
-##### Table 2.1.3-6 Specified Arguments Names Type
+##### **Table 2.1.3-6 Specified Arguments Names Type**
 
 | Type Name               | Type Definition   | Description                                            |
 |:------------------------|:------------------|:-------------------------------------------------------|
@@ -642,7 +647,7 @@ Time ranges are used to specify the time period over which the
 hunt invoked with an `investigate /hunt` command should examine
 data.
 
-##### Table 2.1.3-7 Timeranges Type
+##### **Table 2.1.3-7 Timeranges Type**
 
 | Type Name      | Type Definition    | Description                                  |
 |:---------------|:-------------------|:---------------------------------------------|
@@ -652,7 +657,7 @@ Time ranges may be be specified in absolute terms, with a
 specific start and end time, or for a relative duration leading
 up to the present time.
 
-##### Table 2.1.3-8 Timerange Type
+##### **Table 2.1.3-8 Timerange Type**
 
 **_Type: Timerange (Choice)_**
 
@@ -663,7 +668,7 @@ up to the present time.
 
 An absolute timerange is specified using exact start and stop times.
 
-##### Table 2.1.3-9 Absolute Timerange Type
+##### **Table 2.1.3-9 Absolute Timerange Type**
 
 **_Type: Timerange-Abs (Record{2..*})_**
 
@@ -672,6 +677,8 @@ An absolute timerange is specified using exact start and stop times.
 |  1 | **hunt_start_time** | timestamp | 1 | Start time, as a STIX time string. |
 |  2 | **hunt_stop_time**  | timestamp | 1 | Stop time, as a STIX time string.  |
 
+
+##### **Table 2.1.3-10 timestamp Type**
 
 | Type Name     | Type Definition                                                     | Description |
 |:--------------|:--------------------------------------------------------------------|:------------|
@@ -682,7 +689,7 @@ Relative timeranges can be specified in units ranging from seconds to days. A
 relative timerange is always relative to the current time, so should be
 interpreted as specifying "the last _t_ Time-units". 
 
-##### Table 2.1.3-10 Time-Unit Type
+##### **Table 2.1.3-11 Time-Unit Type**
 
 **_Type: Time-Unit (Enumerated)_**
 
@@ -693,7 +700,7 @@ interpreted as specifying "the last _t_ Time-units".
 |  3 | **Minutes** |             |
 |  4 | **Seconds** |             |
 
-##### Table 2.1.3-11 Timerange-Rel Type
+##### **Table 2.1.3-12 Timerange-Rel Type**
 
 **_Type: Timerange-Rel (Record{2..*})_**
 
@@ -703,7 +710,7 @@ interpreted as specifying "the last _t_ Time-units".
 |  2 | **time_unit** | Time-Unit     | 1 | Time Unit Keywords.                                        |
 
 
-##### Table 2.1.3-12 Typed-Arguments Type
+##### **Table 2.1.3-13 Typed-Arguments Type**
 
 | Type Name           | Type Definition           | Description                                           |
 |:--------------------|:--------------------------|:------------------------------------------------------|
@@ -711,14 +718,14 @@ interpreted as specifying "the last _t_ Time-units".
 
 
 
-##### Table 2.1.3-13 Arg-Type Type
+##### **Table 2.1.3-14 Arg-Type Type**
 
 | Type Name    | Type Definition | Description                                                                                                                                                                         |
 |:-------------|:----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Arg-Type** | String          | Argument types used by a Huntflow. Follow STIX naming conventions, with lowercase characters and hyphens replacing spaces. Common types include process, file, and network-traffic. |
 
 
-##### Table 2.1.3-14 Arg-Name Type
+##### **Table 2.1.3-15 Arg-Name Type**
 
 | Type Name    | Type Definition | Description                                                                                                                |
 |:-------------|:----------------|:---------------------------------------------------------------------------------------------------------------------------|
@@ -746,7 +753,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 
 ### 2.1.5 Actuator Specifiers
 
-##### Table 2.1.5-1 AP Hunt Actuator Type
+##### **Table 2.1.5-1 AP Hunt Actuator Type**
 
 **_Type: Actuator (Enumerated)_**
 
@@ -755,7 +762,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 | 1036 | **th** |             |
 
 
-##### Table 2.1.5-2 TH Huntflow Specifiers Type
+##### **Table 2.1.5-2 TH Huntflow Specifiers Type**
 
 **_Type: Huntflow-Specifiers (Map)_**
 
@@ -768,7 +775,7 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 |  5 | **format_types**  | Return-Type         | 1 | Return huntflows that produce these output types.                       |
 |  6 | **return_format** | Huntflow-Sections   | 1 | For each huntflow returned, include these data items.                   |
 
-##### Table 2.1.5-3 Tags Type
+##### **Table 2.1.5-3 Tags Type**
 
 Tags provide a mechanism to associated multiple, discrete labels to a huntflow
 for the purposes of organization and lookup.
@@ -778,7 +785,7 @@ for the purposes of organization and lookup.
 | **Tags**  | ArrayOf(String) | Tags applied for search or filter purposes. |
 
 
-##### Table 2.1.5-4 Return-Type Type
+##### **Table 2.1.5-4 Return-Type Type**
 
 **_Type: Return-Type (Record{2..*})_**
 
@@ -788,7 +795,7 @@ for the purposes of organization and lookup.
 |  2 | **var_type** | Arg-Type | 1 | Type of data to be returned by use of Huntflow.  |
 
 
-##### Table 2.1.5-5 Huntflow Sections Type
+##### **Table 2.1.5-5 Huntflow Sections Type**
 
 The Huntflow-Sections / Huntflow-Section types are used to specify the types of
 desired return information when querying a Hunt Consumer about available
@@ -798,7 +805,7 @@ huntflows.
 |:----------------------|:--------------------------|:------------------------------------------------------|
 | **Huntflow-Sections** | ArrayOf(Huntflow-Section) | For each huntflow returned, include these data items. |
 
-##### Table 2.1.5-6 Huntflow Section Type
+##### **Table 2.1.5-6 Huntflow Section Type**
 
 **_Type: Huntflow-Section (Enumerated)_**
 
@@ -818,7 +825,7 @@ huntflows.
 The Hunt AP supports the standard OpenC2 introspection response types plus
 additional hunting-oriented types.
 
-##### Table 2.2-1 Results Type
+##### **Table 2.2-1 Results Type**
 
 **_Type: Results (Map{1..*})_**
 
@@ -835,7 +842,7 @@ Hunting-oriented returns enable the Producer to assess the huntflows and data
 sources available from the Hunt Consumer, as well as return t the results of
 hunts invoked via the **investigate** Action.
 
-##### Table 2.2-2 Threat Hunting Reponse Components
+##### **Table 2.2-2 Threat Hunting Reponse Components**
 
 **_Type: TH-Results (Map{1..*})_**
 
@@ -849,14 +856,14 @@ The huntflows available from a Hunt Consumer are described using an array of
 Huntflow-Info records, each of which provides a collection of information
 identifying and characterizing an individual huntflow.
 
-##### Table 2.2-3 Threat Hunting Reponse Type: Huntflow-Array
+##### **Table 2.2-3 Threat Hunting Reponse Type: Huntflow-Array**
 
 | Type Name          | Type Definition        | Description                                   |
 |:-------------------|:-----------------------|:----------------------------------------------|
 | **Huntflow-Array** | ArrayOf(Huntflow-Info) | Structured data returned by Query: Huntflows. |
 
 
-##### Table 2.2-4 Threat Hunting Reponse Type: Huntflow-Info Info
+##### **Table 2.2-4 Threat Hunting Reponse Type: Huntflow-Info Info**
 
 **_Type: Huntflow-Info (Record{1..*})_**
 
@@ -874,14 +881,14 @@ The datasources available from a Hunt Consumer are described using an array
 of Datasource records, each of which provides a name and collection of descritive
 tags for an individual data source.
 
-##### Table 2.2-5 Threat Hunting Reponse Type: Datasource Array
+##### **Table 2.2-5 Threat Hunting Reponse Type: Datasource Array**
 
 | Type Name            | Type Definition     | Description                                                  |
 |:---------------------|:--------------------|:-------------------------------------------------------------|
 | **Datasource-Array** | ArrayOf(Datasource) | An Array of Datasources, with multiple uses in Threathunting |
 
 
-##### Table 2.2-6 Threat Hunting Reponse Type: Datasource Type
+##### **Table 2.2-6 Threat Hunting Reponse Type: Datasource Type**
 
 **_Type: Datasource (Record{1..*})_**
 
@@ -896,14 +903,14 @@ Inv[estigation]-Return records, each of which may contain one or more results
 represented as Strings or organized as STIX Cyber-security Observable Objects
 (SCOs).
 
-##### Table 2.2-7 Threat Hunting Reponse Type: Inv-Returns
+##### **Table 2.2-7 Threat Hunting Reponse Type: Inv-Returns**
 
 | Type Name       | Type Definition           | Description                                       |
 |:----------------|:--------------------------|:--------------------------------------------------|
 | **Inv-Returns** | ArrayOf(Inv-Return){1..*} | Array of returns from threat hunt investigations. |
 
 
-##### Table 2.2-8 Threat Hunting Reponse Type: Inv-Return
+##### **Table 2.2-8 Threat Hunting Reponse Type: Inv-Return**
 
 **_Type: Inv-Return (Record)_**
 
