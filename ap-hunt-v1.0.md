@@ -539,10 +539,6 @@ namespace.
 
 **_Type: TH-Target (Choice)_**
 
-> **NOTE:** Need better description for huntflows (or a
-> definition in 1.2.1.2) and a description for data sources (or a
-> definition in 1.2.1.2)
-> **NOTE**: updated to v0.7 schema content
 
 | ID | Name            | Type                | # | Description                                                                                            |
 |---:|:----------------|:--------------------|--:|:-------------------------------------------------------------------------------------------------------|

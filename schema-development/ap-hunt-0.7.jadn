@@ -52,8 +52,8 @@
     ]],
     ["TH-Target", "Choice", [], "TH targets defined in this profile.", [
       [1, "hunt", "String", [], "A procedure to find a set of entities in the monitored environment that associates with a cyberthreat."],
-      [2, "huntflows", "Huntflow-Specifiers", [], "TH Huntflow specifiers."],
-      [3, "datasources", "String", ["[0"], ""]
+      [2, "huntflows", "Huntflow-Specifiers", [], "The control flow of a hunt."],
+      [3, "datasources", "String", ["[0"], "An identifiable collection of raw or processed data."]
     ]],
     ["TH-Args", "Map", ["{0"], "TH command arguments defined in this profile.", [
       [1, "huntargs", "Huntargs", [], "Arguments for use in conjunction with hunt implementation."]
