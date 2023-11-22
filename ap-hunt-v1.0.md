@@ -121,6 +121,20 @@ For complete copyright information please see the full Notices section in an App
 -------
 
 # Table of Contents
+- [OpenC2 Actuator Profile for Threat Hunting Version 1.0](#openc2-actuator-profile-for-threat-hunting-version-10)
+  - [WD02 of Committee Specification Draft 01](#wd02-of-committee-specification-draft-01)
+  - [xx November 2023](#xx-november-2023)
+      - [Technical Committee:](#technical-committee)
+      - [Chairs:](#chairs)
+      - [Editor:](#editor)
+      - [Additional artifacts:](#additional-artifacts)
+      - [Related work:](#related-work)
+      - [Abstract:](#abstract)
+      - [Status:](#status)
+      - [Key words:](#key-words)
+      - [Citation format:](#citation-format)
+      - [Notices](#notices)
+- [Table of Contents](#table-of-contents)
 - [1 Introduction](#1-introduction)
   - [1.1 Changes from earlier versions](#11-changes-from-earlier-versions)
   - [1.2 Glossary](#12-glossary)
@@ -208,6 +222,7 @@ For complete copyright information please see the full Notices section in an App
   - [E.1 Example 1: Query Features](#e1-example-1-query-features)
   - [E.2 Example 2: Query huntflows](#e2-example-2-query-huntflows)
   - [E.3 Example 3: Investigate Hunt](#e3-example-3-investigate-hunt)
+  - [E.4 Example 4: Query Datasources by Tags](#e4-example-4-query-datasources-by-tags)
 - [Appendix F. Notices](#appendix-f-notices)
 
 
@@ -1024,7 +1039,7 @@ Example `query / datasources` commands:
 
  * Query datasources by name (link to example in appendix)
  * Query datasources by tag  (e.g., for the types of techniques or known
-   adversaries they are intended to detect) (link to example in appendix)
+   adversaries they are intended to detect) ([Example 3.4](#e4-example-4-query-datasources-by-tags))
 
 ### 2.3.2 Investigate /hunt
 
@@ -1350,6 +1365,44 @@ This example command also makes use of the optional command_id field, that is no
     }
 }
 ```
+## E.4 Example 4: Query Datasources by Tags
+
+```json
+{
+  "action": "query",
+  "target": {
+    "th": {
+      "datasources": ""
+    }
+  },
+  "args": {
+    "th": {
+      "huntargs": {
+        "datasources": [{
+            "ds_tags": ["apt47", "ttp61"]
+          }]
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "status": "200",
+  "results": {
+    "th": {
+      "datasources": [{
+          "ds_name": "source_1",
+          "ds_tags": ["apt47", "apt54", "ttp61", "netflow_data"]
+        }]
+    }
+  }
+}
+```
+
+
+
 -------
 
 # Appendix F. Notices
