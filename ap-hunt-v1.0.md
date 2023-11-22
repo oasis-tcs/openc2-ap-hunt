@@ -620,7 +620,8 @@ Given the range of activities that could be sought when hunting, the
 introspection model is of particular value in determining what capabilities a
 Hunt Consumer make available to a Producer. One approach to introspection is
 identifying huntflows that can be invoked with  specific argument types or
-argument names.
+argument names. Some introspection-oriented data types are also used as
+arguments when initiating a hunt.
 
 ##### **Table 2.1.3-5 Specified Arguments Types Type**
 
