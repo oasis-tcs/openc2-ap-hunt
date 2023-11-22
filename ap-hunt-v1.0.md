@@ -983,7 +983,7 @@ with Version 1.1 of the [[OpenC2-Lang-v1.1]](#openc2-lang-v11).
 #### 2.3.1.2 Query /huntflows
 
 The `query /huntflows` command is used to identify the set of
-huntflowss available from a specific threat hunting consumer.
+huntflows available from a specific threat hunting consumer.
 
 OpenC2 Consumers that receive a `query /huntflows` Command:
 
@@ -997,6 +997,11 @@ OpenC2 Consumers that receive a `query /huntflows` Command:
     -  SHOULD respond with "Command not supported" in the status text
     -  MAY respond with status code 500
 
+Example `query / huntflows` commands:
+
+ * Query huntflows by argument type (link to example in appendix)
+ * Query huntflows by location (e.g., in a hierarchically organized collection
+   of huntflows) (link to example in appendix)
 
 #### 2.3.1.3 Query /datasources
 
@@ -1015,6 +1020,11 @@ OpenC2 Consumers that receive a `query /datasources` Command:
     -  SHOULD respond with "Command not supported" in the status text
     -  MAY respond with status code 500
 
+Example `query / datasources` commands:
+
+ * Query datasources by name (link to example in appendix)
+ * Query datasources by tag  (e.g., for the types of techniques or known
+   adversaries they are intended to detect) (link to example in appendix)
 
 ### 2.3.2 Investigate /hunt
 
@@ -1037,6 +1047,13 @@ OpenC2 Consumers that receive a `investigate /hunt` Command:
     -  SHOULD respond with status code 501
     -  SHOULD respond with "Command not supported" in the status text
     -  MAY respond with status code 500
+
+
+Example `investigate /hunt` commands:
+
+ * Investigate ?? by absolute time (link to example in appendix)
+ * Investigate ?? by relative time (link to example in appendix)
+
 
 -------
 
