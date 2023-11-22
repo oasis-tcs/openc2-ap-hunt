@@ -789,6 +789,8 @@ huntflows.
 
 ## 2.2 OpenC2 Response Components
 
+The Hunt AP supports the standard OpenC2 introspection response types plus
+additional hunting-oriented types.
 
 **_Type: Results (Map{1..*})_**
 
@@ -801,6 +803,9 @@ huntflows.
 | 1036 | **th**         | TH-Results       | 1 |                                                             |
 
 
+Hunting-oriented returns enable the Producer to assess the huntflows and data
+sources available from the Hunt Consumer, as well as return t the results of
+hunts invoked via the **investigate** Action.
 
 ##### Table 2.2-1 Threat Hunting Reponse Components
 
@@ -812,14 +817,19 @@ huntflows.
 |  2 | **datasources**   | Datasource-Array | 1 | Datasource names and info returned by Query Datasources. |
 |  3 | **inv_returns**   | Inv-Returns      | 1 | STIX SCO object returns.                                 |
 
-##### Table 2.2-2 Threat Hunting Reponse Type: Huntflow Info
+The huntflows available from a Hunt Consumer are described using an array of
+Huntflow-Info records, each of which provides a collection of information
+identifying and characterizing an individual huntflow.
 
+##### Table 2.2-2 Threat Hunting Reponse Type: Huntflow-Array
 
 | Type Name          | Type Definition        | Description                                   |
 |:-------------------|:-----------------------|:----------------------------------------------|
 | **Huntflow-Array** | ArrayOf(Huntflow-Info) | Structured data returned by Query: Huntflows. |
 
 
+
+##### Table 2.2-2 Threat Hunting Reponse Type: Huntflow-Info Info
 
 **_Type: Huntflow-Info (Record{1..*})_**
 
@@ -833,7 +843,9 @@ huntflows.
 |  6 | **script**           | String          | 1 | Text of Hunt logic implemented by specified Huntflow. |
 
 
-
+The datasources available from a Hunt Consumer are described using an array
+of Datasource records, each of which provides a name and collection of descritive
+tags for an individual data source.
 
 ##### Table 2.2-3 Threat Hunting Reponse Type: Datasource Array
 
@@ -842,6 +854,8 @@ huntflows.
 | **Datasource-Array** | ArrayOf(Datasource) | An Array of Datasources, with multiple uses in Threathunting |
 
 
+##### Table 2.2-3 Threat Hunting Reponse Type: Datasource Type
+
 **_Type: Datasource (Record{1..*})_**
 
 | ID | Name        | Type   | # | Description                                                 |
@@ -849,6 +863,11 @@ huntflows.
 |  1 | **ds_name** | String | 1 | Name of a Datasource used by a Huntflow in Kestrel runtime. |
 |  2 | **ds_tags** | Tags   | 1 | Tags applied to a Datasource for search or filter purposes. |
 
+
+The results of a hunt are returned from a Hunt Consumer in an array of
+Inv[estigation]-Return records, each of which may contain one or more results
+represented as Strings or organized as STIX Cyber-security Observable Objects
+(SCOs).
 
 ##### Table 2.2-4 Threat Hunting Reponse Type: Inv-Returns
 
