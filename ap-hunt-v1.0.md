@@ -748,6 +748,17 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 
 ### 2.1.5 Actuator Specifiers
 
+The `th` actuator specifiers provide a query toolkit for a Producer to identify
+the huntflows available on a Hunt Consumer and determine how to correctly invoke
+them. Huntflows Specifiers. They enable querying for huntflows:
+
+ * In a specified location
+ * By one or more descriptive labels
+ * By particular argument names or types
+
+The specifiers also provide the capability to identify specific information
+types about the huntflow to be returned in the query response.
+
 ##### **Table 2.1.5-1 AP Hunt Actuator Type**
 
 **_Type: Actuator (Enumerated)_**
