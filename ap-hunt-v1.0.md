@@ -374,7 +374,7 @@ and return associated results.  It assumes the availability to
 the OpenC2 Consumer of relevant data sources that can be accessed
 and defined huntflows that can be invoked, and applies the OpenC2
 introspection model to enable an OpenC2 Producer to determine the
-data sources and huntflows available from a particular Consumer. 
+data sources and huntflows available from a particular Hunt Consumer. 
 
 There are multiple common approaches to cyber threat hunting. The capabilities
 defined by this AP are consistent with the 2019 MITRE Technical Report,
