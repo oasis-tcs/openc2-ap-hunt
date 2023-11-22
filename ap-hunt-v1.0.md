@@ -5,9 +5,9 @@
 
 # OpenC2 Actuator Profile for Threat Hunting Version 1.0
 
-## WD01 of Committee Specification Draft 01
+## WD02 of Committee Specification Draft 01
 
-## 24 September 2023
+## xx November 2023
 
 &nbsp;
 
@@ -48,19 +48,16 @@ This specification is related to:
 * _Open Command and Control (OpenC2) Language Specification Version 1.1_. Edited by Duncan Sparrell and Toby Considine. Latest stage: https://docs.oasis-open.org/openc2/oc2ls/v1.1/oc2ls-v1.1.html.
 
 #### Abstract:
-This specification defines an actuator profile to automate
-management of cyber threat hunting activities using OpenC2.
-Threat hunting is the process of proactively and iteratively
-searching through networks and on endpoints to detect and isolate
-cyber observables that may indicate threats that evade existing
-security solutions. This actuator profile defines the OpenC2
-Actions, Targets, Arguments, and Specifiers along with
-conformance clauses to enable the operation of OpenC2 Producers
-and Consumers in the context of cyber threat hunting. It covers
-invocation of stored hunting processes (e.g., “hunt books”),
-passing of hunt parameters, selection of analytics to apply to
-hunt data, and the expected type(s) and format(s) of information
-returned by hunting processes.
+This specification defines an actuator profile to automate management of cyber
+threat hunting activities using OpenC2. Threat hunting is the process of
+proactively and iteratively searching through networks and on endpoints to
+detect and isolate cyber observables that may indicate threats that evade
+existing security solutions. This actuator profile defines the OpenC2 Actions,
+Targets, Arguments, and Specifiers along with conformance clauses to enable the
+operation of OpenC2 Producers and Consumers in the context of cyber threat
+hunting. It covers the identification and invocation of stored hunting processes
+(e.g., “hunt flows”), passing of hunt parameters, and the expected type(s) and
+format(s) of information returned by hunting processes.
 
 #### Status:
 This document was last revised or approved by the OASIS Open
