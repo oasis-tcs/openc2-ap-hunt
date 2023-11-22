@@ -219,7 +219,7 @@ _The content in this section is non-normative, except where it is marked normati
 
 **Note:** This Actuator profile is consistent with Version 1.0 of
 the OpenC2 Language Specification
-([[OpenC2-Lang-v1.0]](#openc2-lang-v10)).
+([[OpenC2-Lang-v1.1]](#openc2-lang-v11)).
 
 OpenC2 is a suite of specifications that enables command and
 control of cyber defense systems and components. OpenC2 typically
@@ -418,9 +418,9 @@ The purpose of this document is to:
 
 This TH profile:
 
-* Does not define or implement Actions beyond those defined in Version 1.0 of
-  the [[OpenC2-Lang-v1.0]](#openc2-lang-v10)
-* Is consistent with Version 1.0 of the OpenC2 Language Specification
+* Does not define or implement Actions beyond those defined in Version 1.1 of
+  the OpenC2 _Language Specification_ [[OpenC2-Lang-v1.1]](#openc2-lang-v11)
+* Is consistent with Version 1.1 of the OpenC2 Language Specification
 
 -------
 
@@ -436,7 +436,7 @@ three major subsections; Command Components, Response Components
 and Commands.
 
 Extensions to the Language Specification are defined in
-accordance with [[OpenC2-Lang-v1.0]](#openc2-lang-v10), Section
+accordance with [[OpenC2-Lang-v1.1]](#openc2-lang-v11), Section
 3.1.5, where:
 
 1. The unique name of the threat hunting schema is
@@ -962,7 +962,7 @@ Argument.
 #### 2.3.1.1 Query Features
 
 The `query features` Command MUST be implemented in accordance
-with Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10).
+with Version 1.1 of the [[OpenC2-Lang-v1.1]](#openc2-lang-v11).
 
 #### 2.3.1.2 Query /huntflows
 
