@@ -440,7 +440,7 @@ accordance with [[OpenC2-Lang-v1.1]](#openc2-lang-v11), Section
 3.1.5, where:
 
 1. The unique name of the threat hunting schema is
-   `oasis-open.org/openc2/v1.0/ap-hunt`.
+   `docs.oasis-open.org/openc2/v1.0/schemas/ap-hunt.jadn`.
 2. The namespace identifier (nsid) referring to the threat
    hunting schema is:  `th`.
 3. The definitions of and conformance requirements for these
