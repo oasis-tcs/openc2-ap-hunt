@@ -329,7 +329,7 @@ Source: https://kestrel.readthedocs.io/en/stable/language/tac.html#huntbook
   entities that are associated with a threat.<br>
 Source: https://kestrel.readthedocs.io/en/stable/language/tac.html#hunt-flow
 
-* **Datasource**: Data sources, e.g., an EDR, a SIEM, a firewall, provide raw or
+* **Datasource**: Data sources, e.g., an EDR, a SIEM, a firewall, that provide raw or
   processed data for hunting. <br>
 Source: https://kestrel.readthedocs.io/en/stable/installation/datasource.html
 
