@@ -461,11 +461,11 @@ OpenC2 Command include:
   Specification that are meaningful in the context of threat
   hunting.
     * This profile SHALL NOT define Actions that are external to
-      Version 1.0 of the [OpenC2 Language Specification](#openc2-lang-v10)
+      Version 1.1 of the [OpenC2 Language Specification](#openc2-lang-v10)
     * This profile MAY augment the definition of the Actions in
       the context of threat hunting
     * This profile SHALL NOT define Actions in a manner that is
-      inconsistent with version 1.0 of the OpenC2 Language
+      inconsistent with version 1.1 of the OpenC2 Language
       Specification
 * **Target**:  A subset of the Targets and Target-Specifiers defined
   in Version 1.0 of the OpenC2 Language Specification that are
@@ -485,7 +485,7 @@ OpenC2 Command include:
 
 ### 2.1.1 Actions
 
-Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0
+Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.1
 of the Language Specification which are meaningful in the context
 of threat hunting. The particular Action/Target pairs that are
 required or are optional are presented in [Section
@@ -525,7 +525,7 @@ Specification that are applicable to threat hunting.
 
 |   ID | Name         | Type        | # | Description |
 |-----:|:-------------|:------------|--:|:------------|
-|    9 | **features** | ls:Features | 1 | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities.            |
+|    9 | **features** | ls:Features | 1 | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The **features** Target is used with the query Action to determine an Actuator's capabilities.            |
 | 1036 | **th**       | TH-Target   | 1 | Hunts, Huntflows, Data sources.            |
 
 
@@ -538,12 +538,11 @@ namespace.
 
 **_Type: TH-Target (Choice)_**
 
-
 | ID | Name            | Type                | # | Description                                                                                            |
 |---:|:----------------|:--------------------|--:|:-------------------------------------------------------------------------------------------------------|
 |  1 | **hunt**        | String              | 1 | A procedure to find a set of entities in the monitored environment that associates with a cyberthreat. |
-|  2 | **huntflows**   | Huntflow-Specifiers | 1 | TH Huntflow specifiers.                                                                                |
-|  3 | **datasources** | String              | 1 |                                                                                                        |
+|  2 | **huntflows**   | Huntflow-Specifiers | 1 | The control flow of a hunt.                                                                            |
+|  3 | **datasources** | String              | 1 | An identifiable collection of raw or processed data.                                                   |
 
 
 ### 2.1.3 Type Definitions
