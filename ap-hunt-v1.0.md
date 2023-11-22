@@ -636,6 +636,10 @@ arguments when initiating a hunt.
 |:------------------------|:------------------|:-------------------------------------------------------|
 | **Specified-Arg-Names** | ArrayOf(Arg-Name) | Return huntflows that take arguments with these names. |
 
+The Typed-Arguments type provides a name-value structure useful for querying
+about available huntflows and providing arguments to a huntflow when it is
+invoked.
+
 ##### **Table 2.1.3-7 Typed-Arguments Type**
 
 | Type Name           | Type Definition           | Description                                           |
