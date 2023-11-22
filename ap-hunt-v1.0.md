@@ -40,7 +40,7 @@ David Lemire (david.lemire@hii-tsd.com), [National Security Agency](https://www.
 
 #### Additional artifacts:
 This prose specification is one component of a Work Product that also includes:
-* JADN schema: https://docs.oasis-open.org/openc2/ap-hunt/v1.0/schemas/ap-hunt.jand
+* JADN schema: https://docs.oasis-open.org/openc2/ap-hunt/v1.0/schemas/ap-hunt.jadn
 
 
 #### Related work:
