@@ -140,7 +140,7 @@ For complete copyright information please see the full Notices section in an App
         - [**Table 2.1.2-1. Targets Applicable to Threat Hunting**](#table-212-1-targets-applicable-to-threat-hunting)
       - [2.1.2.2 Threat Hunting Targets](#2122-threat-hunting-targets)
         - [**Table 2.1.2-2. Targets Unique to Threat Hunting**](#table-212-2-targets-unique-to-threat-hunting)
-    - [**2.1.3 Type Definitions**](#213-type-definitions)
+    - [2.1.3 Type Definitions](#213-type-definitions)
         - [**Table 2.1.3-1 Hunt Arg Types**](#table-213-1-hunt-arg-types)
         - [**Table 2.1.3-2 Hunt Huntargs Type**](#table-213-2-hunt-huntargs-type)
         - [**Table 2.1.3-3 OC2-Data Type**](#table-213-3-oc2-data-type)
@@ -242,7 +242,7 @@ TH functionality in a manner that is independent of the instance
 of the TH function. 
 
 All components, devices, and systems that provide TH
-functionality MUST implement the identified OpenC2 Actions,
+functionality must implement the identified OpenC2 Actions,
 Targets, Specifiers, and Arguments as specified in the
 Conformance section of this specification. 
 
