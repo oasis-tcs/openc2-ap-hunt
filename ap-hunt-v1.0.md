@@ -5,9 +5,9 @@
 
 # OpenC2 Actuator Profile for Threat Hunting Version 1.0
 
-## WD01 of Committee Specification Draft 01
+## WD02 of Committee Specification Draft 01
 
-## 24 September 2023
+## xx November 2023
 
 &nbsp;
 
@@ -40,28 +40,24 @@ David Lemire (david.lemire@hii-tsd.com), [National Security Agency](https://www.
 
 #### Additional artifacts:
 This prose specification is one component of a Work Product that also includes:
-* XML schemas: (list file names or directory name)
-* Other parts (list titles and/or file names)
-* `(Note: Any normative computer language definitions that are part of the Work Product, such as XML instances, schemas and Java(TM) code, including fragments of such, must be (a) well formed and valid, (b) provided in separate plain text files, (c) referenced from the Work Product; and (d) where any definition in these separate files disagrees with the definition found in the specification, the definition in the separate file prevails. Remove this note before submitting for publication.)`
+* JADN schema: https://docs.oasis-open.org/openc2/ap-hunt/v1.0/schemas/ap-hunt.jadn
+
 
 #### Related work:
 This specification is related to:
 * _Open Command and Control (OpenC2) Language Specification Version 1.1_. Edited by Duncan Sparrell and Toby Considine. Latest stage: https://docs.oasis-open.org/openc2/oc2ls/v1.1/oc2ls-v1.1.html.
 
 #### Abstract:
-This specification defines an actuator profile to automate
-management of cyber threat hunting activities using OpenC2.
-Threat hunting is the process of proactively and iteratively
-searching through networks and on endpoints to detect and isolate
-cyber observables that may indicate threats that evade existing
-security solutions. This actuator profile defines the OpenC2
-Actions, Targets, Arguments, and Specifiers along with
-conformance clauses to enable the operation of OpenC2 Producers
-and Consumers in the context of cyber threat hunting. It covers
-invocation of stored hunting processes (e.g., “hunt books”),
-passing of hunt parameters, selection of analytics to apply to
-hunt data, and the expected type(s) and format(s) of information
-returned by hunting processes.
+This specification defines an actuator profile to automate management of cyber
+threat hunting activities using OpenC2. Threat hunting is the process of
+proactively and iteratively searching through networks and on endpoints to
+detect and isolate cyber observables that may indicate threats that evade
+existing security solutions. This actuator profile defines the OpenC2 Actions,
+Targets, Arguments, and Specifiers along with conformance clauses to enable the
+operation of OpenC2 Producers and Consumers in the context of cyber threat
+hunting. It covers the identification and invocation of stored hunting processes
+(e.g., “hunt flows”), passing of hunt parameters, and the expected type(s) and
+format(s) of information returned by hunting processes.
 
 #### Status:
 This document was last revised or approved by the OASIS Open
@@ -125,6 +121,20 @@ For complete copyright information please see the full Notices section in an App
 -------
 
 # Table of Contents
+- [OpenC2 Actuator Profile for Threat Hunting Version 1.0](#openc2-actuator-profile-for-threat-hunting-version-10)
+  - [WD02 of Committee Specification Draft 01](#wd02-of-committee-specification-draft-01)
+  - [xx November 2023](#xx-november-2023)
+      - [Technical Committee:](#technical-committee)
+      - [Chairs:](#chairs)
+      - [Editor:](#editor)
+      - [Additional artifacts:](#additional-artifacts)
+      - [Related work:](#related-work)
+      - [Abstract:](#abstract)
+      - [Status:](#status)
+      - [Key words:](#key-words)
+      - [Citation format:](#citation-format)
+      - [Notices](#notices)
+- [Table of Contents](#table-of-contents)
 - [1 Introduction](#1-introduction)
   - [1.1 Changes from earlier versions](#11-changes-from-earlier-versions)
   - [1.2 Glossary](#12-glossary)
@@ -145,18 +155,39 @@ For complete copyright information please see the full Notices section in an App
       - [2.1.2.2 Threat Hunting Targets](#2122-threat-hunting-targets)
         - [**Table 2.1.2-2. Targets Unique to Threat Hunting**](#table-212-2-targets-unique-to-threat-hunting)
     - [2.1.3 Type Definitions](#213-type-definitions)
-        - [Table 2.1.3-1 AP Target Types](#table-213-1-ap-target-types)
-        - [Table 2.1.3-2 AP Arg Types](#table-213-2-ap-arg-types)
-        - [Table 2.1.3-3 AP Huntargs Type](#table-213-3-ap-huntargs-type)
+        - [**Table 2.1.3-1 Hunt Arg Types**](#table-213-1-hunt-arg-types)
+        - [**Table 2.1.3-2 Hunt Huntargs Type**](#table-213-2-hunt-huntargs-type)
+        - [**Table 2.1.3-3 OC2-Data Type**](#table-213-3-oc2-data-type)
+        - [**Table 2.1.3-4 Language Specification Types**](#table-213-4-language-specification-types)
+        - [**Table 2.1.3-5 Specified Arguments Types Type**](#table-213-5-specified-arguments-types-type)
+        - [**Table 2.1.3-6 Specified Arguments Names Type**](#table-213-6-specified-arguments-names-type)
+        - [**Table 2.1.3-7 Typed-Arguments Type**](#table-213-7-typed-arguments-type)
+        - [**Table 2.1.3-8 Arg-Type Type**](#table-213-8-arg-type-type)
+        - [**Table 2.1.3-9 Arg-Name Type**](#table-213-9-arg-name-type)
+        - [**Table 2.1.3-10 Timeranges Type**](#table-213-10-timeranges-type)
+        - [**Table 2.1.3-11 Timerange Type**](#table-213-11-timerange-type)
+        - [**Table 2.1.3-12 Absolute Timerange Type**](#table-213-12-absolute-timerange-type)
+        - [**Table 2.1.3-13 timestamp Type**](#table-213-13-timestamp-type)
+        - [**Table 2.1.3-14 Time-Unit Type**](#table-213-14-time-unit-type)
+        - [**Table 2.1.3-15 Timerange-Rel Type**](#table-213-15-timerange-rel-type)
     - [2.1.4 Command Arguments](#214-command-arguments)
         - [**Table 2.1.4-1. Command Arguments Unique to Theat Hunting**](#table-214-1-command-arguments-unique-to-theat-hunting)
     - [2.1.5 Actuator Specifiers](#215-actuator-specifiers)
-        - [Table 2.1.5-1 AP huntflow Actuator Type](#table-215-1-ap-huntflow-actuator-type)
-        - [Table 2.1.5-2 AP huntflow Specifiers Type](#table-215-2-ap-huntflow-specifiers-type)
+        - [**Table 2.1.5-1 AP Hunt Actuator Type**](#table-215-1-ap-hunt-actuator-type)
+        - [**Table 2.1.5-2 TH Huntflow Specifiers Type**](#table-215-2-th-huntflow-specifiers-type)
+        - [**Table 2.1.5-3 Tags Type**](#table-215-3-tags-type)
+        - [**Table 2.1.5-4 Return-Type Type**](#table-215-4-return-type-type)
+        - [**Table 2.1.5-5 Huntflow Sections Type**](#table-215-5-huntflow-sections-type)
+        - [**Table 2.1.5-6 Huntflow Section Type**](#table-215-6-huntflow-section-type)
   - [2.2 OpenC2 Response Components](#22-openc2-response-components)
-        - [Table 2.2-1 Threat Hunting Reponse Components](#table-22-1-threat-hunting-reponse-components)
-        - [Table 2.2-2 Threat Hunting Reponse Type: Huntflow Info](#table-22-2-threat-hunting-reponse-type-huntflow-info)
-        - [Table 2.2-3 Threat Hunting Reponse Type: Datasource Array](#table-22-3-threat-hunting-reponse-type-datasource-array)
+        - [**Table 2.2-1 Results Type**](#table-22-1-results-type)
+        - [**Table 2.2-2 Threat Hunting Reponse Components**](#table-22-2-threat-hunting-reponse-components)
+        - [**Table 2.2-3 Threat Hunting Reponse Type: Huntflow-Array**](#table-22-3-threat-hunting-reponse-type-huntflow-array)
+        - [**Table 2.2-4 Threat Hunting Reponse Type: Huntflow-Info Info**](#table-22-4-threat-hunting-reponse-type-huntflow-info-info)
+        - [**Table 2.2-5 Threat Hunting Reponse Type: Datasource Array**](#table-22-5-threat-hunting-reponse-type-datasource-array)
+        - [**Table 2.2-6 Threat Hunting Reponse Type: Datasource Type**](#table-22-6-threat-hunting-reponse-type-datasource-type)
+        - [**Table 2.2-7 Threat Hunting Reponse Type: Inv-Returns**](#table-22-7-threat-hunting-reponse-type-inv-returns)
+        - [**Table 2.2-8 Threat Hunting Reponse Type: Inv-Return**](#table-22-8-threat-hunting-reponse-type-inv-return)
     - [2.2.1 Response Status Codes](#221-response-status-codes)
   - [2.3 OpenC2 Commands](#23-openc2-commands)
         - [**Table 2.3-1 Command Matrix**](#table-23-1-command-matrix)
@@ -171,19 +202,27 @@ For complete copyright information please see the full Notices section in an App
   - [3.2 Conformance Requirements](#32-conformance-requirements)
     - [3.2.1 General TH Conformance Requirements](#321-general-th-conformance-requirements)
     - [3.2.2 TH Producer Conformance Requirements](#322-th-producer-conformance-requirements)
-  - [3.2.3 TH Consumer Conformance Requirements](#323-th-consumer-conformance-requirements)
+    - [3.2.3 TH Consumer Conformance Requirements](#323-th-consumer-conformance-requirements)
 - [Annex A. Schemas](#annex-a-schemas)
 - [Appendix A. References](#appendix-a-references)
   - [A.1 Normative References](#a1-normative-references)
+          - [\[OpenC2-Arch-v1.0\]](#openc2-arch-v10)
+          - [\[OpenC2-Lang-v1.1\]](#openc2-lang-v11)
+          - [\[RFC2119\]](#rfc2119)
+          - [\[RFC8174\]](#rfc8174)
   - [A.2 Informative References](#a2-informative-references)
+          - [\[RFC3552\]](#rfc3552)
+          - [\[TTP-Hunting\]](#ttp-hunting)
 - [Appendix B. Safety, Security and Privacy Considerations](#appendix-b-safety-security-and-privacy-considerations)
 - [Appendix C. Acknowledgments](#appendix-c-acknowledgments)
+  - [C.1 Special Thanks](#c1-special-thanks)
+  - [C.2 Participants](#c2-participants)
 - [Appendix D. Revision History](#appendix-d-revision-history)
 - [Appendix E. Threat Hunting Command / Response Examples](#appendix-e-threat-hunting-command--response-examples)
   - [E.1 Example 1: Query Features](#e1-example-1-query-features)
   - [E.2 Example 2: Query huntflows](#e2-example-2-query-huntflows)
   - [E.3 Example 3: Investigate Hunt](#e3-example-3-investigate-hunt)
-  - [}](#)
+  - [E.4 Example 4: Query Datasources by Tags](#e4-example-4-query-datasources-by-tags)
 - [Appendix F. Notices](#appendix-f-notices)
 
 
@@ -195,7 +234,7 @@ _The content in this section is non-normative, except where it is marked normati
 
 **Note:** This Actuator profile is consistent with Version 1.0 of
 the OpenC2 Language Specification
-([[OpenC2-Lang-v1.0]](#openc2-lang-v10)).
+([[OpenC2-Lang-v1.1]](#openc2-lang-v11)).
 
 OpenC2 is a suite of specifications that enables command and
 control of cyber defense systems and components. OpenC2 typically
@@ -203,7 +242,10 @@ uses a request-response paradigm where a Command is encoded by a
 Producer (managing application) and transferred to a Consumer
 (managed device or virtualized function) using a secure transfer
 protocol, and the Consumer acts on the request and responds with
-status and any other requested information.
+status and any other requested information. An overview of the concepts
+that underlie OpenC2 and the structure of the suite of
+specifications can be found in the OpenC2 *Architecture
+Specification* [[OpenC2-Arch-v1.0](#openc2-arch-v10)].
 
 This specification defines an Actuator profile for **Threat
 Hunting (TH)**. In particular, the specification comprises a set
@@ -215,7 +257,7 @@ TH functionality in a manner that is independent of the instance
 of the TH function. 
 
 All components, devices, and systems that provide TH
-functionality MUST implement the identified OpenC2 Actions,
+functionality must implement the identified OpenC2 Actions,
 Targets, Specifiers, and Arguments as specified in the
 Conformance section of this specification. 
 
@@ -288,30 +330,42 @@ _This section is normative._
 
 #### 1.2.1.2  Threat Hunting Terms
 
-* **Threat Hunting**: Cyber threat hunting is a proactive security search through networks, endpoints, and datasets to hunt malicious, suspicious, or risky activities that have evaded detection by existing tools.<br>
+* **Threat Hunting**: Cyber threat hunting is a proactive security search
+  through networks, endpoints, and datasets to hunt malicious, suspicious, or
+  risky activities that have evaded detection by existing tools.<br>
 Source: https://www.trellix.com/en-us/security-awareness/operations/what-is-cyber-threat-hunting.html
 
-* **Huntbook**: ...
-* **Huntflow**: ...
-* **Datasource**: ...
+* **Huntbook**: A hunt flow combined with its execution results in a notebook format.<br>
+Source: https://kestrel.readthedocs.io/en/stable/language/tac.html#huntbook
+
+* **Huntflow**: The control flow of a hunt. A hunt flow comprises a series of
+  hunt steps, computing multiple sets of entities, and deriving new sets of
+  entities based on previous ones. Finally, a hunt flow reveals all sets of
+  entities that are associated with a threat.<br>
+Source: https://kestrel.readthedocs.io/en/stable/language/tac.html#hunt-flow
+
+* **Datasource**: Data sources, e.g., an EDR, a SIEM, a firewall, that provide raw or
+  processed data for hunting. <br>
+Source: https://kestrel.readthedocs.io/en/stable/installation/datasource.html
+
 * **Hunt Arguments**: ...
 
 
 ### 1.2.2 Acronyms and abbreviations
-
-> **NOTE:** copied from SBOM AP draft; review & update as appropriate. Remove this note when done.
 
 _This section is non-normative_
 
 | Term | Expansion |
 |:---|:---|
 | AP | Actuator Profile |
+| EDR | Endpoint Detection & Response |
 | IPR | Intellectual Property Rights |
 | JADN | JSON Abstract Data Notation |
 | JSON | JavaScript Object Notation |
 | OASIS | Organization for the Advancement of Structured Information Standards |
 | RFC | Request for Comment |
 | SCO | STIX Cyber-observable Objects |
+| SIEM | Security Information & Event Management |
 | STIX | Structured Threat Information eXpression |
 | TC | Technical Committee |
 | TH | Threat Hunting |
@@ -325,17 +379,21 @@ _This section is non-normative_
 
 ## 1.5 Overview
 
-Cyber threat hunting is a proactive security search through
-networks, endpoints, and datasets to hunt malicious, suspicious,
-or risky activities that have evaded detection by existing tools.
-Various aspects of threat hunting can be manual,
-machine-assisted, or automated. This AP defines the use of OpenC2
-to invoke machine-assisted or automated threat hunting activities
-and return associated results.  It assumes the availability to
-the OpenC2 Consumer of relevant data sources that can be accessed
-and defined huntflows that can be invoked, and applies the OpenC2
-introspection model to enable an OpenC2 Producer to determine the
-data sources and huntflows available from a particular Consumer. 
+Cyber threat hunting is a proactive security search through networks, endpoints,
+and datasets to hunt malicious, suspicious, or risky activities that have evaded
+detection by existing tools. Various aspects of threat hunting can be manual,
+machine-assisted, or automated. This AP defines the use of OpenC2 to invoke
+machine-assisted or automated threat hunting activities and return associated
+results.  It assumes the availability to the OpenC2 Consumer with one or more
+defined huntflows that can be invoked and one or more  relevant data sources
+that can be queried, and applies the OpenC2 introspection model to enable an
+OpenC2 Producer to determine the data sources and huntflows available from a
+particular Hunt Consumer to enable it to invoke huntflows with relevant parameters. 
+
+There are multiple common approaches to cyber threat hunting. The capabilities
+defined by this AP are consistent with the 2019 MITRE Technical Report,
+_TTP-Based Hunting_ [[TTP-Hunting](#ttp-hunting)] but should also be applicable
+to the use of other hunting implementations and approaches.
 
 > Research links for threat hunting background:
 > 
@@ -375,8 +433,9 @@ The purpose of this document is to:
 
 This TH profile:
 
-* Does not define or implement Actions beyond those defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10)
-* Is consistent with Version 1.0 of the OpenC2 Language Specification
+* Does not define or implement Actions beyond those defined in Version 1.1 of
+  the OpenC2 _Language Specification_ [[OpenC2-Lang-v1.1]](#openc2-lang-v11)
+* Is consistent with Version 1.1 of the OpenC2 Language Specification
 
 -------
 
@@ -392,11 +451,11 @@ three major subsections; Command Components, Response Components
 and Commands.
 
 Extensions to the Language Specification are defined in
-accordance with [[OpenC2-Lang-v1.0]](#openc2-lang-v10), Section
+accordance with [[OpenC2-Lang-v1.1]](#openc2-lang-v11), Section
 3.1.5, where:
 
 1. The unique name of the threat hunting schema is
-   `oasis-open.org/openc2/v1.0/ap-hunt`.
+   `docs.oasis-open.org/openc2/v1.0/schemas/ap-hunt.jadn`.
 2. The namespace identifier (nsid) referring to the threat
    hunting schema is:  `th`.
 3. The definitions of and conformance requirements for these
@@ -409,25 +468,26 @@ Actuators and associated Arguments and Specifiers. Appropriate
 aggregation of the components will define a Command-body that is
 meaningful in the context of threat hunting.
 
-This specification identifies the applicable components of an
-OpenC2 Command. The components of an OpenC2 Command include:
+The OpenC2 *Language Specification* [[OpenC2-Lang-v1.1](#openc2-lang-v11)]
+identifies the applicable components of an OpenC2 Command. The components of an
+OpenC2 Command include:
 
-* Action:  A subset of the Actions defined in the OpenC2 Language
+* **Action**:  A subset of the Actions defined in the OpenC2 Language
   Specification that are meaningful in the context of threat
   hunting.
     * This profile SHALL NOT define Actions that are external to
-      Version 1.0 of the [OpenC2 Language Specification](#openc2-lang-v10)
+      Version 1.1 of the [OpenC2 Language Specification](#openc2-lang-v10)
     * This profile MAY augment the definition of the Actions in
       the context of threat hunting
     * This profile SHALL NOT define Actions in a manner that is
-      inconsistent with version 1.0 of the OpenC2 Language
+      inconsistent with version 1.1 of the OpenC2 Language
       Specification
-* Target:  A subset of the Targets and Target-Specifiers defined
+* **Target**:  A subset of the Targets and Target-Specifiers defined
   in Version 1.0 of the OpenC2 Language Specification that are
   meaningful in the context of threat hunting and several Targets
   (and associated Specifiers) that are defined in this
   specification
-* Arguments:  A subset of the Arguments defined in the Language
+* **Arguments**:  A subset of the Arguments defined in the Language
   Specification and a set of Arguments defined in this
   specification
 
@@ -435,12 +495,12 @@ OpenC2 Command. The components of an OpenC2 Command include:
 > #404](https://github.com/oasis-tcs/openc2-oc2ls/pull/404), when
 > the v2 LS progresses "Actuator" should become "Profile"
 
-* Actuator:  A set of specifiers defined in this specification
+* **Actuator**:  A set of specifiers defined in this specification
   that are meaningful in the context of threat hunting
 
 ### 2.1.1 Actions
 
-Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0
+Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.1
 of the Language Specification which are meaningful in the context
 of threat hunting. The particular Action/Target pairs that are
 required or are optional are presented in [Section
@@ -455,6 +515,13 @@ required or are optional are presented in [Section
 |  3 | **query**       | Initiate a request for information.                                                                    |
 | 30 | **investigate** | Task the recipient to aggregate and report information as it pertains to a security event or incident. |
 
+Usage:
+ * The **query** action is used to determine the available capabilities of the
+hunting Consumer, consistent with the introspection model described in the
+OpenC2 *Architecture Specification* [[OpenC2-Arch-v1.0](#openc2-arch-v10)].
+ * The **investigate** action is used to initiate a specified hunting activity.
+
+
 ### 2.1.2 Targets
 
 This threat hunting AP employs Targets defined by the OpenC2
@@ -466,14 +533,15 @@ required or are optional are presented in [Section 2.3](#23-openc2-commands).
 Table 2.1.2-1 lists the Targets defined in the OpenC2 Language
 Specification that are applicable to threat hunting.
 
-##### **Table 2.1.2-1. Targets Applicable to Threat Hunting**
+##### **Table 2.1.2-1. Targets Applicable to Threat Hunting** 
+
 
 **_Type: Target (Choice)_**
 
-| ID | Name | Type | Description |
-| :--- | :--- | :--- | :--- |
-| 9 | **features** | Features | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities |
-| 1036 | **th** | Theat Hunting | Hunts, Huntflows, Data sources |
+|   ID | Name         | Type        | # | Description |
+|-----:|:-------------|:------------|--:|:------------|
+|    9 | **features** | ls:Features | 1 | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The **features** Target is used with the query Action to determine an Actuator's capabilities.            |
+| 1036 | **th**       | TH-Target   | 1 | Hunts, Huntflows, Data sources.            |
 
 
 #### 2.1.2.2 Threat Hunting Targets
@@ -483,71 +551,64 @@ namespace.
 
 ##### **Table 2.1.2-2. Targets Unique to Threat Hunting**
 
-**_Type: AP-Target (Choice)_**
-
-> **NOTE:** Need better description for huntflows (or a
-> definition in 1.2.1.2) and a description for data sources (or a
-> definition in 1.2.1.2)
-> **NOTE**: updated to v0.7 schema content
+**_Type: TH-Target (Choice)_**
 
 | ID | Name            | Type                | # | Description                                                                                            |
 |---:|:----------------|:--------------------|--:|:-------------------------------------------------------------------------------------------------------|
 |  1 | **hunt**        | String              | 1 | A procedure to find a set of entities in the monitored environment that associates with a cyberthreat. |
-|  2 | **huntflows**   | Huntflow-Specifiers | 1 | TH Huntflow specifiers.                                                                                |
-|  3 | **datasources** | String              | 1 |                                                                                                        |
+|  2 | **huntflows**   | Huntflow-Specifiers | 1 | The control flow of a hunt.                                                                            |
+|  3 | **datasources** | String              | 1 | An identifiable collection of raw or processed data.                                                   |
 
 
 ### 2.1.3 Type Definitions
 
-Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This section defines data types associated with TH activities.
+Common data types are defined in [[OpenC2-Lang-V1.1](#openc2-lang-v11)]. This
+section defines data types associated with TH activities.
 
-##### Table 2.1.3-1 AP Target Types
+Hunt arguments are used to specify the parameters of a particular hunt. This AP
+supports a flexible set of arguments to enable an OpenC2 Producer to access the
+full capabilities of an OpenC2 Hunt Consumer. Hunt arguments can take a variety
+of forms, including hunt-specific forms, standard OpenC2 data types and STIX
+objects.
 
-**_Type: AP-Target (Choice)_**
+##### **Table 2.1.3-1 Hunt Arg Types**
 
-> **NOTE**: updated to v0.7 schema content
+**_Type: TH-Args (Map)_**
 
-| ID | Name            | Type                | # | Description                                                                                            |
-|---:|:----------------|:--------------------|--:|:-------------------------------------------------------------------------------------------------------|
-|  1 | **hunt**        | String              | 1 | A procedure to find a set of entities in the monitored environment that associates with a cyberthreat. |
-|  2 | **huntflows**   | Huntflow-Specifiers | 1 | TH Huntflow specifiers.                                                                                |
-|  3 | **datasources** | String              | 1 |                                                                                                        |
+| ID | Name         | Type     | # | Description                                                |
+|---:|:-------------|:---------|--:|:-----------------------------------------------------------|
+|  1 | **huntargs** | Huntargs | 1 | Arguments for use in conjunction with hunt implementation. |
 
 
-##### Table 2.1.3-2 AP Arg Types
-
-**_Type: AP-Args (Map)_**
-
-| ID | Name         | Type     | # | Description                                                    |
-|---:|:-------------|:---------|--:|:---------------------------------------------------------------|
-|  1 | **huntargs** | Huntargs | 1 | Arguments for use in conjunction with huntflow implementation. |
-
-##### Table 2.1.3-3 AP Huntargs Type
-
-> **NOTE**: updated to v0.7 schema content
+##### **Table 2.1.3-2 Hunt Huntargs Type**
 
 **_Type: Huntargs (Record{1..*})_**
 
-| ID | Name                | Type                           | # | Description                                                                                       |
-|---:|:--------------------|:-------------------------------|--:|:--------------------------------------------------------------------------------------------------|
-|  1 | **string_args**     | Huntargs$String-args           | 1 | string arguments supplied as huntargs.                                                            |
-|  2 | **integer_args**    | Huntargs$Integer-args          | 1 | integer arguments supplied as huntargs.                                                           |
-|  3 | **typed_args**      | Typed-Arguments                | 1 | Paired strings of named arguments.                                                                |
-|  4 | **native_oc2**      | OC2-Data                       | 1 | OC2 Language types supplied as huntargs.                                                          |
-|  5 | **stix**            | sco:STIX-Cybersecurity-Observables | 1 | STIX arguments supplied as untarghs.                                                          |
-|  6 | **stix_extensions** | oca:OCA-STIX-Extensions        | 1 | OCA Extended STIX arguments supplied as huntargs. add a custom stix for oca-asset and event       |
-|  7 | **timeranges**      | Timeranges                     | 1 | Timeranges used in the execution of a hunt.                                                       |
-|  8 | **datasources**     | Datasource-Array               | 1 | Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc. |
+| ID | Name                | Type                               | # | Description                                                                                                      |
+|---:|:--------------------|:-----------------------------------|--:|:-----------------------------------------------------------------------------------------------------------------|
+|  1 | **string_args**     | ArrayOf(String)                    | 1 | string arguments supplied as huntargs.                                                                           |
+|  2 | **integer_args**    | ArrayOf(Integer)                   | 1 | integer arguments supplied as huntargs.                                                                          |
+|  3 | **typed_args**      | Typed-Arguments                    | 1 | Paired strings of named arguments.                                                                               |
+|  4 | **native_oc2**      | OC2-Data                           | 1 | OC2 Language types supplied as huntargs.                                                                         |
+|  5 | **stix**            | sco:STIX-Cybersecurity-Observables | 1 | STIX arguments supplied as huntargs.                                                                             |
+|  6 | **stix_extensions** | oca:OCA-Extensions                 | 1 | STIX arguments extended with OCA extensions supplied as huntargs. TODO add a custom stix for oca-asset and event |
+|  7 | **timeranges**      | Timeranges                         | 1 | Timeranges used in the execution of a hunt.                                                                      |
+|  8 | **datasources**     | Datasource-Array                   | 1 | Available data sources for hunting. These may be a host monitor, an EDR, a SIEM, a firewall, etc.                |
+
+
+##### **Table 2.1.3-3 OC2-Data Type**
 
 
 | Type Name    | Type Definition                    | Description                                                                   |
 |:-------------|:-----------------------------------|:------------------------------------------------------------------------------|
 | **OC2-Data** | ArrayOf(Language-Spec-Types){1..*} | OC2-Data is an array of one or more types defined in the OpenC2 language spec |
 
+##### **Table 2.1.3-4 Language Specification Types**
+
 **_Type: Language-Spec-Types (Record)_**
 
-| ID | Name                  | Type            | # | Description                                                                                              |
-|---:|:----------------------|:----------------|--:|:---------------------------------------------------------------------------------------------------------|
+| ID | Name                  | Type               | # | Description                                                                                              |
+|---:|:----------------------|:-------------------|--:|:---------------------------------------------------------------------------------------------------------|
 |  1 | **artifact**          | ls:Artifact        | 1 | An array of bytes representing a file-like object or a link to that object.                              |
 |  2 | **device**            | ls:Device          | 1 | The properties of a hardware device.                                                                     |
 |  3 | **domain_name**       | ls:Domain-Name     | 1 | A network domain name.                                                                                   |
@@ -567,21 +628,60 @@ Common data types are defined in [[OpenC2-Lang-V11](#openc2-lang-v11)]. This sec
 | 17 | **mac_address**       | ls:MAC-Addr        | 1 | A Media Access Control (MAC) address - EUI-48 or EUI-64 as defined in [EUI].                             |
 | 18 | **port**              | ls:Port            | 1 | Transport Protocol Port Number, [RFC6335]                                                                |
 | 19 | **process**           | ls:Process         | 1 | Common properties of an instance of a computer program as executed on an operating system.               |
-| 20 | **uri**               | ls:URI             | 1 | A uniform resource identifier (URI).                                                                     |
+| 20 | **uri**               | ls:URI             | 1 | A uniform resource identifier (URI).                                                           
 
+
+Given the range of activities that could be sought when hunting, the
+introspection model is of particular value in determining what capabilities a
+Hunt Consumer make available to a Producer. One approach to introspection is
+identifying huntflows that can be invoked with  specific argument types or
+argument names. Some introspection-oriented data types are also used as
+arguments when initiating a hunt.
+
+##### **Table 2.1.3-5 Specified Arguments Types Type**
 
 | Type Name               | Type Definition   | Description                                      |
 |:------------------------|:------------------|:-------------------------------------------------|
 | **Specified-Arg-Types** | ArrayOf(Arg-Type) | Return huntflows that take these argument types. |
 
 
+##### **Table 2.1.3-6 Specified Arguments Names Type**
+
 | Type Name               | Type Definition   | Description                                            |
 |:------------------------|:------------------|:-------------------------------------------------------|
 | **Specified-Arg-Names** | ArrayOf(Arg-Name) | Return huntflows that take arguments with these names. |
 
-Time ranges are used to specify the time period over which the
-hunt invoked with an `investigate /hunt` command should examine
-data.
+The Typed-Arguments type provides a name-value structure useful for querying
+about available huntflows and providing arguments to a huntflow when it is
+invoked.
+
+##### **Table 2.1.3-7 Typed-Arguments Type**
+
+| Type Name           | Type Definition           | Description                                           |
+|:--------------------|:--------------------------|:------------------------------------------------------|
+| **Typed-Arguments** | MapOf(Arg-Name, Arg-Type) | Argument names and types tied to a specific Huntflow. |
+
+
+
+##### **Table 2.1.3-8 Arg-Type Type**
+
+| Type Name    | Type Definition | Description                                                                                                                                                                         |
+|:-------------|:----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Arg-Type** | String          | Argument types used by a Huntflow. Follow STIX naming conventions, with lowercase characters and hyphens replacing spaces. Common types include process, file, and network-traffic. |
+
+
+##### **Table 2.1.3-9 Arg-Name Type**
+
+| Type Name    | Type Definition | Description                                                                                                                |
+|:-------------|:----------------|:---------------------------------------------------------------------------------------------------------------------------|
+| **Arg-Name** | String          | Argument names used by a Huntflow. Follow C variable naming conventions. Examples include name, src_port, and x_unique_id. |
+
+
+When executing a hunt an important parameter is the time period to be examined.
+Time ranges are used to specify the time period over which the hunt invoked with
+an `investigate /hunt` command should examine data.
+
+##### **Table 2.1.3-10 Timeranges Type**
 
 | Type Name      | Type Definition    | Description                                  |
 |:---------------|:-------------------|:---------------------------------------------|
@@ -591,6 +691,8 @@ Time ranges may be be specified in absolute terms, with a
 specific start and end time, or for a relative duration leading
 up to the present time.
 
+##### **Table 2.1.3-11 Timerange Type**
+
 **_Type: Timerange (Choice)_**
 
 | ID | Name                   | Type          | # | Description                                                             |
@@ -598,16 +700,30 @@ up to the present time.
 |  1 | **timerange_absolute** | Timerange-Abs | 1 | Absolute timerange, defined by a start and end time in ISO 8601 format. |
 |  2 | **timerange_relative** | Timerange-Rel | 1 | Relative timerange, example '3, Days' for last 3 days.                  |
 
+An absolute timerange is specified using exact start and stop times.
+
+##### **Table 2.1.3-12 Absolute Timerange Type**
+
 **_Type: Timerange-Abs (Record{2..*})_**
 
-| ID | Name                | Type   | # | Description                        |
-|---:|:--------------------|:-------|--:|:-----------------------------------|
-|  1 | **hunt_start_time** | sco:timerange | 1 | Start time, as a STIX time string. |
-|  2 | **hunt_stop_time**  | sco:timerange | 1 | Stop time, as a STIX time string.  |
+| ID | Name                | Type      | # | Description                        |
+|---:|:--------------------|:----------|--:|:-----------------------------------|
+|  1 | **hunt_start_time** | timestamp | 1 | Start time, as a STIX time string. |
+|  2 | **hunt_stop_time**  | timestamp | 1 | Stop time, as a STIX time string.  |
 
 
-Relative time ranges can be specified in units ranging from
-seconds to days.
+##### **Table 2.1.3-13 timestamp Type**
+
+| Type Name     | Type Definition                                                     | Description |
+|:--------------|:--------------------------------------------------------------------|:------------|
+| **timestamp** | String (%^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$%) |             |
+
+
+Relative timeranges can be specified in units ranging from seconds to days. A
+relative timerange is always relative to the current time, so should be
+interpreted as specifying "the last _t_ Time-units". 
+
+##### **Table 2.1.3-14 Time-Unit Type**
 
 **_Type: Time-Unit (Enumerated)_**
 
@@ -618,6 +734,8 @@ seconds to days.
 |  3 | **Minutes** |             |
 |  4 | **Seconds** |             |
 
+##### **Table 2.1.3-15 Timerange-Rel Type**
+
 **_Type: Timerange-Rel (Record{2..*})_**
 
 | ID | Name          | Type          | # | Description                                                |
@@ -626,14 +744,6 @@ seconds to days.
 |  2 | **time_unit** | Time-Unit     | 1 | Time Unit Keywords.                                        |
 
 
-| Type Name    | Type Definition | Description                                                                                                                                                                         |
-|:-------------|:----------------|:------------|
-| **Arg-Type** | String          | Argument types used by a huntflow. Follow STIX naming conventions, with lowercase characters and hyphens replacing spaces. Common types include process, file, and network-traffic. |
-
-
-| Type Name    | Type Definition | Description                                                                                                                |
-|:-------------|:----------------|:---------------------------------------------------------------------------------------------------------------------------|
-| **Arg-Name** | String          | Argument names used by a huntflow. Follow C variable naming conventions. Examples include name, src_port, and x_unique_id. |
 
 ### 2.1.4 Command Arguments
 
@@ -645,19 +755,30 @@ referenced with the `th` namespace.
 
 Standard OpenC2 Language arguments are available for using in threat hunting commands.
 
-**_Type: Args (Enumerated)_**
+**_Type: Args (Map{1..*})_**
 
-|   ID | Name                   | Description |
-|-----:|:-----------------------|:------------|
-|    1 | **start_time**         |             |
-|    2 | **stop_time**          |             |
-|    3 | **duration**           |             |
-|    4 | **response_requested** |             |
-| 1036 | **th**                 |             |
+|   ID | Name                   | Type                  | # | Description |
+|-----:|:-----------------------|:----------------------|--:|:------------|
+|    1 | **start_time**         | ls:Date-Time          | 1 |             |
+|    2 | **stop_time**          | ls:Date-Time          | 1 |             |
+|    3 | **duration**           | ls:Duration           | 1 |             |
+|    4 | **response_requested** | ls:Response-Requested | 1 |             |
+| 1036 | **th**                 | TH-Args               | 1 |             |
 
 ### 2.1.5 Actuator Specifiers
 
-##### Table 2.1.5-1 AP huntflow Actuator Type
+The `th` actuator specifiers provide a query toolkit for a Producer to identify
+the huntflows available on a Hunt Consumer and determine how to correctly invoke
+them. Huntflows Specifiers. They enable querying for huntflows:
+
+ * In a specified location
+ * By one or more descriptive labels
+ * By particular argument names or types
+
+The specifiers also provide the capability to identify specific information
+types about the huntflow to be returned in the query response.
+
+##### **Table 2.1.5-1 AP Hunt Actuator Type**
 
 **_Type: Actuator (Enumerated)_**
 
@@ -666,9 +787,9 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 | 1036 | **th** |             |
 
 
-##### Table 2.1.5-2 AP huntflow Specifiers Type
+##### **Table 2.1.5-2 TH Huntflow Specifiers Type**
 
-**_Type: huntflow-Specifiers (Map)_**
+**_Type: Huntflow-Specifiers (Map)_**
 
 | ID | Name              | Type                | # | Description                                                             |
 |---:|:------------------|:--------------------|--:|:------------------------------------------------------------------------|
@@ -679,33 +800,150 @@ Standard OpenC2 Language arguments are available for using in threat hunting com
 |  5 | **format_types**  | Return-Type         | 1 | Return huntflows that produce these output types.                       |
 |  6 | **return_format** | Huntflow-Sections   | 1 | For each huntflow returned, include these data items.                   |
 
+##### **Table 2.1.5-3 Tags Type**
+
+Tags provide a mechanism to associated multiple, discrete labels to a huntflow
+for the purposes of organization and lookup.
+
+| Type Name | Type Definition | Description                                 |
+|:----------|:----------------|:--------------------------------------------|
+| **Tags**  | ArrayOf(String) | Tags applied for search or filter purposes. |
+
+
+##### **Table 2.1.5-4 Return-Type Type**
+
+**_Type: Return-Type (Record{2..*})_**
+
+| ID | Name         | Type     | # | Description                                      |
+|---:|:-------------|:---------|--:|:-------------------------------------------------|
+|  1 | **var_name** | Arg-Name | 1 | Variable name to be returned by use of Huntflow. |
+|  2 | **var_type** | Arg-Type | 1 | Type of data to be returned by use of Huntflow.  |
+
+
+##### **Table 2.1.5-5 Huntflow Sections Type**
+
+The Huntflow-Sections / Huntflow-Section types are used to specify the types of
+desired return information when querying a Hunt Consumer about available
+huntflows.
+
+| Type Name             | Type Definition           | Description                                           |
+|:----------------------|:--------------------------|:------------------------------------------------------|
+| **Huntflow-Sections** | ArrayOf(Huntflow-Section) | For each huntflow returned, include these data items. |
+
+##### **Table 2.1.5-6 Huntflow Section Type**
+
+**_Type: Huntflow-Section (Enumerated)_**
+
+| ID | Name                 | Description                                                                                           |
+|---:|:---------------------|:------------------------------------------------------------------------------------------------------|
+|  1 | **path**             | Specifies the return should include the path to each Huntflow specified by the query conditions.      |
+|  2 | **uniqueId**         | Specifies the return should include the ID of each Huntflow specified by the query conditions.        |
+|  3 | **version**          | Specifies the return should include the version of each Huntflow specified by the query conditions.   |
+|  4 | **args_required**    | Specifies the returned data should include the required arguments for the available Huntflows.        |
+|  5 | **expected_returns** | Specifies the returned data should include the expected returns for the available Huntflows.          |
+|  6 | **script**           | Specifies the returned data should include the full text of the Huntflow for each available Huntflow. |
+
+
 
 ## 2.2 OpenC2 Response Components
 
-##### Table 2.2-1 Threat Hunting Reponse Components
+The Hunt AP supports the standard OpenC2 introspection response types plus
+additional hunting-oriented types.
 
-**_Type: AP-Results (Map{1..*})_**
+##### **Table 2.2-1 Results Type**
 
-| ID | Name              | Type                     | # | Description                                              |
-|---:|:------------------|:-------------------------|--:|:---------------------------------------------------------|
-|  1 | **huntflow_info** | Ap-results$huntflow-info | 1 | Structured data returned by Query: huntflows.            |
-|  2 | **datasources**   | Datasource-Array         | 1 | Datasource names and info returned by Query Datasources. |
-|  3 | **stix_returns**  | sco:STIX-Cybersecurity-Observables | 1 | STIX SCO object returns                        |
+**_Type: Results (Map{1..*})_**
 
-##### Table 2.2-2 Threat Hunting Reponse Type: Huntflow Info
+|   ID | Name           | Type             | # | Description                                                 |
+|-----:|:---------------|:-----------------|--:|:------------------------------------------------------------|
+|    1 | **versions**   | ls:Version       | 1 | List of OpenC2 language versions supported by this Actuator |
+|    2 | **profiles**   | ArrayOf(ls:Nsid) | 1 | List of profiles supported by this Actuator                 |
+|    3 | **pairs**      | Pairs            | 1 | List of targets applicable to each supported Action         |
+|    4 | **rate_limit** | Number{0..*}     | 1 |                                                             |
+| 1036 | **th**         | TH-Results       | 1 |                                                             |
 
 
+Hunting-oriented returns enable the Producer to assess the huntflows and data
+sources available from the Hunt Consumer, as well as return t the results of
+hunts invoked via the **investigate** Action.
 
-| Type Name                    | Type Definition        | Description                                   |
-|:-----------------------------|:-----------------------|:----------------------------------------------|
-| **Huntflow-Info-Array**      | ArrayOf(Huntflow-Info) | Structured data returned by Query: Huntflows. |
+##### **Table 2.2-2 Threat Hunting Reponse Components**
 
-##### Table 2.2-3 Threat Hunting Reponse Type: Datasource Array
+**_Type: TH-Results (Map{1..*})_**
 
+| ID | Name              | Type             | # | Description                                              |
+|---:|:------------------|:-----------------|--:|:---------------------------------------------------------|
+|  1 | **huntflow_info** | Huntflow-Array   | 1 | Structured data returned by Query: Huntflows.            |
+|  2 | **datasources**   | Datasource-Array | 1 | Datasource names and info returned by Query Datasources. |
+|  3 | **inv_returns**   | Inv-Returns      | 1 | STIX SCO object returns.                                 |
+
+The huntflows available from a Hunt Consumer are described using an array of
+Huntflow-Info records, each of which provides a collection of information
+identifying and characterizing an individual huntflow.
+
+##### **Table 2.2-3 Threat Hunting Reponse Type: Huntflow-Array**
+
+| Type Name          | Type Definition        | Description                                   |
+|:-------------------|:-----------------------|:----------------------------------------------|
+| **Huntflow-Array** | ArrayOf(Huntflow-Info) | Structured data returned by Query: Huntflows. |
+
+
+##### **Table 2.2-4 Threat Hunting Reponse Type: Huntflow-Info Info**
+
+**_Type: Huntflow-Info (Record{1..*})_**
+
+| ID | Name                 | Type            | # | Description                                           |
+|---:|:---------------------|:----------------|--:|:------------------------------------------------------|
+|  1 | **path**             | String          | 1 | Path used to identify a Huntflow in place of a name.  |
+|  2 | **uniqueId**         | Integer{0..*}   | 1 | Unique ID associated with a specified Huntflow.       |
+|  3 | **version**          | String          | 1 | Unique ID associated with a specified Huntflow.       |
+|  4 | **args_required**    | Typed-Arguments | 1 | List of arguments used in the specified Huntflow.     |
+|  5 | **expected_returns** | Typed-Arguments | 1 | Data returned by the specified Huntflows.             |
+|  6 | **script**           | String          | 1 | Text of Hunt logic implemented by specified Huntflow. |
+
+
+The datasources available from a Hunt Consumer are described using an array
+of Datasource records, each of which provides a name and collection of descritive
+tags for an individual data source.
+
+##### **Table 2.2-5 Threat Hunting Reponse Type: Datasource Array**
 
 | Type Name            | Type Definition     | Description                                                  |
 |:---------------------|:--------------------|:-------------------------------------------------------------|
 | **Datasource-Array** | ArrayOf(Datasource) | An Array of Datasources, with multiple uses in Threathunting |
+
+
+##### **Table 2.2-6 Threat Hunting Reponse Type: Datasource Type**
+
+**_Type: Datasource (Record{1..*})_**
+
+| ID | Name        | Type   | # | Description                                                 |
+|---:|:------------|:-------|--:|:------------------------------------------------------------|
+|  1 | **ds_name** | String | 1 | Name of a Datasource used by a Huntflow in Kestrel runtime. |
+|  2 | **ds_tags** | Tags   | 1 | Tags applied to a Datasource for search or filter purposes. |
+
+
+The results of a hunt are returned from a Hunt Consumer in an array of
+Inv[estigation]-Return records, each of which may contain one or more results
+represented as Strings or organized as STIX Cyber-security Observable Objects
+(SCOs).
+
+##### **Table 2.2-7 Threat Hunting Reponse Type: Inv-Returns**
+
+| Type Name       | Type Definition           | Description                                       |
+|:----------------|:--------------------------|:--------------------------------------------------|
+| **Inv-Returns** | ArrayOf(Inv-Return){1..*} | Array of returns from threat hunt investigations. |
+
+
+##### **Table 2.2-8 Threat Hunting Reponse Type: Inv-Return**
+
+**_Type: Inv-Return (Record)_**
+
+| ID | Name               | Type                               | # | Description                         |
+|---:|:-------------------|:-----------------------------------|--:|:------------------------------------|
+|  1 | **string_returns** | ArrayOf(String)                    | 1 | String return from an investigation |
+|  2 | **stix_sco**       | sco:STIX-Cybersecurity-Observables | 1 | STIX SCO object returns             |
+
 
 ### 2.2.1 Response Status Codes
 
@@ -755,12 +993,12 @@ Argument.
 #### 2.3.1.1 Query Features
 
 The `query features` Command MUST be implemented in accordance
-with Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10).
+with Version 1.1 of the [[OpenC2-Lang-v1.1]](#openc2-lang-v11).
 
 #### 2.3.1.2 Query /huntflows
 
 The `query /huntflows` command is used to identify the set of
-huntflowss available from a specific threat hunting consumer.
+huntflows available from a specific threat hunting consumer.
 
 OpenC2 Consumers that receive a `query /huntflows` Command:
 
@@ -774,6 +1012,11 @@ OpenC2 Consumers that receive a `query /huntflows` Command:
     -  SHOULD respond with "Command not supported" in the status text
     -  MAY respond with status code 500
 
+Example `query / huntflows` commands:
+
+ * Query huntflows by argument type (link to example in appendix)
+ * Query huntflows by location (e.g., in a hierarchically organized collection
+   of huntflows) (link to example in appendix)
 
 #### 2.3.1.3 Query /datasources
 
@@ -792,6 +1035,11 @@ OpenC2 Consumers that receive a `query /datasources` Command:
     -  SHOULD respond with "Command not supported" in the status text
     -  MAY respond with status code 500
 
+Example `query / datasources` commands:
+
+ * Query datasources by name (link to example in appendix)
+ * Query datasources by tag  (e.g., for the types of techniques or known
+   adversaries they are intended to detect) ([Example 3.4](#e4-example-4-query-datasources-by-tags))
 
 ### 2.3.2 Investigate /hunt
 
@@ -815,31 +1063,19 @@ OpenC2 Consumers that receive a `investigate /hunt` Command:
     -  SHOULD respond with "Command not supported" in the status text
     -  MAY respond with status code 500
 
+
+Example `investigate /hunt` commands:
+
+ * Investigate ?? by absolute time (link to example in appendix)
+ * Investigate ?? by relative time (link to example in appendix)
+
+
 -------
 
 # 3 Conformance
 
 _This section is normative._
 
-========================================
->  The following rough approach to conformance was discussed and
->  approved at the 7 June 2023 working meeting. Delete this
->  material once the text in 3.1 and 3.2 is approved.
-
-* Define 
-  * Producer conformance target
-  * Consumer conformance target
-* Each conformance target:
-  * MUST
-    * conform to the Architecture and LS
-    * implement `query features` (per LS)
-    * implement `query /huntflows`, `investigate /hunt` (per AP)
-  * SHOULD
-    * implement at least one approved transfer spec
-    * implement `query /datasources` (per AP)
-  * make adjustments for argument handling as need determined
-
-========================================
 
 ## 3.1 Conformance Targets
 
@@ -882,7 +1118,7 @@ TH Producers SHOULD:
     responses.
  
  
- ## 3.2.3 TH Consumer Conformance Requirements
+### 3.2.3 TH Consumer Conformance Requirements
 
 TH Consumers MUST:
 
@@ -964,6 +1200,9 @@ Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, 
 
 ###### [RFC3552]
 Rescorla, E. and B. Korver, "Guidelines for Writing RFC Text on Security Considerations", BCP 72, RFC 3552, DOI 10.17487/RFC3552, July 2003, https://www.rfc-editor.org/info/rfc3552.
+
+###### [TTP-Hunting]
+Daszczyszak, R., Ellis, D., Luke, S., and Whitley, S., "TTP-Based Hunting", The MITRE Corporation, March 2019, https://www.mitre.org/sites/default/files/2021-11/prs-19-3892-ttp-based-hunting.pdf 
 
 -------
 
@@ -1126,6 +1365,44 @@ This example command also makes use of the optional command_id field, that is no
     }
 }
 ```
+## E.4 Example 4: Query Datasources by Tags
+
+```json
+{
+  "action": "query",
+  "target": {
+    "th": {
+      "datasources": ""
+    }
+  },
+  "args": {
+    "th": {
+      "huntargs": {
+        "datasources": [{
+            "ds_tags": ["apt47", "ttp61"]
+          }]
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "status": "200",
+  "results": {
+    "th": {
+      "datasources": [{
+          "ds_name": "source_1",
+          "ds_tags": ["apt47", "apt54", "ttp61", "netflow_data"]
+        }]
+    }
+  }
+}
+```
+
+
+
 -------
 
 # Appendix F. Notices
