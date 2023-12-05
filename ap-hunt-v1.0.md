@@ -7,7 +7,7 @@
 
 ## WD02 of Committee Specification Draft 01
 
-## xx November 2023
+## 29 November 2023
 
 &nbsp;
 
@@ -46,6 +46,9 @@ This prose specification is one component of a Work Product that also includes:
 #### Related work:
 This specification is related to:
 * _Open Command and Control (OpenC2) Language Specification Version 1.1_. Edited by Duncan Sparrell and Toby Considine. Latest stage: https://docs.oasis-open.org/openc2/oc2ls/v1.1/oc2ls-v1.1.html.
+
+#### Declared JADN Namespaces
+* http://docs.oasis-open-org/openc2/ns/ap/hunt/v1.0
 
 #### Abstract:
 This specification defines an actuator profile to automate management of cyber
