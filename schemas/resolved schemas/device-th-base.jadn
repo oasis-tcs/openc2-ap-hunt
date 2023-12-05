@@ -29,14 +29,14 @@
     ]],
     ["Target", "Choice", [], "", [
       [9, "features", "ls:Features", [], "A set of items used with the query Action to determine an Actuator's capabilities."],
-      [1036, "th", "th:AP-Target", ["<"], "Threat Hunting Profile-defined targets"]
+      [1036, "th", "th:TH-Target", ["<"], "Threat Hunting Profile-defined targets"]
     ]],
     ["Args", "Map", ["{1"], "", [
       [1, "start_time", "ls:Date-Time", ["[0"], ""],
       [2, "stop_time", "ls:Date-Time", ["[0"], ""],
       [3, "duration", "ls:Duration", ["[0"], ""],
       [4, "response_requested", "ls:Response-Type", ["[0"], ""],
-      [1036, "th", "th:AP-Args", ["<"], ""]
+      [1036, "th", "th:TH-Args", ["<"], ""]
     ]],
     ["Actuator", "Enumerated", [], "", [
       [1036, "th", ""]
@@ -46,7 +46,7 @@
       [2, "profiles", "ls:Nsid", ["q", "[0", "]0"], "List of profiles supported by this Actuator"],
       [3, "pairs", "Action-Targets", ["[0"], "Targets applicable to each supported Action"],
       [4, "rate_limit", "Number", ["y0.0", "[0"], "Maximum number of requests per minute supported by design or policy"],
-      [1036, "th", "th:AP-Results", ["[0", "<"], "TH-defined results"]
+      [1036, "th", "th:TH-Results", ["[0", "<"], "TH-defined results"]
     ]],
     ["Action-Targets", "ArrayOf", ["*Pairs"], "", []],
     ["Pairs", "Enumerated", [], "", [
